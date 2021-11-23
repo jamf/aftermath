@@ -51,6 +51,9 @@ caseHandler.log("Aftermath Started")
 // Processes
 
 // Persistence - DJ Beef Stew
+let persistenceHandler = PersistenceHandle()
+persistenceHandler.start()
+
 
 // FileSystem
 
