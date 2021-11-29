@@ -111,7 +111,5 @@ class PersistenceHandle {
         print("------- Launch Items -------")
         captureLaunchData(urlLocations: launchDaemons)
         captureLaunchData(urlLocations: launchAgents)
-        
-        
     }
 }
