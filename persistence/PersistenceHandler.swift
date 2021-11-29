@@ -24,8 +24,8 @@ class PersistenceHandle {
         self.launchAgentsPath = "/Library/LaunchAgents/"
         
         self.persistenceDir = caseHandler.createNewDir(dirName: "persistence")
-        self.aftermathHooksDir = caseHandler.createNewDir(dirName: "persistence/login")
-        self.aftermathLaunchDir = caseHandler.createNewDir(dirName: "persistence/launchItems")
+        self.aftermathHooksDir = caseHandler.createNewDir(dirName: "persistence/hooks_raw")
+        self.aftermathLaunchDir = caseHandler.createNewDir(dirName: "persistence/launchItems_raw")
     }
     
     func enumeratePath(path: String) -> [URL] {
@@ -60,27 +60,20 @@ class PersistenceHandle {
         return plistDict
     }
     
-    // TODO
     func captureLaunchData(urlLocations: [URL]) {
         print("Capturing...")
+        
+        let capturedLaunchFile = self.caseHandler.createNewCaseFile(dirUrl: self.persistenceDir, filename: "launchItems.txt")
      
         for url in urlLocations {
             let plistDict = getPlistAsDict(atUrl: url)
-            let _ = self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.aftermathLaunchDir)
             
-            for (x,y) in plistDict {
-                if x == "ProgramArguments" {
-                 
-                    var str = String(describing: y)
-                    print("String \(str)")
-
-                    let components = str.components(separatedBy: ",")
-                    print("Components: \(components)")
-                    print("Binary")
-                    let binaryUrl = URL(fileURLWithPath: components[0])
-                    print("END ----")
-                }
-            }
+            // copy the plists to the persistence directory
+            self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.aftermathLaunchDir)
+            // write the plists to one file
+            self.caseHandler.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url) -----\n")
+            self.caseHandler.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.description)
+            
             
             print(plistDict)
         }
