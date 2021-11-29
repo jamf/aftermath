@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A3A3CB27472CD900F8F557 /* ArgManager.swift */; };
 		A3CD4E56274434EE00869ECB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E55274434EE00869ECB /* main.swift */; };
 		A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E5C2744368B00869ECB /* CaseHandler.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A3A3A3CB27472CD900F8F557 /* ArgManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgManager.swift; sourceTree = "<group>"; };
 		A3A3A3CD274754B400F8F557 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,9 +45,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0776CAC27482FF2007D18D8 /* persistence */ = {
+			isa = PBXGroup;
+			children = (
+				A076742B27555FC100ED7066 /* PersistenceModule.swift */,
+			);
+			path = persistence;
+			sourceTree = "<group>";
+		};
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				A0776CAC27482FF2007D18D8 /* persistence */,
 				A3A3A3CD274754B400F8F557 /* Readme.md */,
 				A3CD4E54274434EE00869ECB /* aftermath */,
 				A3CD4E53274434EE00869ECB /* Products */,
@@ -131,6 +142,7 @@
 				A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
+				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,7 +268,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C793NB2B2B;
+				DEVELOPMENT_TEAM = 83R6535NQ3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -267,7 +279,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C793NB2B2B;
+				DEVELOPMENT_TEAM = 83R6535NQ3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
