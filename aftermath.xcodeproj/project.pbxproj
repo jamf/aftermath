@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0776CB0274838A8007D18D8 /* PersistenceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0776CAF274838A8007D18D8 /* PersistenceHandler.swift */; };
+		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A3A3CB27472CD900F8F557 /* ArgManager.swift */; };
 		A3CD4E56274434EE00869ECB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E55274434EE00869ECB /* main.swift */; };
 		A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E5C2744368B00869ECB /* CaseHandler.swift */; };
@@ -26,7 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A0776CAF274838A8007D18D8 /* PersistenceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceHandler.swift; sourceTree = "<group>"; };
+		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A3A3A3CB27472CD900F8F557 /* ArgManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgManager.swift; sourceTree = "<group>"; };
 		A3A3A3CD274754B400F8F557 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +48,7 @@
 		A0776CAC27482FF2007D18D8 /* persistence */ = {
 			isa = PBXGroup;
 			children = (
-				A0776CAF274838A8007D18D8 /* PersistenceHandler.swift */,
+				A076742B27555FC100ED7066 /* PersistenceModule.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -141,8 +141,8 @@
 			files = (
 				A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
-				A0776CB0274838A8007D18D8 /* PersistenceHandler.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
+				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

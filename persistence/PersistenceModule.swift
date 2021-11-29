@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PersistenceHandle {
+class PersistenceModule {
     
     let caseHandler: CaseHandler
     let hooks: String
@@ -17,8 +17,8 @@ class PersistenceHandle {
     let aftermathHooksDir: URL
     let aftermathLaunchDir: URL
     
-    init() {
-        self.caseHandler = CaseHandler()
+    init(caseHandler: CaseHandler) {
+        self.caseHandler = caseHandler
         self.hooks = "/Library/Preferences/com.apple.loginwindow.plist"
         self.launchDaemonsPath = "/Library/LaunchDaemons/"
         self.launchAgentsPath = "/Library/LaunchAgents/"
@@ -39,7 +39,7 @@ class PersistenceHandle {
                         files.append(fileURL)
                     }
                 } catch {
-                    print(error, fileURL)
+                    self.caseHandler.log("Error: \(error) at URL: \(fileURL)")
                 }
             }
         }
@@ -53,18 +53,16 @@ class PersistenceHandle {
             data = try Data(contentsOf: atUrl)
             plistDict = try PropertyListSerialization.propertyList(from: data, format: nil) as! [String:Any]
         } catch {
-            print("Could not read \(atUrl.relativePath)")
-            print(error)
+            self.caseHandler.log("Could not read \(atUrl.relativePath) due to \(error)")
             return plistDict
         }
         return plistDict
     }
     
     func captureLaunchData(urlLocations: [URL]) {
-        print("Capturing...")
-        
         let capturedLaunchFile = self.caseHandler.createNewCaseFile(dirUrl: self.persistenceDir, filename: "launchItems.txt")
-     
+        self.caseHandler.log("Copying plists to aftermath persistence directory...")
+        
         for url in urlLocations {
             let plistDict = getPlistAsDict(atUrl: url)
             
@@ -74,9 +72,9 @@ class PersistenceHandle {
             self.caseHandler.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url) -----\n")
             self.caseHandler.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.description)
             
-            
             print(plistDict)
         }
+        self.caseHandler.log("Completed copying and writing plists to aftermath directory...")
     }
     
     // TODO
@@ -90,14 +88,13 @@ class PersistenceHandle {
         let url = URL(fileURLWithPath: path)
     
         let hooksPlistAsDict = getPlistAsDict(atUrl: url)
-        print(hooksPlistAsDict)
-        print("Saving out hooks plist...")
-        caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.aftermathHooksDir)
+        self.caseHandler.log("Saving hooks to aftermath...)")
+        self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.aftermathHooksDir)
     
         for (x,y) in hooksPlistAsDict {
             if x == "LoginHook" || x == "LogoutHook" {
                 print("\(x): \(y)")
-            } else { print("No Hooks.")}
+            } else { continue }
         }
     }
     
@@ -105,10 +102,10 @@ class PersistenceHandle {
         let launchDaemons = enumeratePath(path: self.launchDaemonsPath)
         let launchAgents = enumeratePath(path: self.launchAgentsPath)
         
-        print("------- Hooks -------")
+        caseHandler.log("------- Hooks -------")
         getHooks(path: self.hooks)
         
-        print("------- Launch Items -------")
+        caseHandler.log("------- Launch Items -------")
         captureLaunchData(urlLocations: launchDaemons)
         captureLaunchData(urlLocations: launchAgents)
     }

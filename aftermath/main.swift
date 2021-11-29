@@ -51,9 +51,10 @@ caseHandler.log("Aftermath Started")
 // Processes
 
 // Persistence - DJ Beef Stew
-let persistenceHandler = PersistenceHandle()
-persistenceHandler.start()
-
+caseHandler.log("Started logging persistence items")
+let persistenceModule = PersistenceModule(caseHandler: CaseHandler())
+persistenceModule.start()
+caseHandler.log("Finished logging persistence items")
 
 // FileSystem
 
