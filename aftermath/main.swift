@@ -65,5 +65,9 @@ artifactModule.start()
 caseHandler.log("Finished gathering artifacts")
 
 // Logs - Benyo
+caseHandler.log("Started logging unified logs")
+let unifiedLogModule = UnifiedLogModule(caseHandler: CaseHandler())
+unifiedLogModule.start()
+caseHandler.log("Finished logging persistence items")
 
 caseHandler.log("Aftermath Finished")
