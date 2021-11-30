@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */; };
+		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
 		A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A3A3CB27472CD900F8F557 /* ArgManager.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedLogModule.swift; sourceTree = "<group>"; };
+		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
 		A3A3A3CB27472CD900F8F557 /* ArgManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgManager.swift; sourceTree = "<group>"; };
@@ -47,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8ABB9E2927568E9000C0ADD7 /* unifiedlogs */ = {
+			isa = PBXGroup;
+			children = (
+				8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */,
+			);
+			path = unifiedlogs;
+			sourceTree = "<group>";
+		};
 		A076742D2755797800ED7066 /* artifacts */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +78,7 @@
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				8ABB9E2927568E9000C0ADD7 /* unifiedlogs */,
 				A076742D2755797800ED7066 /* artifacts */,
 				A0776CAC27482FF2007D18D8 /* persistence */,
 				A3A3A3CD274754B400F8F557 /* Readme.md */,
@@ -88,6 +101,7 @@
 				A3CD4E55274434EE00869ECB /* main.swift */,
 				A3CD4E5C2744368B00869ECB /* CaseHandler.swift */,
 				A3A3A3CB27472CD900F8F557 /* ArgManager.swift */,
+				8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */,
 			);
 			path = aftermath;
 			sourceTree = "<group>";
@@ -153,6 +167,8 @@
 				A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
+				8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */,
+				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
 			);
@@ -280,7 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83R6535NQ3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -291,7 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83R6535NQ3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

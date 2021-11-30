@@ -15,6 +15,7 @@ class UnifiedLogModule {
     
     init(caseHandler: CaseHandler) {
         self.caseHandler = caseHandler
+        //predicates eventually to be loaded from external file
         self.predicates = [
             "login": "process == \"logind\"",
             "tcc": "process == \"tccd\"",
@@ -26,28 +27,13 @@ class UnifiedLogModule {
         self.unifiedLogDir = caseHandler.createNewDir(dirName: "unifiedLogs")
     }
     
-    func shell(_ command: String) -> String {
-        let task = Process()
-        let pipe = Pipe()
-        
-        task.standardOutput = pipe
-        task.standardError = pipe
-        task.arguments = ["-c", command]
-        task.launchPath = "/bin/sh"
-        task.launch()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)!
-        
-        return output
-    }
 
     func filterPredicates(filter: [String: String]) {
         for (filtername, filter) in predicates {
             self.caseHandler.log("Filtering for \(filtername) events...")
             
-            let command = "log show -predicate " + "'" + filter + "'"
-            let output = shell("\(command)")
+            let command = "log show -info -backtrace -debug -loss -signpost -predicate " + "'" + filter + "'"
+            let output = aftermath.shell("\(command)")
 
             if output != "" {
                 let logfile = self.caseHandler.createNewCaseFile(dirUrl: unifiedLogDir, filename: filtername)
