@@ -59,6 +59,10 @@ caseHandler.log("Finished logging persistence items")
 // FileSystem
 
 // Artifacts
+caseHandler.log("Started gathering artifacts...")
+let artifactModule = ArtifactsModule(caseHandler: CaseHandler())
+artifactModule.start()
+caseHandler.log("Finished gathering artifacts")
 
 // Logs - Benyo
 
