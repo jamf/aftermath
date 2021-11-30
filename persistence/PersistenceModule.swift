@@ -59,8 +59,7 @@ class PersistenceModule {
         return plistDict
     }
     
-    func captureLaunchData(urlLocations: [URL]) {
-        let capturedLaunchFile = self.caseHandler.createNewCaseFile(dirUrl: self.persistenceDir, filename: "launchItems.txt")
+    func captureLaunchData(urlLocations: [URL], capturedLaunchFile: URL) {
         self.caseHandler.log("Copying plists to aftermath persistence directory...")
         
         for url in urlLocations {
@@ -105,7 +104,8 @@ class PersistenceModule {
         getHooks(path: self.hooks)
         
         // capture the launch items
-        captureLaunchData(urlLocations: launchDaemons)
-        captureLaunchData(urlLocations: launchAgents)
+        let capturedLaunchFile = self.caseHandler.createNewCaseFile(dirUrl: self.persistenceDir, filename: "launchItems.txt")
+        captureLaunchData(urlLocations: launchDaemons, capturedLaunchFile: capturedLaunchFile)
+        captureLaunchData(urlLocations: launchAgents, capturedLaunchFile: capturedLaunchFile)
     }
 }

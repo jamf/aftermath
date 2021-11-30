@@ -52,13 +52,17 @@ caseHandler.log("Aftermath Started")
 
 // Persistence - DJ Beef Stew
 caseHandler.log("Started logging persistence items")
-let persistenceModule = PersistenceModule(caseHandler: CaseHandler())
+let persistenceModule = PersistenceModule(caseHandler: caseHandler)
 persistenceModule.start()
 caseHandler.log("Finished logging persistence items")
 
 // FileSystem
 
 // Artifacts
+caseHandler.log("Started gathering artifacts...")
+let artifactModule = ArtifactsModule(caseHandler: caseHandler)
+artifactModule.start()
+caseHandler.log("Finished gathering artifacts")
 
 // Logs - Benyo
 
