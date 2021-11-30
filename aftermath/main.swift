@@ -68,6 +68,6 @@ caseHandler.log("Finished gathering artifacts")
 caseHandler.log("Started logging unified logs")
 let unifiedLogModule = UnifiedLogModule(caseHandler: CaseHandler())
 unifiedLogModule.start()
-caseHandler.log("Finished logging persistence items")
+caseHandler.log("Finished logging unified logs")
 
 caseHandler.log("Aftermath Finished")
