@@ -42,6 +42,7 @@ print(#"""
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 
 let caseHandler = CaseHandler()
+
 caseHandler.log("Aftermath Started")
 
 // System Recon - Sal
@@ -65,5 +66,9 @@ artifactModule.start()
 caseHandler.log("Finished gathering artifacts")
 
 // Logs - Benyo
+caseHandler.log("Started logging unified logs")
+let unifiedLogModule = UnifiedLogModule(caseHandler: caseHandler)
+unifiedLogModule.start()
+caseHandler.log("Finished logging unified logs")
 
 caseHandler.log("Aftermath Finished")
