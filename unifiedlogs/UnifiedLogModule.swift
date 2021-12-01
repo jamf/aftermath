@@ -33,7 +33,7 @@ class UnifiedLogModule {
             self.caseHandler.log("Filtering for \(filtername) events...")
             
             let command = "log show -info -backtrace -debug -loss -signpost -predicate " + "'" + filter + "'"
-            let output = aftermath.shell("\(command)")
+            let output = Aftermath.shell("\(command)")
 
             if output != "" {
                 let logfile = self.caseHandler.createNewCaseFile(dirUrl: unifiedLogDir, filename: filtername)

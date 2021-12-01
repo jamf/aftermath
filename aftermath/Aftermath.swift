@@ -13,7 +13,7 @@ class Aftermath {
     }
     
     //function for calling bash commands
-    func shell(_ command: String) -> String {
+    static func shell(_ command: String) -> String {
         let task = Process()
         let pipe = Pipe()
         

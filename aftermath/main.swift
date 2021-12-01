@@ -42,6 +42,7 @@ print(#"""
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 
 let caseHandler = CaseHandler()
+
 caseHandler.log("Aftermath Started")
 
 // System Recon - Sal
