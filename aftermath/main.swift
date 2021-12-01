@@ -46,6 +46,10 @@ let caseHandler = CaseHandler()
 caseHandler.log("Aftermath Started")
 
 // System Recon - Sal
+caseHandler.log("Started system recon")
+let systemReconModule = SystemReconModule(caseHandler: caseHandler)
+systemReconModule.start()
+caseHandler.log("Finished system recon")
 
 // Network
 
