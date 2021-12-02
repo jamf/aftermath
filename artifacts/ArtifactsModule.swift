@@ -2,11 +2,19 @@
 //  ArtifactsModule.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 11/29/21.
 //
 
 import Foundation
 import SQLite3
+
+
+// tcc
+// lsquarantine
+// /etc/sudoers
+// /etc/host
+// /etc/ssh/.*
+// ~/.ssh
+
 
 class ArtifactsModule {
     

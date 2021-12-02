@@ -2,7 +2,6 @@
 //  UnifiedLogModule.swift
 //  aftermath
 //
-//  Created by Benyo on 11/29/21.
 //
 
 import Foundation
@@ -20,8 +19,8 @@ class UnifiedLogModule {
             "login": "process == \"logind\"",
             "tcc": "process == \"tccd\"",
             "ssh": "process == \"sshd\"",
-            "failed sudo": "process == \"sudo\" and eventMessage CONTAINS \"TTY\" AND eventMessage CONTAINS \"3 incorrect password attempts\"",
-            "manual configuration profile install": "subsystem == \"com.apple.ManagedClient\" AND process == \"mdmclient\" AND category == \"MDMDaemon\" and eventMessage CONTAINS \"Installed configuration profile:\" AND eventMessage CONTAINS \"Source: Manual\"",
+            "failed_sudo": "process == \"sudo\" and eventMessage CONTAINS \"TTY\" AND eventMessage CONTAINS \"3 incorrect password attempts\"",
+            "manual_configuration_profile_install": "subsystem == \"com.apple.ManagedClient\" AND process == \"mdmclient\" AND category == \"MDMDaemon\" and eventMessage CONTAINS \"Installed configuration profile:\" AND eventMessage CONTAINS \"Source: Manual\"",
             "screensharing": "(process == \"screensharingd\" || process == \"ScreensharingAgent\")"
         ]
         self.unifiedLogDir = caseHandler.createNewDir(dirName: "unifiedLogs")
@@ -39,9 +38,9 @@ class UnifiedLogModule {
                 let logfile = self.caseHandler.createNewCaseFile(dirUrl: unifiedLogDir, filename: filtername)
                 self.caseHandler.addTextToFile(atUrl: logfile, text: output)
                 
-                self.caseHandler.log("Done filtering for \(filtername) events")
+                //self.caseHandler.log(module: self.moduleName, "Done filtering for \(filtername) events")
             } else {
-                self.caseHandler.log("No logs found for \(filtername) events")
+                //self.caseHandler.log(module: self.moduleName, "No logs found for \(filtername) events")
             }
         }
     }

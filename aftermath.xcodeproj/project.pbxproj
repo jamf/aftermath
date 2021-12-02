@@ -12,6 +12,9 @@
 		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
+		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
+		A374535A275735B40074B65C /* LoginHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745359275735B40074B65C /* LoginHooks.swift */; };
+		A374535D2757C1300074B65C /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374535C2757C1300074B65C /* FileManager.swift */; };
 		A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A3A3CB27472CD900F8F557 /* ArgManager.swift */; };
 		A3CD4E56274434EE00869ECB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E55274434EE00869ECB /* main.swift */; };
 		A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E5C2744368B00869ECB /* CaseHandler.swift */; };
@@ -35,6 +38,9 @@
 		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
+		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
+		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
+		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		A3A3A3CB27472CD900F8F557 /* ArgManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgManager.swift; sourceTree = "<group>"; };
 		A3A3A3CD274754B400F8F557 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,19 +87,30 @@
 			isa = PBXGroup;
 			children = (
 				A076742B27555FC100ED7066 /* PersistenceModule.swift */,
+				A3745357275730870074B65C /* LaunchItems.swift */,
+				A3745359275735B40074B65C /* LoginHooks.swift */,
 			);
 			path = persistence;
+			sourceTree = "<group>";
+		};
+		A374535B2757C1110074B65C /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A374535C2757C1300074B65C /* FileManager.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				A374535B2757C1110074B65C /* extensions */,
 				70A44401275707800035F40E /* systemRecon */,
 				8ABB9E2927568E9000C0ADD7 /* unifiedlogs */,
 				A076742D2755797800ED7066 /* artifacts */,
 				A0776CAC27482FF2007D18D8 /* persistence */,
-				A3A3A3CD274754B400F8F557 /* Readme.md */,
 				A3CD4E54274434EE00869ECB /* aftermath */,
+				A3A3A3CD274754B400F8F557 /* Readme.md */,
 				A3CD4E53274434EE00869ECB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -175,11 +192,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
 				A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
+				A374535A275735B40074B65C /* LoginHooks.swift in Sources */,
 				8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */,
 				70A44403275707A90035F40E /* SystemReconModule.swift in Sources */,
+				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,

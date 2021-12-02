@@ -2,16 +2,11 @@
 //  Aftermath.swift
 //  aftermath
 //
-//  Created by Matt Benyo on 11/30/21.
 //
 
 import Foundation
 
 class Aftermath {
-    init(){
-        
-    }
-    
     //function for calling bash commands
     static func shell(_ command: String) -> String {
         let task = Process()
@@ -27,5 +22,21 @@ class Aftermath {
         let output = String(data: data, encoding: .utf8)!
         
         return output
+    }
+    
+    static func getPlistAsDict(atUrl: URL) -> [String: Any] {
+        var data = Data()
+        var plistDict = [String:Any]()
+        
+        if FileManager.default.fileExists(atPath: atUrl.relativePath) {
+            do {
+                data = try Data(contentsOf: atUrl)
+                plistDict = try PropertyListSerialization.propertyList(from: data, format: nil) as! [String:Any]
+            } catch {
+                print("Could not read \(atUrl.relativePath) due to \(error)")
+            }
+        }
+        
+        return plistDict
     }
 }

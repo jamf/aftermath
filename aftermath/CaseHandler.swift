@@ -2,7 +2,6 @@
 //  CaseHandler.swift
 //  aftermath
 //
-//  Created by Jaron Bradley on 11/16/21.
 //
 
 import Foundation
@@ -84,8 +83,9 @@ class CaseHandler {
         
     }
     
-    func log(_ note: String, displayOnly: Bool = false) {
-        let entry = "\(Date().ISO8601Format()) - \(note)"
+    func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
+        let module = URL(fileURLWithPath: file).lastPathComponent
+        let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
         print(entry)
         if displayOnly == false {
             addTextToFile(atUrl: self.logFile, text: entry)

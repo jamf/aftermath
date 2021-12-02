@@ -2,7 +2,6 @@
 //  main.swift
 //  aftermath
 //
-//  Created by Jaron Bradley on 11/16/21.
 //
 
 import Foundation
@@ -37,31 +36,40 @@ print(#"""
 )
 
 // Check Permissions
+if (NSUserName() != "root") {
+    print("This tool must be run as root in order to collect all artifacts")
+}
+
 // Case management creation
-
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
-
 let caseHandler = CaseHandler()
 
+// Start Aftermath
 caseHandler.log("Aftermath Started")
 
-// System Recon - Sal
+
+// System Recon
 caseHandler.log("Started system recon")
 let systemReconModule = SystemReconModule(caseHandler: caseHandler)
 systemReconModule.start()
 caseHandler.log("Finished system recon")
 
+
 // Network
+
 
 // Processes
 
-// Persistence - DJ Beef Stew
+
+// Persistence
 caseHandler.log("Started logging persistence items")
 let persistenceModule = PersistenceModule(caseHandler: caseHandler)
 persistenceModule.start()
 caseHandler.log("Finished logging persistence items")
 
+
 // FileSystem
+
 
 // Artifacts
 caseHandler.log("Started gathering artifacts...")
@@ -69,10 +77,13 @@ let artifactModule = ArtifactsModule(caseHandler: caseHandler)
 artifactModule.start()
 caseHandler.log("Finished gathering artifacts")
 
-// Logs - Benyo
+
+// Logs
 caseHandler.log("Started logging unified logs")
 let unifiedLogModule = UnifiedLogModule(caseHandler: caseHandler)
 unifiedLogModule.start()
 caseHandler.log("Finished logging unified logs")
 
+
+// End Aftermath
 caseHandler.log("Aftermath Finished")
