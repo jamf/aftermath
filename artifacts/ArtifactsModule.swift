@@ -82,7 +82,7 @@ class ArtifactsModule {
                         }
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
+                    self.caseHandler.addTextToFile(atUrl: capturedTCC, text: "Bundle ID: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
                 }
             }
             self.caseHandler.log("Finished capturing TCC data")
