@@ -38,7 +38,6 @@ print(#"""
 // Check Permissions
 if (NSUserName() != "root") {
     print("This tool must be run as root in order to collect all artifacts")
-    print("Exiting...")
 }
 
 // Case management creation
