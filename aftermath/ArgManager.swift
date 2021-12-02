@@ -2,7 +2,6 @@
 //  ArgParser.swift
 //  aftermath
 //
-//  Created by Jaron Bradley on 11/18/21.
 //
 
 import Foundation

@@ -2,7 +2,6 @@
 //  SystemReconModule.swift
 //  aftermath
 //
-//  Created by Ferdous Saljooki on 2021-11-30.
 //
 
 import Foundation
