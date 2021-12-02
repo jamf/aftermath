@@ -38,12 +38,13 @@ class ArtifactsModule {
         
         if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
             var queryStatement: OpaquePointer? = nil
-            let queryString = "select client, auth_value, auth_reason from access"
+            let queryString = "select client, auth_value, auth_reason, service from access"
             
             if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
                 var client: String = ""
                 var authValue: String = ""
                 var authReason: String = ""
+                var service: String = ""
                 
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
                     let col1 = sqlite3_column_text(queryStatement, 0)
@@ -71,7 +72,17 @@ class ArtifactsModule {
                         }
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
+                    let col4 = sqlite3_column_text(queryStatement, 3)
+                    if col4 != nil {
+                        service = String(cString: col4!)
+                        for item in TCCService.allCases {
+                            if service == String(item.rawValue) {
+                                service = String(describing: item)
+                            }
+                        }
+                    }
+                    
+                    self.caseHandler.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
                 }
             }
             self.caseHandler.log("Finished capturing TCC data")
@@ -104,5 +115,57 @@ class ArtifactsModule {
         case preflightUnknown = "10"
         case entitled = "11"
         case appTypePolicy = "12"
+    }
+    
+    /*
+     Compiled from /System/Library/PrivateFrameworks/TCC.framework/Resources/en.lproj/Localizable.strings and https://rainforest.engineering/2021-02-09-macos-tcc/
+     */
+    enum TCCService: String, CaseIterable {
+        // critical
+        case location = "kTCCServiceLiverpool"
+        case icloud = "kTCCServiceUbiquity"
+        case sharing = "kTCCServiceShareKit"
+        case fda = "kTCCServiceSystemPolicyAllFiles"
+        
+        // common
+        case accessibility = "kTCCServiceAccessibility"
+        case keystrokes = "kTCCServicePostEvent"
+        case inputMonitoring = "kTCCServiceListenEvent"
+        case developerTools = "kTCCServiceDeveloperTool"
+        case screenCapture = "kTCCServiceScreenCapture"
+        
+        // file access
+        case adminFiles = "kTCCServiceSystemPolicySysAdminFiles"
+        case desktopFolder = "kTCCServiceSystemPolicyDesktopFolder"
+        case developerFiles = "kTCCServiceSystemPolicyDeveloperFiles"
+        case documentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
+        case downloadsFolder = "kTCCServiceSystemPolicyDownloadsFolder"
+        case networkVolumes = "kTCCServiceSystemPolicyNetworkVolumes"
+        
+        // service access
+        case addressBook = "kTCCServiceAddressBook"
+        case appleEvents = "kTCCServiceAppleEvents"
+        case availability = "kTCCServiceUserAvailability"
+        case bluetooth_always = "kTCCServiceBluetoothAlways"
+        case calendar = "kTCCServiceCalendar"
+        case camera = "kTCCServiceCamera"
+        case contacts_full = "kTCCServiceContactsFull"
+        case contacts_limited = "kTCCServiceContactsLimited"
+        case currentLocation = "kTCCServiceLocation"
+        case fileAccess = "kTCCServiceFileProviderDomain"
+        case fileAccess_request = "kTCCServiceFileProviderPresence"
+        case fitness = "kTCCServiceMotion"
+        case focus_notifications = "kTCCServiceFocusStatus"
+        case gamecenter = "kTCCServiceGameCenterFriends"
+        case homeData = "kTCCServiceWillow"
+        case mediaLibrary = "kTCCServiceMediaLibrary"
+        case microphone = "kTCCServiceMicrophone"
+        case photos = "kTCCServicePhotos"
+        case photos_add = "kTCCServicePhotosAdd"
+        case proto3Right = "kTCCServicePrototype3Rights"
+        case reminders = "kTCCServiceReminders"
+        case removableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
+        case siri = "kTCCServiceSiri"
+        case speechRecognition = "kTCCServiceSpeechRecognition"
     }
 }
