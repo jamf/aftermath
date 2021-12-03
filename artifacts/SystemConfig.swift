@@ -1,5 +1,5 @@
 //
-//  Etc.swift
+//  SystemConfig.swift
 //  aftermath
 //
 //
