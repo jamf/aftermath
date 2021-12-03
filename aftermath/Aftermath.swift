@@ -42,7 +42,15 @@ class Aftermath {
     
     static func dateFromTimestamp(timeStamp : Double) -> String {
         
-        return "hi"
+        let date = NSDate(timeIntervalSince1970: timeStamp)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        let dateString = dateFormatter.string(from: date as Date)
+        return dateString
     }
 
 }
