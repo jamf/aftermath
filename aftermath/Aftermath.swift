@@ -39,4 +39,10 @@ class Aftermath {
         
         return plistDict
     }
+    
+    static func dateFromTimestamp(timeStamp : Double) -> String {
+        
+        return "hi"
+    }
+
 }
