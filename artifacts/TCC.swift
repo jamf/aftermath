@@ -82,6 +82,7 @@ class TCC {
     }
     
     func run() {
+        self.caseHandler.log("Collecting TCC information...")
         getTCC()
     }
     

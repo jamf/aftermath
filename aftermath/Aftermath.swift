@@ -52,5 +52,4 @@ class Aftermath {
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
     }
-
 }
