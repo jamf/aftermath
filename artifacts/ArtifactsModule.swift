@@ -31,6 +31,9 @@ class ArtifactsModule {
         self.caseHandler.log("Collecting TCC information...")
         let tcc = TCC(caseHandler: caseHandler, artifactsDir: self.artifactsDir, tccDir: self.tccDir)
         tcc.run()
+
+        let lsquarantine = LSQuarantine(caseHandler: caseHandler, artifactsDir: self.artifactsDir)
+        lsquarantine.run()
     }
     
 }

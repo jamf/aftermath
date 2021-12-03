@@ -15,7 +15,7 @@ class TCC {
     
     init(caseHandler: CaseHandler, artifactsDir: URL, tccDir: URL) {
         self.caseHandler = caseHandler
-        self.artifactsDir = caseHandler.createNewDir(dirName: "artifacts")
+        self.artifactsDir = artifactsDir
         self.tccDir = tccDir
     }
     

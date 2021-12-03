@@ -43,12 +43,7 @@ class SystemReconModule {
             return
         }
 
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "HostName: " + hostName)
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "UserName: " + userName)
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "FullName: " + fullName)
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "System Version: " + systemVersion)
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "XProtect Version: " + xprotectVersion)
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "MRT Version: " + mrtVersion)
+        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
     }
 
     func installedApps() {
@@ -100,15 +95,12 @@ class SystemReconModule {
     }
 
     func XProtect(key: String) -> String? {
-        let xprotectPath = "/Library/Apple/System/Library/CoreServices/XProtect.bundle/Contents/Resources/XProtect.meta.plist"
-
-        var xprotectDict: NSDictionary?
-
-        //Load content of XProtect.meta.plist into dictionary
-        xprotectDict = NSDictionary(contentsOfFile: xprotectPath)
-
-        if let xprotectDictContent = xprotectDict {
-            return "\(xprotectDictContent.object(forKey: key)!)"
+        let xprotectPath = URL(fileURLWithPath: "/Library/Apple/System/Library/CoreServices/XProtect.bundle/Contents/Resources/XProtect.meta.plist")
+        
+        let xprotectDict = Aftermath.getPlistAsDict(atUrl: xprotectPath)
+        
+        if let xprotectKeyValue = xprotectDict[key] {
+            return String(describing:xprotectKeyValue)
         } else {
             self.caseHandler.log("Error has occured reading xprotect plist")
             return nil
@@ -116,15 +108,12 @@ class SystemReconModule {
     }
 
     func MRT(key: String) -> String? {
-        let mrtPath = "/Library/Apple/System/Library/CoreServices/MRT.app/Contents/version.plist"
+        let mrtPath = URL(fileURLWithPath: "/Library/Apple/System/Library/CoreServices/MRT.app/Contents/version.plist")
 
-        var mrtDict: NSDictionary?
-
-        //Load content of version.plist into dictionary
-        mrtDict = NSDictionary(contentsOfFile: mrtPath)
-
-        if let mrtDictContent = mrtDict {
-            return "\(mrtDictContent.object(forKey: key)!)"
+        let mrtDict = Aftermath.getPlistAsDict(atUrl: mrtPath)
+        
+        if let mrtKeyValue = mrtDict[key] {
+            return String(describing:mrtKeyValue)
         } else {
             self.caseHandler.log("Error has occured reading mrt plist")
             return nil
