@@ -14,6 +14,7 @@
 		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
+		A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0879956275AD2DC00E885BC /* SystemConfig.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
 		A374535A275735B40074B65C /* LoginHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745359275735B40074B65C /* LoginHooks.swift */; };
 		A374535D2757C1300074B65C /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374535C2757C1300074B65C /* FileManager.swift */; };
@@ -42,6 +43,7 @@
 		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
+		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
 		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
 		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		A076742D2755797800ED7066 /* artifacts */ = {
 			isa = PBXGroup;
 			children = (
+				A0879956275AD2DC00E885BC /* SystemConfig.swift */,
 				A076742E2755798F00ED7066 /* ArtifactsModule.swift */,
 				A0759134275985170006766F /* TCC.swift */,
 				70A44404275A76990035F40E /* LSQuarantine.swift */,
@@ -208,6 +211,7 @@
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
+				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A0759135275985170006766F /* TCC.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,

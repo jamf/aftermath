@@ -67,6 +67,15 @@ class CaseHandler {
         }
     }
     
+    func addTextToFileFromUrl(fromFile: URL, toFile: URL) {
+        do {
+            let contents = try String(contentsOf: fromFile, encoding: .utf8)
+            self.addTextToFile(atUrl: toFile, text: "\(fromFile):\n\n\(contents)\n----------\n")
+        } catch {
+            self.log("\(Date().ISO8601Format())-  Unable to writing contents of \(fromFile) to \(toFile) due to error:\n\(error) ")
+        }
+    }
+    
     func copyFileToCase(fileToCopy: URL, toLocation: URL?) {
         var to = self.caseDir
         if let toLocation = toLocation { to = toLocation }
