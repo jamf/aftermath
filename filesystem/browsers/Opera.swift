@@ -58,7 +58,6 @@ class Opera {
                     }
                     
                     self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nContent: \(currentPath)\n")
-                    print(url)
                 }
             }
         }
