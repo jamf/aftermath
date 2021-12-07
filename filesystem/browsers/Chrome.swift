@@ -111,22 +111,21 @@ class Chrome {
         self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downlaods -----\n")
     }
     
+    // TODO - this needs to be tuned more
     func captureExtensions() {
         let username = NSUserName()
         let exdir = "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Extensions"
-        let files = fm.filesInDirRecursive(path: exdir)
-        
-        for file in files {
-            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
-        }
+        __ = fm.filesInDirRecursive(path: exdir)
+//
+//        for file in files {
+//            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
+//        }
     }
     
     func dumpPreferences() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Preferences")
-        
-//        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
-        
+                
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
