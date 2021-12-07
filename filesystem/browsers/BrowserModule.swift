@@ -32,20 +32,45 @@ class BrowserModule {
     func start() {
         self.caseHandler.log("Collecting browser information...")
         
-        let firefox = Firefox(caseHandler: caseHandler, browserDir: self.browserDir, firefoxDir: self.firefox, writeFile: self.writeFile, appPath: Browsers.firefox.rawValue)
-        firefox.run()
+        // Check if Firefox is installed
+        if aftermath.systemReconModule.installAppsArray.contains(Browsers.firefox.rawValue) {
+            let firefox = Firefox(caseHandler: caseHandler, browserDir: self.browserDir, firefoxDir: self.firefox, writeFile: self.writeFile, appPath: Browsers.firefox.rawValue)
+            firefox.run()
+        } else {
+            self.caseHandler.log("Firefox not installed. Continuing browser recon...")
+        }
         
-        let chrome = Chrome(caseHandler: caseHandler, browserDir: self.browserDir, chromeDir: self.chrome, writeFile: self.writeFile, appPath: Browsers.chrome.rawValue)
-        chrome.run()
+        // Check if Chrome is installed
+        if aftermath.systemReconModule.installAppsArray.contains(Browsers.chrome.rawValue) {
+            let chrome = Chrome(caseHandler: caseHandler, browserDir: self.browserDir, chromeDir: self.chrome, writeFile: self.writeFile, appPath: Browsers.chrome.rawValue)
+            chrome.run()
+        } else {
+            self.caseHandler.log("Chrome not installed. Continuing browser recon...")
+        }
         
-        let safari = Safari(caseHandler: caseHandler, browserDir: self.browserDir, safariDir: self.safari, writeFile: self.writeFile, appPath: Browsers.safari.rawValue)
-        safari.run()
+        // Check if Safari is installed
+        if aftermath.systemReconModule.installAppsArray.contains(Browsers.safari.rawValue) {
+            let safari = Safari(caseHandler: caseHandler, browserDir: self.browserDir, safariDir: self.safari, writeFile: self.writeFile, appPath: Browsers.safari.rawValue)
+            safari.run()
+        } else {
+            self.caseHandler.log("Safari not installed. Continuing browser recon...")
+        }
         
-        let opera = Opera(caseHandler: caseHandler, browserDir: self.browserDir, operaDir: self.opera, writeFile: self.writeFile, appPath: Browsers.opera.rawValue)
-        opera.run()
+        // Check if Opera is installed
+        if aftermath.systemReconModule.installAppsArray.contains(Browsers.opera.rawValue) {
+            let opera = Opera(caseHandler: caseHandler, browserDir: self.browserDir, operaDir: self.opera, writeFile: self.writeFile, appPath: Browsers.opera.rawValue)
+            opera.run()
+        } else {
+            self.caseHandler.log("Opera not installed. Continuing browser recon...")
+        }
         
-        let brave = Brave(caseHandler: caseHandler, browserDir: self.browserDir, braveDir: self.brave, writeFile: self.writeFile, appPath: Browsers.brave.rawValue)
-        brave.run()
+        // Check if Brave is installed
+        if aftermath.systemReconModule.installAppsArray.contains(Browsers.brave.rawValue) {
+            let brave = Brave(caseHandler: caseHandler, browserDir: self.browserDir, braveDir: self.brave, writeFile: self.writeFile, appPath: Browsers.brave.rawValue)
+            brave.run()
+        } else {
+            self.caseHandler.log("Brave Browser not installed. Continuing browser recon...")
+        }
     }
     
     enum Browsers: String, CaseIterable {

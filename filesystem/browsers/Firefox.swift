@@ -46,7 +46,7 @@ class Firefox {
     }
     
     func dumpHistory(file: URL) {
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Firefox History: -----\n")
+        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- Firefox History: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -111,9 +111,56 @@ class Firefox {
         self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox Downloads -----")
     }
     
-    // TODO - need to figure out what columns store cookies
     func dumpCookies(file: URL) {
-        return
+        let username = NSUserName()
+        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
+        
+        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
+        
+        var db: OpaquePointer?
+        if sqlite3_open(file.path, &db) == SQLITE_OK {
+            var queryStatement: OpaquePointer? = nil
+            let queryString = "select datetime(creation_utc/1000000-11644473600, 'unixepoch'), name,  host_key, path, datetime(expires_utc/1000000-11644473600, 'unixepoch') from cookies;"
+        
+            if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                var dateTime: String = ""
+                var name: String = ""
+                var hostKey: String = ""
+                var path: String = ""
+                var expireTime: String = ""
+                
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    let col1  = sqlite3_column_text(queryStatement, 0)
+                    if col1 != nil {
+                        dateTime = String(cString: col1!)
+                    }
+                    
+                    let col2 = sqlite3_column_text(queryStatement, 1)
+                    if col2 != nil {
+                        name = String(cString: col2!)
+                    }
+                    
+                    let col3 = sqlite3_column_text(queryStatement, 2)
+                    if col3 != nil {
+                        hostKey = String(cString: col1!)
+                    }
+                    
+                    let col4 = sqlite3_column_text(queryStatement, 3)
+                    if col4 != nil {
+                        path = String(cString: col2!)
+                    }
+                    
+                    let col5 = sqlite3_column_text(queryStatement, 4)
+                    if col5 != nil {
+                        expireTime = String(cString: col1!)
+                    }
+                    
+                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
+                }
+            }
+        }
+        
+        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
     }
     
     func dumpExtensions(file: URL) {
@@ -129,12 +176,6 @@ class Firefox {
     }
     
     func run() {
-        // Check if Firefox is installed
-        if !aftermath.systemReconModule.installAppsArray.contains(appPath) {
-            self.caseHandler.log("Firefox not installed. Continuing browser recon...")
-            return
-        }
-        
         self.caseHandler.log("Collecting firefox browser information...")
         getContent()
     }

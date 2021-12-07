@@ -66,12 +66,6 @@ class Opera {
     }
     
     func run() {
-        // Check if Opera is installed
-        if !aftermath.systemReconModule.installAppsArray.contains(appPath) {
-            self.caseHandler.log("Opera not installed. Continuing browser recon...")
-            return
-        }
-        
         self.caseHandler.log("Collecting opera browser information...")
         gatherHistory()
     }

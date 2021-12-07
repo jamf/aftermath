@@ -25,11 +25,7 @@ class Safari {
     }
     
     func run() {
-        // Check if Safari is installed
-        if !aftermath.systemReconModule.installAppsArray.contains(appPath) {
-            self.caseHandler.log("Safari not installed. Continuing browser recon...")
-            return
-        }
+        
         
         self.caseHandler.log("Collecting safari browser information...")
     }

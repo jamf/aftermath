@@ -125,7 +125,7 @@ class Chrome {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Preferences")
         
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
+//        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
         
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
@@ -189,12 +189,6 @@ class Chrome {
     }
     
     func run() {
-        // Check if Chrome is installed
-        if !aftermath.systemReconModule.installAppsArray.contains(appPath) {
-            self.caseHandler.log("Chrome not installed. Continuing browser recon...")
-            return
-        }
-        
         self.caseHandler.log("Collecting chrome browser information...")
         gatherHistory()
         dumpDownloads()
