@@ -31,7 +31,6 @@ class Firefox {
         let profiles = "/Users/\(username)/Library/Application Support/Firefox/Profiles"
         let files = fm.filesInDirRecursive(path: profiles)
     
-        
         for file in files {
             if file.lastPathComponent == "places.sqlite" {
                 dumpHistory(file: file)
@@ -47,11 +46,9 @@ class Firefox {
     }
     
     func dumpHistory(file: URL) {
-        
         self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Firefox History: -----\n")
+        
         var db: OpaquePointer?
-        
-        
         if sqlite3_open(file.path, &db) == SQLITE_OK {
             var queryStatement: OpaquePointer? = nil
             let queryString = "SELECT datetime(hv.visit_date/1000000, 'unixepoch') as dt, p.url FROM moz_historyvisits hv INNER JOIN moz_places p ON hv.place_id = p.id ORDER by dt ASC;"
@@ -80,9 +77,8 @@ class Firefox {
     
     func dumpDownloads(file: URL) {
         self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Downloads: -----\n")
+        
         var db: OpaquePointer?
-        
-        
         if sqlite3_open(file.path, &db) == SQLITE_OK {
             var queryStatement: OpaquePointer? = nil
             let queryString = "SELECT moz_annos.dateAdded, moz_annos.content, moz_places.url FROM moz_annos, moz_places WHERE moz_places.id = moz_annos.place_id AND anno_attribute_id=1;"
@@ -121,17 +117,15 @@ class Firefox {
     }
     
     func dumpExtensions(file: URL) {
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: browserDir)
+        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir)
         
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                print(json)
-                self.caseHandler.addTextToFile(atUrl: writeFile, text: "\nFirefox Extensions -----\n\(String(describing: json))\n ----- End of Firefox Extensions -----")
+                self.caseHandler.addTextToFile(atUrl: writeFile, text: "\nFirefox Extensions -----\n\(String(describing: json))\n ----- End of Firefox Extensions -----\n")
             }
             
         } catch { self.caseHandler.log("Unable to capture Firefox extensions") }
-        
     }
     
     func run() {
