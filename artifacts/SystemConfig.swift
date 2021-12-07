@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import AppKit
 
 class SystemConfig {
     
@@ -13,6 +14,7 @@ class SystemConfig {
     let sysConfigDir: URL
     let fm: FileManager
     let writeFile: URL
+    let user = NSUserName()
     
     init(caseHandler: CaseHandler, artifactsDir: URL, sysConfigDir: URL) {
         self.caseHandler = caseHandler
@@ -23,59 +25,33 @@ class SystemConfig {
     }
     
     func copyHostsFile() {
-        let file = URL(fileURLWithPath: "/etc/hosts")
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-        self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+        let _ = copySingleArtifact(path: "etc/hosts", isDir: false)
     }
     
     func copySSHContents() {
-        let dir = "/etc/ssh/"
-        let files = fm.filesInDirRecursive(path: dir)
-        
-        for file in files {
-            if file.lastPathComponent == "moduli" { continue } // used by sshd, unnecessary for us
-            let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
-        }
+        let _ = copySingleArtifact(path: "etc/ssh/", isDir: true)
     }
     
     func copySudoers() {
-        let file = URL(fileURLWithPath: "/etc/sudoers")
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-        self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+        let _ = copySingleArtifact(path: "/etc/sudoers", isDir: false)
     }
     
     func copyEtcProfile() {
-        let file = URL(fileURLWithPath: "/etc/profile")
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-        self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+        let _ = copySingleArtifact(path: "/etc/profile", isDir: false)
     }
     
     func copyResolvDNS() {
-        let file = URL(fileURLWithPath: "/private/var/run/resolv.conf")
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-        self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+        let _ = copySingleArtifact(path: "/private/var/run/resolv.conf", isDir: false)
+    }
+    
+    func copyUserSSH() {
+        let _ = copySingleArtifact(path: "Users/\(user)/.ssh/", isDir: true)
     }
     
     func copyKcPassword() {
         let fileString = "/etc/kcpassword"
         if fm.fileExists(atPath: fileString) {
-            let file = URL(fileURLWithPath: fileString)
-            let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
-        } else {
-            self.caseHandler.log("AutoLogin is not enabled - kcpassword file does not exist")
-        }
-    }
-    
-    func copyUserSSH() {
-        let user = NSUserName()
-        let dir = "/Users/\(user)/.ssh/"
-        let files = fm.filesInDirRecursive(path: dir)
-        
-        for file in files {
-            let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+            let _ = copySingleArtifact(path: fileString, isDir: false)
         }
     }
     
@@ -85,6 +61,25 @@ class SystemConfig {
         
         self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.sysConfigDir)
         self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- \(url) -----\n\(plistDict)\n")
+    }
+    
+    func copySingleArtifact(path: String, isDir: Bool) {
+        if !isDir {
+            let file = URL(fileURLWithPath: path)
+            
+            let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
+            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+        }
+        if isDir {
+            let files = fm.filesInDirRecursive(path: path)
+            
+            for file in files {
+                if file.lastPathComponent == "moduli" { continue } // used by sshd, unnecessary for us
+
+                let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
+                self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+            }
+        }
     }
     
     func run() {

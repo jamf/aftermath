@@ -25,8 +25,8 @@ class ArtifactsModule {
     init(caseHandler: CaseHandler) {
         self.caseHandler = caseHandler
         self.artifactsDir = caseHandler.createNewDir(dirName: "artifacts")
-        self.tccDir = caseHandler.createNewDir(dirName: "artifacts/tcc_raw")
-        self.sysConfigDir = caseHandler.createNewDir(dirName: "artifacts/sysConfig_raw")
+        self.tccDir = caseHandler.createNewDir(dirName: "artifacts/raw/tcc")
+        self.sysConfigDir = caseHandler.createNewDir(dirName: "artifacts/raw/ssh")
     }
     
     func start() {
