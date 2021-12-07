@@ -32,19 +32,27 @@ class BrowserModule {
     func start() {
         self.caseHandler.log("Collecting browser information...")
         
-        let firefox = Firefox(caseHandler: caseHandler, browserDir: self.browserDir, firefoxDir: self.firefox, writeFile: self.writeFile)
+        let firefox = Firefox(caseHandler: caseHandler, browserDir: self.browserDir, firefoxDir: self.firefox, writeFile: self.writeFile, appPath: Browsers.firefox.rawValue)
         firefox.run()
         
-        let chrome = Chrome(caseHandler: caseHandler, browserDir: self.browserDir, chromeDir: self.chrome, writeFile: self.writeFile)
+        let chrome = Chrome(caseHandler: caseHandler, browserDir: self.browserDir, chromeDir: self.chrome, writeFile: self.writeFile, appPath: Browsers.chrome.rawValue)
         chrome.run()
         
-        let safari = Safari(caseHandler: caseHandler, browserDir: self.browserDir, safariDir: self.safari, writeFile: self.writeFile)
+        let safari = Safari(caseHandler: caseHandler, browserDir: self.browserDir, safariDir: self.safari, writeFile: self.writeFile, appPath: Browsers.safari.rawValue)
         safari.run()
         
-        let opera = Opera(caseHandler: caseHandler, browserDir: self.browserDir, operaDir: self.opera, writeFile: self.writeFile)
+        let opera = Opera(caseHandler: caseHandler, browserDir: self.browserDir, operaDir: self.opera, writeFile: self.writeFile, appPath: Browsers.opera.rawValue)
         opera.run()
         
-        let brave = Brave(caseHandler: caseHandler, browserDir: self.browserDir, braveDir: self.brave, writeFile: self.writeFile)
+        let brave = Brave(caseHandler: caseHandler, browserDir: self.browserDir, braveDir: self.brave, writeFile: self.writeFile, appPath: Browsers.brave.rawValue)
         brave.run()
+    }
+    
+    enum Browsers: String, CaseIterable {
+        case firefox = "/Applications/Firefox.app"
+        case chrome = "/Applications/Google Chrome.app"
+        case safari = "/Applications/Safari.app"
+        case opera = "/Applications/Opera.app"
+        case brave = "/Applications/Brave Browser.app"
     }
 }
