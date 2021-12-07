@@ -115,7 +115,7 @@ class Chrome {
     func captureExtensions() {
         let username = NSUserName()
         let exdir = "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Extensions"
-        __ = fm.filesInDirRecursive(path: exdir)
+        let _ = fm.filesInDirRecursive(path: exdir)
 //
 //        for file in files {
 //            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
