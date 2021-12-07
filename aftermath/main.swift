@@ -56,7 +56,10 @@ caseHandler.log("Finished system recon")
 
 
 // Network
-
+caseHandler.log("Started gathering network information...")
+let networkModule = NetworkModule(caseHandler: caseHandler)
+networkModule.start()
+caseHandler.log("Finished gathering network information")
 
 // Processes
 
@@ -69,6 +72,10 @@ caseHandler.log("Finished logging persistence items")
 
 
 // FileSystem
+caseHandler.log("Started gathering file system information...")
+let browserModule = BrowserModule(caseHandler: caseHandler)
+browserModule.start()
+caseHandler.log("Finished gathering file system information")
 
 
 // Artifacts
@@ -83,6 +90,12 @@ caseHandler.log("Started logging unified logs")
 let unifiedLogModule = UnifiedLogModule(caseHandler: caseHandler)
 unifiedLogModule.start()
 caseHandler.log("Finished logging unified logs")
+
+// Memory
+caseHandler.log("Started memory dump...")
+let memoryModule = MemoryModule(caseHandler: caseHandler)
+memoryModule.start()
+caseHandler.log("Finishing memory dump")
 
 
 // End Aftermath

@@ -16,6 +16,7 @@ class SystemReconModule {
     let runningAppsFile: URL
     let interfacesFile: URL
     let environmentVariablesFile: URL
+    var installAppsArray = [String]()
 
     init(caseHandler: CaseHandler) {
         self.caseHandler = caseHandler
@@ -47,7 +48,6 @@ class SystemReconModule {
     }
 
     func installedApps() {
-        var installAppsArray = [String]()
         let appPath = "/Applications/"
         let fileManager = FileManager.default
         do {
