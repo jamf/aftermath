@@ -20,13 +20,13 @@ class ArtifactsModule {
     let caseHandler: CaseHandler
     let artifactsDir: URL
     let tccDir: URL
-    let etcDir: URL
+    let sysConfigDir: URL
     
     init(caseHandler: CaseHandler) {
         self.caseHandler = caseHandler
         self.artifactsDir = caseHandler.createNewDir(dirName: "artifacts")
         self.tccDir = caseHandler.createNewDir(dirName: "artifacts/tcc_raw")
-        self.etcDir = caseHandler.createNewDir(dirName: "artifacts/etc_raw")
+        self.sysConfigDir = caseHandler.createNewDir(dirName: "artifacts/sysConfig_raw")
     }
     
     func start() {
@@ -36,8 +36,7 @@ class ArtifactsModule {
         let lsquarantine = LSQuarantine(caseHandler: caseHandler, artifactsDir: self.artifactsDir)
         lsquarantine.run()
         
-        let systemConfig = SystemConfig(caseHandler: caseHandler, artifactsDir: self.artifactsDir, etcDir: self.etcDir)
+        let systemConfig = SystemConfig(caseHandler: caseHandler, artifactsDir: self.artifactsDir, sysConfigDir: self.sysConfigDir)
         systemConfig.run()
     }
-    
 }
