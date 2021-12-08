@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
+		70CF9E3A27611C6100FD884B /* BashProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* BashProfiles.swift */; };
 		8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */; };
 		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
+		70CF9E3927611C6100FD884B /* BashProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BashProfiles.swift; sourceTree = "<group>"; };
 		8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedLogModule.swift; sourceTree = "<group>"; };
 		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
 		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				A076742E2755798F00ED7066 /* ArtifactsModule.swift */,
 				A0759134275985170006766F /* TCC.swift */,
 				70A44404275A76990035F40E /* LSQuarantine.swift */,
+				70CF9E3927611C6100FD884B /* BashProfiles.swift */,
 			);
 			path = artifacts;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
 				A374535A275735B40074B65C /* LoginHooks.swift in Sources */,
+				70CF9E3A27611C6100FD884B /* BashProfiles.swift in Sources */,
 				A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */,
 				8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */,
 				A0E1E3F8275ED35D008D0DC6 /* Airport.swift in Sources */,

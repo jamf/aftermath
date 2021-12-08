@@ -25,11 +25,11 @@ class SystemConfig {
     }
     
     func copyHostsFile() {
-        let _ = copySingleArtifact(path: "etc/hosts", isDir: false)
+        let _ = copySingleArtifact(path: "/etc/hosts", isDir: false)
     }
     
     func copySSHContents() {
-        let _ = copySingleArtifact(path: "etc/ssh/", isDir: true)
+        let _ = copySingleArtifact(path: "/etc/ssh/", isDir: true)
     }
     
     func copySudoers() {
@@ -45,7 +45,7 @@ class SystemConfig {
     }
     
     func copyUserSSH() {
-        let _ = copySingleArtifact(path: "Users/\(user)/.ssh/", isDir: true)
+        let _ = copySingleArtifact(path: "/Users/\(user)/.ssh/", isDir: true)
     }
     
     func copyKcPassword() {

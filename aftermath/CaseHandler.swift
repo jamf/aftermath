@@ -56,6 +56,12 @@ class CaseHandler {
     }
     
     func addTextToFile(atUrl: URL, text: String) {
+        if (!FileManager.default.fileExists(atPath: atUrl.relativePath)) {
+            self.log("\(Date().ISO8601Format())-  Unable to add text to \(atUrl.relativePath) as the file does not exist")
+            self.log("\(Date().ISO8601Format())-  Creating file at path \(atUrl.relativePath)")
+            let _ = self.createNewCaseFile(dirUrl: atUrl.deletingLastPathComponent(), filename: atUrl.lastPathComponent)
+        }
+        
         let textWithNewLine = "\(text)\n"
         do {
             let fileHandle = try FileHandle(forWritingTo: atUrl)
@@ -68,8 +74,17 @@ class CaseHandler {
     }
     
     func addTextToFileFromUrl(fromFile: URL, toFile: URL) {
+        if (!FileManager.default.fileExists(atPath: fromFile.relativePath)) {
+            self.log("\(Date().ISO8601Format())-  Unable to copy text from file \(fromFile.relativePath) as the file does not exist")
+            return
+        } else if (!FileManager.default.fileExists(atPath: toFile.relativePath)) {
+            self.log("\(Date().ISO8601Format())-  Unable to copy text to file \(toFile.relativePath) as the file does not exist")
+            self.log("\(Date().ISO8601Format())-  Creating file at path \(toFile.relativePath)")
+            let _ = self.createNewCaseFile(dirUrl: toFile.deletingLastPathComponent(), filename: toFile.lastPathComponent)
+        }
+        
         do {
-            let contents = try String(contentsOf: fromFile, encoding: .utf8)
+            let contents = try String(contentsOf: fromFile, encoding: .ascii)
             self.addTextToFile(atUrl: toFile, text: "\(fromFile):\n\n\(contents)\n----------\n")
         } catch {
             self.log("\(Date().ISO8601Format())-  Unable to writing contents of \(fromFile) to \(toFile) due to error:\n\(error) ")
@@ -77,6 +92,11 @@ class CaseHandler {
     }
     
     func copyFileToCase(fileToCopy: URL, toLocation: URL?) {
+        if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
+            self.log("\(Date().ISO8601Format())-  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
+            return
+        }
+        
         var to = self.caseDir
         if let toLocation = toLocation { to = toLocation }
         
@@ -85,7 +105,6 @@ class CaseHandler {
         
         do {
             try FileManager.default.copyItem(at:fileToCopy, to:dest)
-
         } catch {
             print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to case directory")
         }
