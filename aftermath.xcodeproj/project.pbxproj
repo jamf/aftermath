@@ -8,10 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
+		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
+		70CF9E3A27611C6100FD884B /* BashProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* BashProfiles.swift */; };
 		8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */; };
 		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
+		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
+		A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0879956275AD2DC00E885BC /* SystemConfig.swift */; };
+		A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */; };
+		A0E1E3E6275EC433008D0DC6 /* MemoryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */; };
+		A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */; };
+		A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EA275EC800008D0DC6 /* Firefox.swift */; };
+		A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EC275EC809008D0DC6 /* Chrome.swift */; };
+		A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EE275EC810008D0DC6 /* Safari.swift */; };
+		A0E1E3F1275EC818008D0DC6 /* Opera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F0275EC818008D0DC6 /* Opera.swift */; };
+		A0E1E3F3275EC81F008D0DC6 /* Brave.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F2275EC81F008D0DC6 /* Brave.swift */; };
+		A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */; };
+		A0E1E3F8275ED35D008D0DC6 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F7275ED35D008D0DC6 /* Airport.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
 		A374535A275735B40074B65C /* LoginHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745359275735B40074B65C /* LoginHooks.swift */; };
 		A374535D2757C1300074B65C /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374535C2757C1300074B65C /* FileManager.swift */; };
@@ -34,10 +48,24 @@
 
 /* Begin PBXFileReference section */
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
+		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
+		70CF9E3927611C6100FD884B /* BashProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BashProfiles.swift; sourceTree = "<group>"; };
 		8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedLogModule.swift; sourceTree = "<group>"; };
 		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
+		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
+		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
+		A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
+		A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryModule.swift; sourceTree = "<group>"; };
+		A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModule.swift; sourceTree = "<group>"; };
+		A0E1E3EA275EC800008D0DC6 /* Firefox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firefox.swift; sourceTree = "<group>"; };
+		A0E1E3EC275EC809008D0DC6 /* Chrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chrome.swift; sourceTree = "<group>"; };
+		A0E1E3EE275EC810008D0DC6 /* Safari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
+		A0E1E3F0275EC818008D0DC6 /* Opera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opera.swift; sourceTree = "<group>"; };
+		A0E1E3F2275EC81F008D0DC6 /* Brave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brave.swift; sourceTree = "<group>"; };
+		A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
+		A0E1E3F7275ED35D008D0DC6 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
 		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
 		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -78,7 +106,11 @@
 		A076742D2755797800ED7066 /* artifacts */ = {
 			isa = PBXGroup;
 			children = (
+				A0879956275AD2DC00E885BC /* SystemConfig.swift */,
 				A076742E2755798F00ED7066 /* ArtifactsModule.swift */,
+				A0759134275985170006766F /* TCC.swift */,
+				70A44404275A76990035F40E /* LSQuarantine.swift */,
+				70CF9E3927611C6100FD884B /* BashProfiles.swift */,
 			);
 			path = artifacts;
 			sourceTree = "<group>";
@@ -93,6 +125,45 @@
 			path = persistence;
 			sourceTree = "<group>";
 		};
+		A0E1E3E2275EBBED008D0DC6 /* memoryDump */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */,
+				A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */,
+			);
+			path = memoryDump;
+			sourceTree = "<group>";
+		};
+		A0E1E3E7275EC720008D0DC6 /* browsers */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */,
+				A0E1E3EA275EC800008D0DC6 /* Firefox.swift */,
+				A0E1E3EC275EC809008D0DC6 /* Chrome.swift */,
+				A0E1E3EE275EC810008D0DC6 /* Safari.swift */,
+				A0E1E3F0275EC818008D0DC6 /* Opera.swift */,
+				A0E1E3F2275EC81F008D0DC6 /* Brave.swift */,
+			);
+			path = browsers;
+			sourceTree = "<group>";
+		};
+		A0E1E3F4275ED2D6008D0DC6 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */,
+				A0E1E3F7275ED35D008D0DC6 /* Airport.swift */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		A0E1E3F9275ED4B7008D0DC6 /* filesystem */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1E3E7275EC720008D0DC6 /* browsers */,
+			);
+			path = filesystem;
+			sourceTree = "<group>";
+		};
 		A374535B2757C1110074B65C /* extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +175,9 @@
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
+				A0E1E3F4275ED2D6008D0DC6 /* network */,
+				A0E1E3E2275EBBED008D0DC6 /* memoryDump */,
 				A374535B2757C1110074B65C /* extensions */,
 				70A44401275707800035F40E /* systemRecon */,
 				8ABB9E2927568E9000C0ADD7 /* unifiedlogs */,
@@ -192,17 +266,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E1E3F1275EC818008D0DC6 /* Opera.swift in Sources */,
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
+				A0E1E3F3275EC81F008D0DC6 /* Brave.swift in Sources */,
 				A3CD4E5D2744368B00869ECB /* CaseHandler.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
 				A374535A275735B40074B65C /* LoginHooks.swift in Sources */,
+				70CF9E3A27611C6100FD884B /* BashProfiles.swift in Sources */,
+				A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */,
 				8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */,
+				A0E1E3F8275ED35D008D0DC6 /* Airport.swift in Sources */,
+				A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */,
 				70A44403275707A90035F40E /* SystemReconModule.swift in Sources */,
+				A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */,
+				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
+				A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
+				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
+				A0E1E3E6275EC433008D0DC6 /* MemoryModule.swift in Sources */,
+				A0759135275985170006766F /* TCC.swift in Sources */,
+				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
+				A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
