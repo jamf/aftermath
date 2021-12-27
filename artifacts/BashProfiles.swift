@@ -6,26 +6,25 @@
 
 import Foundation
 
-class BashProfiles {
-    
-    let caseHandler: CaseHandler
-    let artifactsDir: URL
+
+class BashProfiles: ArtifactsModule {
+    /// Needs to be modified so that profiles aren't hidden in the directory they're copied to
+    /// Needs to be modified so that profiles for all users are collected and not just for the one who ran the script
+
     let profilesDir: URL
-    let writeFile: URL
     let user: String
+    lazy var writeFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "bashProfiles.txt")
     
-    init(caseHandler: CaseHandler, artifactsDir: URL, profilesDir: URL) {
+    init(profilesDir: URL) {
         self.user = NSUserName()
-        self.caseHandler = caseHandler
-        self.artifactsDir = artifactsDir
         self.profilesDir = profilesDir
-        self.writeFile = self.caseHandler.createNewCaseFile(dirUrl: self.artifactsDir, filename: "bashProfiles.txt")
     }
     
     func copyArtifact(file: URL) {
         if (FileManager.default.fileExists(atPath: file.relativePath)) {
-            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.profilesDir)
-            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+            self.copyFileToCase(fileToCopy: file, toLocation: self.profilesDir)
+            print("copying \(file) to \(self.profilesDir)")
+            self.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
         }
     }
     
@@ -74,8 +73,8 @@ class BashProfiles {
         copyArtifact(file: path)
     }
     
-    func run() {
-        self.caseHandler.log("Collecting bash history and profile information...")
+    override func run() {
+        self.log("Collecting bash history and profile information...")
         copyBashHistory()
         copyZshHistory()
         copyShHistory()
@@ -85,6 +84,6 @@ class BashProfiles {
         copyZshRC()
         copyZLogin()
         copyZLogout()
-        self.caseHandler.log("Finished collecting bash history and profile information...")
+        self.log("Finished collecting bash history and profile information...")
     }
 }

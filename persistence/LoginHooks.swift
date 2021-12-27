@@ -6,17 +6,13 @@
 
 import Foundation
 
-class LoginHooks {
+class LoginHooks: PersistenceModule {
     
-    let caseHandler: CaseHandler
     let hooks: String
-    let saveToDir: URL
     let saveToRawDir: URL
     
-    init(caseHandler: CaseHandler, saveToDir: URL, saveToRawDir: URL) {
-        self.caseHandler = caseHandler
+    init(saveToRawDir: URL) {
         self.hooks = "/Library/Preferences/com.apple.loginwindow.plist"
-        self.saveToDir = saveToDir
         self.saveToRawDir = saveToRawDir
     }
     
@@ -37,17 +33,17 @@ class LoginHooks {
         return parsedHooks
     }
     
-    func run() {
+    override func run() {
         let userFm = FileManager.default.homeDirectoryForCurrentUser.path
         let path = "\(userFm)\(self.hooks)"
         let url = URL(fileURLWithPath: path)
         let hooksParsed = parseHooks(hooksFile: url)
         if let hooksParsed = hooksParsed {
-            let hooksSaveFile = caseHandler.createNewCaseFile(dirUrl: saveToDir, filename: "hooks.txt")
-            caseHandler.addTextToFile(atUrl: hooksSaveFile, text: hooksParsed)
+            let hooksSaveFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "hooks.txt")
+            self.addTextToFile(atUrl: hooksSaveFile, text: hooksParsed)
         }
         
         
-        self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
+        self.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
     }
 }

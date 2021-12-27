@@ -7,29 +7,23 @@
 import Foundation
 import SQLite3
 
-class Opera {
+class Opera: BrowserModule {
         
-    let caseHandler: CaseHandler
-    let browserDir: URL
     let operaDir: URL
     let fm: FileManager
     let writeFile: URL
-    let appPath: String
     
-    init(caseHandler: CaseHandler, browserDir: URL, operaDir: URL, writeFile: URL, appPath: String) {
-        self.caseHandler = caseHandler
-        self.browserDir = browserDir
+    init(operaDir: URL, writeFile: URL) {
         self.operaDir = operaDir
         self.fm = FileManager.default
         self.writeFile = writeFile
-        self.appPath = appPath
     }
     
     func gatherHistory() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Opera/com.operasoftware.Opera/History")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Opera History: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Opera History: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -57,16 +51,17 @@ class Opera {
                         url = String(cString: col3!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nContent: \(currentPath)\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nContent: \(currentPath)\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Opera Downloads -----")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Opera Downloads -----")
     }
     
-    func run() {
-        self.caseHandler.log("Collecting opera browser information...")
+    override func run() {
+        self.log("Collecting opera browser information...")
         gatherHistory()
     }
 }
+

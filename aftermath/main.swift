@@ -42,61 +42,63 @@ if (NSUserName() != "root") {
 
 // Case management creation
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
-let caseHandler = CaseHandler()
 
 // Start Aftermath
-caseHandler.log("Aftermath Started")
+CaseFiles.CreateCaseDir()
+let mainModule = AftermathModule()
+mainModule.log("Aftermath Started")
 
 
 // System Recon
-caseHandler.log("Started system recon")
-let systemReconModule = SystemReconModule(caseHandler: caseHandler)
-systemReconModule.start()
-caseHandler.log("Finished system recon")
+mainModule.log("Started system recon")
+let systemReconModule = SystemReconModule()
+systemReconModule.run()
+mainModule.log("Finished system recon")
 
 
 // Network
-caseHandler.log("Started gathering network information...")
-let networkModule = NetworkModule(caseHandler: caseHandler)
-networkModule.start()
-caseHandler.log("Finished gathering network information")
+mainModule.log("Started gathering network information...")
+let networkModule = NetworkModule()
+networkModule.run()
+mainModule.log("Finished gathering network information")
 
 // Processes
 
 
 // Persistence
-caseHandler.log("Started logging persistence items")
-let persistenceModule = PersistenceModule(caseHandler: caseHandler)
-persistenceModule.start()
-caseHandler.log("Finished logging persistence items")
+mainModule.log("Starting Persistence Module")
+let persistenceModule = PersistenceModule()
+persistenceModule.run()
+mainModule.log("Finished logging persistence items")
 
 
 // FileSystem
-caseHandler.log("Started gathering file system information...")
-let browserModule = BrowserModule(caseHandler: caseHandler)
-browserModule.start()
-caseHandler.log("Finished gathering file system information")
+mainModule.log("Started gathering file system information...")
+let browserModule = BrowserModule()
+browserModule.run()
+mainModule.log("Finished gathering file system information")
 
 
 // Artifacts
-caseHandler.log("Started gathering artifacts...")
-let artifactModule = ArtifactsModule(caseHandler: caseHandler)
-artifactModule.start()
-caseHandler.log("Finished gathering artifacts")
+mainModule.log("Started gathering artifacts...")
+let artifactModule = ArtifactsModule()
+artifactModule.run()
+mainModule.log("Finished gathering artifacts")
 
 
 // Logs
-caseHandler.log("Started logging unified logs")
-let unifiedLogModule = UnifiedLogModule(caseHandler: caseHandler)
-unifiedLogModule.start()
-caseHandler.log("Finished logging unified logs")
+mainModule.log("Started logging unified logs")
+let unifiedLogModule = UnifiedLogModule()
+unifiedLogModule.run()
+mainModule.log("Finished logging unified logs")
+
 
 // Memory
-caseHandler.log("Started memory dump...")
-let memoryModule = MemoryModule(caseHandler: caseHandler)
-memoryModule.start()
-caseHandler.log("Finishing memory dump")
+mainModule.log("Started memory dump...")
+let memoryModule = MemoryModule()
+memoryModule.run()
+mainModule.log("Finishing memory dump")
 
 
 // End Aftermath
-caseHandler.log("Aftermath Finished")
+mainModule.log("Aftermath Finished")

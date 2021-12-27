@@ -6,20 +6,16 @@
 
 import Foundation
 
-class NetworkModule {
+class NetworkModule: AftermathModule, AMProto {
+    let name = "Network Module"
+    var dirName = "Network"
+    var description = "A module that provides information about active network data on the system"
+    lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-    let caseHandler: CaseHandler
-    let networkDir: URL
-    let writeFile: URL
-    
-    init(caseHandler: CaseHandler) {
-        self.caseHandler = caseHandler
-        self.networkDir = caseHandler.createNewDir(dirName: "network")
-        self.writeFile = caseHandler.createNewCaseFile(dirUrl: self.networkDir, filename: "network.txt")
-    }
-    
-    func start() {
-        let airport = Airport(caseHandler: caseHandler, networkDir: self.networkDir, writeFile: self.writeFile)
+    func run() {
+        let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "network.txt")
+        let airport = Airport(writeFile: writeFile)
         airport.run()
     }
 }
+

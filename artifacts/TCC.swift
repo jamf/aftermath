@@ -7,23 +7,19 @@
 import Foundation
 import SQLite3
 
-class TCC {
+class TCC: ArtifactsModule {
     
-    let caseHandler: CaseHandler
-    let artifactsDir: URL
     let tccDir: URL
     
-    init(caseHandler: CaseHandler, artifactsDir: URL, tccDir: URL) {
-        self.caseHandler = caseHandler
-        self.artifactsDir = artifactsDir
+    init(tccDir: URL) {
         self.tccDir = tccDir
     }
     
     func getTCC() {
         let fileURL = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("com.apple.TCC/TCC.db")
-        self.caseHandler.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir)
+        self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir)
         
-        let capturedTCC = self.caseHandler.createNewCaseFile(dirUrl: self.artifactsDir, filename: "tccItems.txt")
+        let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
         var db : OpaquePointer?
         
         if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
@@ -72,17 +68,17 @@ class TCC {
                         }
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
+                    self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
                 }
             }
-            self.caseHandler.log("Finished capturing TCC data")
+            self.log("Finished capturing TCC data")
         } else {
-            self.caseHandler.log("An error occurred when attempting to query the TCC database...")
+            self.log("An error occurred when attempting to query the TCC database...")
         }
     }
     
-    func run() {
-        self.caseHandler.log("Collecting TCC information...")
+    override func run() {
+        self.log("Collecting TCC information...")
         getTCC()
     }
     
@@ -160,3 +156,4 @@ class TCC {
         case speechRecognition = "kTCCServiceSpeechRecognition"
     }
 }
+

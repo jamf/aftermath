@@ -6,20 +6,19 @@
 
 import Foundation
 
-class MemoryModule {
+
+class MemoryModule: AftermathModule, AMProto {
+    // All data this module collects so far is encrypted.
+    // We either have to research if there is anything to be done or remove it
+    let name = "Memory Module"
+    let dirName = "Memory"
+    var description = "A module that collects artifacts tied to system memory"
+    lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-    let caseHandler: CaseHandler
-    let memoryDir: URL
-    let swapDir: URL
     
-    init(caseHandler: CaseHandler) {
-        self.caseHandler = caseHandler
-        self.memoryDir = caseHandler.createNewDir(dirName: "memory")
-        self.swapDir = caseHandler.createNewDir(dirName: "memory/swap_raw")
-    }
-    
-    func start() {
-        let swap = Swap(caseHandler: caseHandler, memoryDir: self.memoryDir, swapDir: self.swapDir)
+    func run() {
+        let swapDir = self.createNewDirInRoot(dirName: "\(dirName)/raw")
+        let swap = Swap(swapDir: swapDir)
         swap.run()
     }
 }

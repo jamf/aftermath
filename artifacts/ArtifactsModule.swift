@@ -15,33 +15,30 @@ import Foundation
 // ~/.ssh
 
 
-class ArtifactsModule {
+class ArtifactsModule: AftermathModule, AMProto {
     
-    let caseHandler: CaseHandler
-    let artifactsDir: URL
-    let tccDir: URL
-    let sysConfigDir: URL
-    let profilesDir: URL
+    let name = "Artifacts Module"
+    var dirName = "Artifacts"
+    var description = "A module that collections various artifacts stored on disk"
+    lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-    init(caseHandler: CaseHandler) {
-        self.caseHandler = caseHandler
-        self.artifactsDir = caseHandler.createNewDir(dirName: "artifacts")
-        self.tccDir = caseHandler.createNewDir(dirName: "artifacts/raw/tcc")
-        self.sysConfigDir = caseHandler.createNewDir(dirName: "artifacts/raw/ssh")
-        self.profilesDir = caseHandler.createNewDir(dirName: "artifacts/raw/profiles")
-    }
-    
-    func start() {
-        let tcc = TCC(caseHandler: caseHandler, artifactsDir: self.artifactsDir, tccDir: self.tccDir)
+    func run() {
+        let rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
+        let systemConfigDir = self.createNewDir(dir: rawDir, dirname: "ssh")
+        let profilesDir = self.createNewDir(dir: rawDir, dirname: "profiles")
+        
+        let tcc = TCC(tccDir: rawDir)
         tcc.run()
 
-        let lsquarantine = LSQuarantine(caseHandler: caseHandler, artifactsDir: self.artifactsDir)
+        let lsquarantine = LSQuarantine()
         lsquarantine.run()
         
-        let systemConfig = SystemConfig(caseHandler: caseHandler, artifactsDir: self.artifactsDir, sysConfigDir: self.sysConfigDir)
-        systemConfig.run()
         
-        let bashProfiles = BashProfiles(caseHandler: caseHandler, artifactsDir: self.artifactsDir, profilesDir: self.profilesDir)
+        let systemConf = SystemConfig(systemConfigDir: systemConfigDir)
+        systemConf.run()
+        
+        let bashProfiles = BashProfiles(profilesDir: profilesDir)
         bashProfiles.run()
     }
 }
+

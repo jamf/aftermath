@@ -6,15 +6,11 @@
 
 import Foundation
 
-class Airport {
-    
-    let caseHandler: CaseHandler
-    let networkDir: URL
+
+class Airport: NetworkModule {
     let writeFile: URL
     
-    init(caseHandler: CaseHandler, networkDir: URL, writeFile: URL) {
-        self.caseHandler = caseHandler
-        self.networkDir = networkDir
+    init(writeFile: URL) {
         self.writeFile = writeFile
     }
     
@@ -22,12 +18,13 @@ class Airport {
         let url = URL(fileURLWithPath: "/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist")
         let plistDict = Aftermath.getPlistAsDict(atUrl: url)
         
-        self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.networkDir)
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- \(url) -----\n\(plistDict)\n")
+        self.copyFileToCase(fileToCopy: url, toLocation: moduleDirRoot)
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- \(url) -----\n\(plistDict)\n")
     }
     
-    func run() {
-        self.caseHandler.log("Collecting airport information...")
+    override func run() {
+        self.log("Collecting airport information...")
         captureAirportPrefs()
     }
 }
+
