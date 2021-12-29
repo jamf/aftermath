@@ -8,22 +8,16 @@ import Foundation
 import SQLite3
 import AppKit
 
-class Firefox {
+class Firefox: BrowserModule {
         
-    let caseHandler: CaseHandler
-    let browserDir: URL
+    let writeFile: URL
     let firefoxDir: URL
     let fm: FileManager
-    let writeFile: URL
-    let appPath: String
     
-    init(caseHandler: CaseHandler, browserDir: URL, firefoxDir: URL, writeFile: URL, appPath: String) {
-        self.caseHandler = caseHandler
-        self.browserDir = browserDir
+    init(firefoxDir: URL, writeFile: URL) {
         self.firefoxDir = firefoxDir
-        self.fm = FileManager.default
         self.writeFile = writeFile
-        self.appPath = appPath
+        self.fm = FileManager.default
     }
     
     func getContent() {
@@ -46,7 +40,7 @@ class Firefox {
     }
     
     func dumpHistory(file: URL) {
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- Firefox History: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Firefox History: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -68,15 +62,15 @@ class Firefox {
                         url = String(cString: col2!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
                 }
             }
         }
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox History -----")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox History -----")
     }
     
     func dumpDownloads(file: URL) {
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Downloads: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Downloads: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -104,18 +98,18 @@ class Firefox {
                         url = String(cString: col3!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateAdded: \(dateAdded)\nURL: \(url)\nContent: \(content)\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateAdded: \(dateAdded)\nURL: \(url)\nContent: \(content)\n")
                 }
             }
         }
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox Downloads -----")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox Downloads -----")
     }
     
     func dumpCookies(file: URL) {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -155,28 +149,29 @@ class Firefox {
                         expireTime = String(cString: col1!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
     }
     
     func dumpExtensions(file: URL) {
-        let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir)
+        let _ = self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir)
         
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                self.caseHandler.addTextToFile(atUrl: writeFile, text: "\nFirefox Extensions -----\n\(String(describing: json))\n ----- End of Firefox Extensions -----\n")
+                self.addTextToFile(atUrl: writeFile, text: "\nFirefox Extensions -----\n\(String(describing: json))\n ----- End of Firefox Extensions -----\n")
             }
             
-        } catch { self.caseHandler.log("Unable to capture Firefox extensions") }
+        } catch { self.log("Unable to capture Firefox extensions") }
     }
     
-    func run() {
-        self.caseHandler.log("Collecting firefox browser information...")
+    override func run() {
+        self.log("Collecting firefox browser information...")
         getContent()
     }
 }
+

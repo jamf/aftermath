@@ -7,22 +7,16 @@
 import Foundation
 import SQLite3
 
-class Brave {
-        
-    let caseHandler: CaseHandler
-    let browserDir: URL
+class Brave: BrowserModule {
+
     let braveDir: URL
     let fm: FileManager
     let writeFile: URL
-    let appPath: String
     
-    init(caseHandler: CaseHandler, browserDir: URL, braveDir: URL, writeFile: URL, appPath: String) {
-        self.caseHandler = caseHandler
-        self.browserDir = browserDir
+    init(braveDir: URL, writeFile: URL) {
         self.braveDir = braveDir
         self.fm = FileManager.default
         self.writeFile = writeFile
-        self.appPath = appPath
     }
     
     func getContents() {
@@ -38,7 +32,7 @@ class Brave {
     }
     
     func dumpHistory(file: URL) {
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- Brave History -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Brave History -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -60,18 +54,18 @@ class Brave {
                         url = String(cString: col2!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
                 }
             }
         }
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Brave History -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Brave History -----\n")
     }
     
     func dumpCookies() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -111,16 +105,16 @@ class Brave {
                         expireTime = String(cString: col1!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
     }
     
-    func run() {
-        self.caseHandler.log("Collecting brave browser information...")
+    override func run() {
+        self.log("Collecting brave browser information...")
         getContents()
         dumpCookies()
     }

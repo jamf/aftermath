@@ -7,64 +7,50 @@
 import Foundation
 import AppKit
 
-class SystemReconModule {
 
-    let caseHandler: CaseHandler
-    let systemReconDir: URL
-    let systemInformationFile: URL
-    let installedAppsFile: URL
-    let runningAppsFile: URL
-    let interfacesFile: URL
-    let environmentVariablesFile: URL
-    var installAppsArray = [String]()
-    let installHistoryFile: URL
+class SystemReconModule: AftermathModule, AMProto {
+    let name = "System Recon"
+    var dirName = "Recon"
+    var description = "A module that performs scans of the system to gain helpful information about installed applications"
+    lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
 
-    init(caseHandler: CaseHandler) {
-        self.caseHandler = caseHandler
-        self.systemReconDir = caseHandler.createNewDir(dirName: "systemRecon")
-        self.systemInformationFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "system_information.txt")
-        self.installedAppsFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "installed_apps.txt")
-        self.runningAppsFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "running_apps.txt")
-        self.interfacesFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "interfaces.txt")
-        self.environmentVariablesFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "environment_variables.txt")
-        self.installHistoryFile = caseHandler.createNewCaseFile(dirUrl: self.systemReconDir, filename: "install_history.txt")
-    }
-
-    func systemInformation() {
+    func systemInformation(saveFile: URL) {
         let hostName = ProcessInfo.processInfo.hostName
         let userName = ProcessInfo.processInfo.userName
         let fullName = ProcessInfo.processInfo.fullUserName
         let systemVersion = ProcessInfo.processInfo.operatingSystemVersionString
 
         guard let xprotectVersion = XProtect(key: "Version") else {
-            self.caseHandler.log("Error has occured, XProtect returned nil")
+            self.log("Error has occured, XProtect returned nil")
             return
         }
 
         guard let mrtVersion = MRT(key: "CFBundleShortVersionString") else {
-            self.caseHandler.log("Error has occured, MRT returned nil")
+            self.log("Error has occured, MRT returned nil")
             return
         }
 
-        self.caseHandler.addTextToFile(atUrl: systemInformationFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
+        self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
     }
 
-    func installedApps() {
+    func installedApps(saveFile: URL) {
         let appPath = "/Applications/"
         let fileManager = FileManager.default
+        
+        var installAppsArray = [String]()
         do {
             let appList = try fileManager.contentsOfDirectory(atPath: appPath)
             for app in appList {
                 installAppsArray.append(appPath + app)
             }
-            self.caseHandler.addTextToFile(atUrl: installedAppsFile, text: installAppsArray.joined(separator: "\n"))
+            self.addTextToFile(atUrl: saveFile, text: installAppsArray.joined(separator: "\n"))
         }
         catch {
-            self.caseHandler.log("Error has occured reading directory \(appPath): \(error)")
+            self.log("Error has occured reading directory \(appPath): \(error)")
         }
     }
     
-    func installHistory() {
+    func installHistory(saveFile: URL) {
         let installPath = "/Library/Receipts/InstallHistory.plist"
         
         let data = FileManager.default.contents(atPath: installPath)
@@ -125,39 +111,39 @@ class SystemReconModule {
                 installHistoryArray.append("PackageIdentifiers: \n")
             }
         }
-        self.caseHandler.addTextToFile(atUrl: installHistoryFile, text: installHistoryArray.joined(separator: "\n"))
+        self.addTextToFile(atUrl: saveFile, text: installHistoryArray.joined(separator: "\n"))
     }
 
-    func runningApps() {
+    func runningApps(saveFile: URL) {
         var runAppsArray = [String]()
         let applications = NSWorkspace.shared.runningApplications
         for app in applications {
             guard let appUrl: URL = app.executableURL else {
-                self.caseHandler.log("Error has occured reading running apps")
+                self.log("Error has occured reading running apps")
                 return
             }
             let appString:String = String(describing: appUrl.path)
             runAppsArray.append(appString)
         }
-        self.caseHandler.addTextToFile(atUrl: runningAppsFile, text: runAppsArray.joined(separator: "\n"))
+        self.addTextToFile(atUrl: saveFile, text: runAppsArray.joined(separator: "\n"))
     }
 
-    func interfaces() {
+    func interfaces(saveFile: URL) {
         var interfacesArray = [String]()
         let interfacesDict = Host.current().addresses
         for address in interfacesDict {
             interfacesArray.append(address)
         }
-        self.caseHandler.addTextToFile(atUrl: interfacesFile, text: interfacesArray.joined(separator: "\n"))
+        self.addTextToFile(atUrl: saveFile, text: interfacesArray.joined(separator: "\n"))
     }
 
-    func environmentVariables() {
+    func environmentVariables(saveFile: URL) {
         var envArray = [String]()
         let envDict = ProcessInfo.processInfo.environment
         for variable in envDict {
             envArray.append(variable.value)
         }
-        self.caseHandler.addTextToFile(atUrl: environmentVariablesFile, text: envArray.joined(separator: "\n"))
+        self.addTextToFile(atUrl: saveFile, text: envArray.joined(separator: "\n"))
     }
 
     func XProtect(key: String) -> String? {
@@ -168,7 +154,7 @@ class SystemReconModule {
         if let xprotectKeyValue = xprotectDict[key] {
             return String(describing:xprotectKeyValue)
         } else {
-            self.caseHandler.log("Error has occured reading xprotect plist")
+            self.log("Error has occured reading xprotect plist")
             return nil
         }
     }
@@ -181,17 +167,25 @@ class SystemReconModule {
         if let mrtKeyValue = mrtDict[key] {
             return String(describing:mrtKeyValue)
         } else {
-            self.caseHandler.log("Error has occured reading mrt plist")
+            self.log("Error has occured reading mrt plist")
             return nil
         }
     }
 
-    func start() {
-        systemInformation()
-        installedApps()
-        installHistory()
-        runningApps()
-        interfaces()
-        environmentVariables()
+    func run() {
+        let systemInformationFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "system_information.txt")
+        let installedAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "installed_apps.txt")
+        let runningAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "running_apps.txt")
+        let interfacesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "interfaces.txt")
+        let environmentVariablesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "environment_variables.txt")
+        let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.txt")
+        
+        systemInformation(saveFile: systemInformationFile)
+        installedApps(saveFile: installedAppsFile)
+        runningApps(saveFile: runningAppsFile)
+        installHistory(saveFile: installHistoryFile)
+        interfaces(saveFile: interfacesFile)
+        environmentVariables(saveFile: environmentVariablesFile)
     }
 }
+

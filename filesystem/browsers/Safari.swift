@@ -7,29 +7,23 @@
 import Foundation
 import SQLite3
 
-class Safari {
+class Safari: BrowserModule {
         
-    let caseHandler: CaseHandler
-    let browserDir: URL
     let safariDir: URL
     let fm: FileManager
     let writeFile: URL
-    let appPath: String
     
-    init(caseHandler: CaseHandler, browserDir: URL, safariDir: URL, writeFile: URL, appPath: String) {
-        self.caseHandler = caseHandler
-        self.browserDir = browserDir
+    init(safariDir: URL, writeFile: URL) {
         self.safariDir = safariDir
         self.fm = FileManager.default
         self.writeFile = writeFile
-        self.appPath = appPath
     }
     
     func getHistory() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Safari/History")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- Safari History -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Safari History -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -51,12 +45,12 @@ class Safari {
                         url = String(cString: col2!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Safari History -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Safari History -----\n")
     }
     
     func dumpImportantPlists() {
@@ -65,15 +59,16 @@ class Safari {
         
         for file in files {
             let plistDict = Aftermath.getPlistAsDict(atUrl: file)
-            self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\nFile Name:\n----- \(file) -----\n\n\(plistDict.description)\n----- End of \(file) -----\n")
+            self.addTextToFile(atUrl: self.writeFile, text: "\nFile Name:\n----- \(file) -----\n\n\(plistDict.description)\n----- End of \(file) -----\n")
             
-            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.safariDir)
+            self.copyFileToCase(fileToCopy: file, toLocation: self.safariDir)
         }
     }
     
-    func run() {
-        self.caseHandler.log("Collecting safari browser information...")
+    override func run() {
+        self.log("Collecting safari browser information...")
         getHistory()
         dumpImportantPlists()
     }
 }
+

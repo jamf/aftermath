@@ -7,31 +7,24 @@
 import Foundation
 
 
-class PersistenceModule {
+class PersistenceModule: AftermathModule, AMProto {
+    let name = "Persistence Module"
+    let dirName = "Persistence"
+    let description = "A module for collecting Auto Start Execution Points"
+    lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-    let caseHandler: CaseHandler
-    let hooks: String
-    let persistenceDir: URL
-    let persistenceRawDir: URL
-    
-    init(caseHandler: CaseHandler) {
-        self.caseHandler = caseHandler
-        self.hooks = "/Library/Preferences/com.apple.loginwindow.plist"
-        self.persistenceDir = caseHandler.createNewDir(dirName: "persistence")
-        self.persistenceRawDir = caseHandler.createNewDir(dirName: "persistence/raw")
-    }
-    
-    
-    func start() {
+    func run() {
+        let persistenceRawDir = self.createNewDirInRoot(dirName: "\(dirName)/raw")
+        
         // capture the launch items
-        self.caseHandler.log("Collecting launchagents and launchdaemons...")
-        let launch = LaunchItems(caseHandler: caseHandler, saveToDir: self.persistenceDir, saveToRawDir: self.persistenceRawDir)
+        self.log("Collecting launchagents and launchdaemons...")
+        let launch = LaunchItems(saveToRawDir: persistenceRawDir)
         launch.run()
         
         
         // get the login and logout hooks
-        self.caseHandler.log("Collecting login hooks...")
-        let hooks = LoginHooks(caseHandler: caseHandler, saveToDir: self.persistenceDir, saveToRawDir: persistenceRawDir)
+        self.log("Collecting login hooks...")
+        let hooks = LoginHooks(saveToRawDir: persistenceRawDir)
         hooks.run()
     }
 }

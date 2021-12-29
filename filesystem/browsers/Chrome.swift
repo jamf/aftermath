@@ -7,29 +7,23 @@
 import Foundation
 import SQLite3
 
-class Chrome {
+class Chrome: BrowserModule {
         
-    let caseHandler: CaseHandler
-    let browserDir: URL
     let chromeDir: URL
     let fm: FileManager
     let writeFile: URL
-    let appPath: String
     
-    init(caseHandler: CaseHandler, browserDir: URL, chromeDir: URL, writeFile: URL, appPath: String) {
-        self.caseHandler = caseHandler
-        self.browserDir = browserDir
+    init(chromeDir: URL, writeFile: URL) {
         self.chromeDir = chromeDir
         self.fm = FileManager.default
         self.writeFile = writeFile
-        self.appPath = appPath
     }
     
     func gatherHistory() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/History")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -51,19 +45,19 @@ class Chrome {
                         url = String(cString: col2!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- End of Chrome History -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Chrome History -----\n")
     }
     
     func dumpDownloads() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/History")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -103,12 +97,12 @@ class Chrome {
                         opened = String(cString: col1!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nTargetPath: \(targetPath)\nDangerType:\(dangerType)\nOpened: \(opened)\n\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nTargetPath: \(targetPath)\nDangerType:\(dangerType)\nOpened: \(opened)\n\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downlaods -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downlaods -----\n")
     }
     
     // TODO - this needs to be tuned more
@@ -129,17 +123,17 @@ class Chrome {
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
             if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                self.caseHandler.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
+                self.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
             }
             
-        } catch { self.caseHandler.log("Unable to capture Chrome Preferenes") }
+        } catch { self.log("Unable to capture Chrome Preferenes") }
     }
     
     func dumpCookies() {
         let username = NSUserName()
         let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Cookies")
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -179,16 +173,16 @@ class Chrome {
                         expireTime = String(cString: col1!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
+                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                 }
             }
         }
         
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
     }
     
-    func run() {
-        self.caseHandler.log("Collecting chrome browser information...")
+    override func run() {
+        self.log("Collecting chrome browser information...")
         gatherHistory()
         dumpDownloads()
         captureExtensions()

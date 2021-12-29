@@ -7,22 +7,15 @@
 import Foundation
 import SQLite3
 
-class LSQuarantine {
-    
-    let caseHandler: CaseHandler
-    let artifactsDir: URL
-    
-    init(caseHandler: CaseHandler, artifactsDir: URL) {
-        self.caseHandler = caseHandler
-        self.artifactsDir = artifactsDir
-    }
+
+class LSQuarantine: ArtifactsModule {
 
     func getLSQuarantine() {
-        self.caseHandler.log("Capturing LSQuarantine data...")
+        self.log("Capturing LSQuarantine data...")
         
         let fileURL = try! FileManager.default.url(for: .allLibrariesDirectory, in: .allDomainsMask, appropriateFor: nil, create: false).appendingPathComponent("Preferences/com.apple.LaunchServices.QuarantineEventsV2")
         
-        let capturedLSQuarantine = self.caseHandler.createNewCaseFile(dirUrl: self.artifactsDir, filename: "lsQuarantine.txt")
+        let parsedLSQuarantine = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "lsQuarantine.txt")
         
         var db : OpaquePointer?
         
@@ -76,16 +69,17 @@ class LSQuarantine {
                         LSQuarantineSenderAddress = String(cString: col7!)
                     }
                     
-                    self.caseHandler.addTextToFile(atUrl: capturedLSQuarantine, text: "Timestamp: \(LSQuarantineTimeStamp)\nAgent Name: \(LSQuarantineAgentName)\nAgent Identifier: \(LSQuarantineAgentBundleIdentifier)\nDownload URL: \(LSQuarantineDataURLString)\nOrigin URL: \(LSQuarantineOriginURLString)\nSender Name: \(LSQuarantineSenderName)\nSender Address: \(LSQuarantineSenderAddress)\n")
+                    self.addTextToFile(atUrl: parsedLSQuarantine, text: "Timestamp: \(LSQuarantineTimeStamp)\nAgent Name: \(LSQuarantineAgentName)\nAgent Identifier: \(LSQuarantineAgentBundleIdentifier)\nDownload URL: \(LSQuarantineDataURLString)\nOrigin URL: \(LSQuarantineOriginURLString)\nSender Name: \(LSQuarantineSenderName)\nSender Address: \(LSQuarantineSenderAddress)\n")
                 }
             }
-        self.caseHandler.log("Finished capturing LSQuarantine data")
+        self.log("Finished capturing LSQuarantine data")
         } else {
-            self.caseHandler.log("An error occurred when attempting to query the LSQuarantine database...")
+            self.log("An error occurred when attempting to query the LSQuarantine database...")
         }
     }
     
-    func run() {
+    override func run() {
         getLSQuarantine()
     }
 }
+

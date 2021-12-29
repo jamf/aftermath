@@ -1,40 +1,36 @@
 //
-//  CaseHandler.swift
+//  Module.swift
 //  aftermath
 //
+//  Created by Jaron Bradley on 12/8/21.
 //
 
 import Foundation
 
-class CaseHandler {
-    let hostName = Host.current().localizedName ?? ""
-    let starttime = Date().ISO8601Format()
-    let caseDir: URL
-    let logFile: URL
+protocol AMProto {
+    var name: String { get }
+    var dirName: String { get }
+    var description: String { get }
+    var moduleDirRoot: URL { get }
+}
+
+
+class AftermathModule {
     
-    init() {
-        let caseName = "Aftermath_\(hostName)_\(starttime)"
-        self.caseDir = URL(fileURLWithPath: "/tmp/\(caseName)")
-        self.logFile = caseDir.appendingPathComponent("aftermath.log")
-        self.setup()
-    }
-    
-    private func setup() {
-        self.createCaseDir()
-        let _ = self.createNewCaseFile(dirUrl: self.caseDir, filename: "aftermath.log")
-    }
-    
-    private func createCaseDir() {
+    func createNewDirInRoot(dirName: String) -> URL {
+        let newUrl = CaseFiles.caseDir.appendingPathComponent(dirName)
+        
         do {
-            try FileManager.default.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
-            print("Response directory created at \(caseDir.relativePath)")
+            try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: true, attributes: nil)
         } catch {
             print(error)
         }
+        
+        return newUrl
     }
     
-    func createNewDir(dirName: String) -> URL {
-        let newUrl = self.caseDir.appendingPathComponent(dirName)
+    func createNewDir(dir: URL, dirname: String ) -> URL {
+        let newUrl = dir.appendingPathComponent(dirname)
         
         do {
             try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: true, attributes: nil)
@@ -49,7 +45,7 @@ class CaseHandler {
         let newFile = dirUrl.appendingPathComponent(filename)
         let path = newFile.relativePath
         if !(FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)) {
-            print("\(Date().ISO8601Format()) - Error creating \(self.logFile)")
+            print("\(Date().ISO8601Format()) - Error creating \(path)")
         }
         
         return newFile
@@ -57,8 +53,6 @@ class CaseHandler {
     
     func addTextToFile(atUrl: URL, text: String) {
         if (!FileManager.default.fileExists(atPath: atUrl.relativePath)) {
-            self.log("\(Date().ISO8601Format())-  Unable to add text to \(atUrl.relativePath) as the file does not exist")
-            self.log("\(Date().ISO8601Format())-  Creating file at path \(atUrl.relativePath)")
             let _ = self.createNewCaseFile(dirUrl: atUrl.deletingLastPathComponent(), filename: atUrl.lastPathComponent)
         }
         
@@ -76,11 +70,8 @@ class CaseHandler {
     func addTextToFileFromUrl(fromFile: URL, toFile: URL) {
         if (!FileManager.default.fileExists(atPath: fromFile.relativePath)) {
             self.log("\(Date().ISO8601Format())-  Unable to copy text from file \(fromFile.relativePath) as the file does not exist")
-            return
-        } else if (!FileManager.default.fileExists(atPath: toFile.relativePath)) {
-            self.log("\(Date().ISO8601Format())-  Unable to copy text to file \(toFile.relativePath) as the file does not exist")
-            self.log("\(Date().ISO8601Format())-  Creating file at path \(toFile.relativePath)")
             let _ = self.createNewCaseFile(dirUrl: toFile.deletingLastPathComponent(), filename: toFile.lastPathComponent)
+            return
         }
         
         do {
@@ -97,7 +88,7 @@ class CaseHandler {
             return
         }
         
-        var to = self.caseDir
+        var to = CaseFiles.caseDir
         if let toLocation = toLocation { to = toLocation }
         
         let filename = fileToCopy.lastPathComponent
@@ -116,7 +107,7 @@ class CaseHandler {
         let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
         print(entry)
         if displayOnly == false {
-            addTextToFile(atUrl: self.logFile, text: entry)
+            addTextToFile(atUrl: CaseFiles.logFile, text: entry)
         }
     }
 }

@@ -7,21 +7,17 @@
 import Foundation
 import AppKit
 
-class SystemConfig {
+
+class SystemConfig: ArtifactsModule {
     
-    let caseHandler: CaseHandler
-    let artifactsDir: URL
-    let sysConfigDir: URL
     let fm: FileManager
-    let writeFile: URL
+    let systemConfigDir: URL
     let user = NSUserName()
+    lazy var writeFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "systemConfig.txt")
     
-    init(caseHandler: CaseHandler, artifactsDir: URL, sysConfigDir: URL) {
-        self.caseHandler = caseHandler
-        self.artifactsDir = artifactsDir
-        self.sysConfigDir = sysConfigDir
+    init(systemConfigDir: URL) {
+        self.systemConfigDir = systemConfigDir
         self.fm = FileManager.default
-        self.writeFile = self.caseHandler.createNewCaseFile(dirUrl: self.artifactsDir, filename: "sysConfig.txt")
     }
     
     func copyHostsFile() {
@@ -59,16 +55,16 @@ class SystemConfig {
         let url = URL(fileURLWithPath: "/var/db/launchd.db/com.apple.launchd/overrides.plist")
         let plistDict = Aftermath.getPlistAsDict(atUrl: url)
         
-        self.caseHandler.copyFileToCase(fileToCopy: url, toLocation: self.sysConfigDir)
-        self.caseHandler.addTextToFile(atUrl: self.writeFile, text: "\n----- \(url) -----\n\(plistDict)\n")
+        self.copyFileToCase(fileToCopy: url, toLocation: self.systemConfigDir)
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- \(url) -----\n\(plistDict)\n")
     }
     
     func copySingleArtifact(path: String, isDir: Bool) {
         if !isDir {
             let file = URL(fileURLWithPath: path)
             
-            let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-            self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+            let _ = self.copyFileToCase(fileToCopy: file, toLocation: self.systemConfigDir)
+            self.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
         }
         if isDir {
             let files = fm.filesInDirRecursive(path: path)
@@ -76,14 +72,14 @@ class SystemConfig {
             for file in files {
                 if file.lastPathComponent == "moduli" { continue } // used by sshd, unnecessary for us
 
-                let _ = self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.sysConfigDir)
-                self.caseHandler.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
+                let _ = self.copyFileToCase(fileToCopy: file, toLocation: self.systemConfigDir)
+                self.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
             }
         }
     }
     
-    func run() {
-        self.caseHandler.log("Collecting etc information...")
+    override func run() {
+        self.log("Collecting etc information...")
         copyHostsFile()
         copySSHContents()
         copySudoers()
@@ -91,10 +87,11 @@ class SystemConfig {
         copyEtcProfile()
         copyKcPassword()
         
-        self.caseHandler.log("Collecting user ssh information...")
+        self.log("Collecting user ssh information...")
         copyUserSSH()
         
-        self.caseHandler.log("Collecting launch overrides...")
+        self.log("Collecting launch overrides...")
         captureOverrides()
     }
 }
+
