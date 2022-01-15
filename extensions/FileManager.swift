@@ -40,4 +40,17 @@ public extension FileManager {
         return files
     }
     
+    func filesInDir(path: String) -> [URL] {
+        let directoryURL: URL = URL(fileURLWithPath: path)
+        let contents =
+            try! FileManager.default.contentsOfDirectory(at: directoryURL,
+                                                        includingPropertiesForKeys: nil,
+                                                        options: [.skipsHiddenFiles])
+        
+        var urls = [URL]()
+        for file in contents { urls.append(file) }
+        
+        return urls
+    }
+    
 }

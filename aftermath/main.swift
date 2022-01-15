@@ -35,11 +35,6 @@ print(#"""
 """#
 )
 
-// Check Permissions
-if (NSUserName() != "root") {
-    print("This tool must be run as root in order to collect all artifacts")
-}
-
 // Case management creation
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 
@@ -102,3 +97,4 @@ mainModule.log("Finishing memory dump")
 
 // End Aftermath
 mainModule.log("Aftermath Finished")
+

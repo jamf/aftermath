@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct User {
+    let username: String
+    let homedir: String
+}
+
 protocol AMProto {
     var name: String { get }
     var dirName: String { get }
@@ -14,8 +19,41 @@ protocol AMProto {
     var moduleDirRoot: URL { get }
 }
 
-
 class AftermathModule {
+    var users: [User]?
+    
+    init() {
+        users = getUsersOnSystem()
+    }
+    
+    func getUsersOnSystem() -> [User] {
+        var users = [User]()
+        
+        // Check Permissions
+        let activeUser = NSUserName()
+        if (activeUser != "root") {
+            self.log("Aftermath being run in non-root mode...")
+            if let homedir = NSHomeDirectoryForUser(activeUser) {
+                let user = User(username:activeUser, homedir: homedir)
+                users.append(user)
+            }
+        } else {
+            let filemanager = FileManager.default
+            let userPlists = filemanager.filesInDir(path: "/var/db/dslocal/nodes/Default/users/")
+            for file in userPlists {
+                let filename = file.lastPathComponent
+                if !filename.hasPrefix("_") {
+                    let username = file.deletingPathExtension().lastPathComponent
+                    if let homedir = NSHomeDirectoryForUser(username) {
+                        let user = User(username:username, homedir: homedir)
+                        users.append(user)
+                    }
+                }
+            }
+        }
+        
+        return users
+    }
     
     func createNewDirInRoot(dirName: String) -> URL {
         let newUrl = CaseFiles.caseDir.appendingPathComponent(dirName)
