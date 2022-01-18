@@ -21,6 +21,7 @@ protocol AMProto {
 
 class AftermathModule {
     var users: [User]?
+    var activeUser = NSUserName()
     
     init() {
         users = getUsersOnSystem()
@@ -30,7 +31,6 @@ class AftermathModule {
         var users = [User]()
         
         // Check Permissions
-        let activeUser = NSUserName()
         if (activeUser != "root") {
             self.log("Aftermath being run in non-root mode...")
             if let homedir = NSHomeDirectoryForUser(activeUser) {
@@ -120,7 +120,7 @@ class AftermathModule {
         }
     }
     
-    func copyFileToCase(fileToCopy: URL, toLocation: URL?) {
+    func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil) {
         if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
             self.log("\(Date().ISO8601Format())-  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
             return
@@ -129,13 +129,18 @@ class AftermathModule {
         var to = CaseFiles.caseDir
         if let toLocation = toLocation { to = toLocation }
         
-        let filename = fileToCopy.lastPathComponent
+        var filename = fileToCopy.lastPathComponent
+        if let newFileName = newFileName {
+            filename = newFileName
+        }
+        
         let dest = to.appendingPathComponent(filename)
+        
         
         do {
             try FileManager.default.copyItem(at:fileToCopy, to:dest)
         } catch {
-            print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to case directory")
+            print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
         }
         
     }
