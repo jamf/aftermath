@@ -35,11 +35,6 @@ print(#"""
 """#
 )
 
-// Check Permissions
-if (NSUserName() != "root") {
-    print("This tool must be run as root in order to collect all artifacts")
-}
-
 // Case management creation
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 
@@ -61,6 +56,7 @@ mainModule.log("Started gathering network information...")
 let networkModule = NetworkModule()
 networkModule.run()
 mainModule.log("Finished gathering network information")
+
 
 // Processes
 
@@ -102,3 +98,4 @@ mainModule.log("Finishing memory dump")
 
 // End Aftermath
 mainModule.log("Aftermath Finished")
+
