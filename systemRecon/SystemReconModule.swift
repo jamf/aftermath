@@ -35,11 +35,10 @@ class SystemReconModule: AftermathModule, AMProto {
 
     func installedApps(saveFile: URL) {
         let appPath = "/Applications/"
-        let fileManager = FileManager.default
         
         var installAppsArray = [String]()
         do {
-            let appList = try fileManager.contentsOfDirectory(atPath: appPath)
+            let appList = try filemanager.contentsOfDirectory(atPath: appPath)
             for app in appList {
                 installAppsArray.append(appPath + app)
             }
@@ -53,7 +52,7 @@ class SystemReconModule: AftermathModule, AMProto {
     func installHistory(saveFile: URL) {
         let installPath = "/Library/Receipts/InstallHistory.plist"
         
-        let data = FileManager.default.contents(atPath: installPath)
+        let data = filemanager.contents(atPath: installPath)
         let installDict = try! PropertyListSerialization.propertyList(from: data!, options: [], format: nil) as! Array<[String: Any]>
 
         var installHistoryArray = [String]()

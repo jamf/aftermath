@@ -10,19 +10,17 @@ import SQLite3
 class Brave: BrowserModule {
 
     let braveDir: URL
-    let fm: FileManager
     let writeFile: URL
     
     init(braveDir: URL, writeFile: URL) {
         self.braveDir = braveDir
-        self.fm = FileManager.default
         self.writeFile = writeFile
     }
     
     func getContents() {
         let username = NSUserName()
         let path = "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default"
-        let files = fm.filesInDirRecursive(path: path)
+        let files = filemanager.filesInDirRecursive(path: path)
         
         for file in files {
             if file.lastPathComponent == "" {

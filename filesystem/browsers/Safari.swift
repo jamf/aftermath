@@ -10,12 +10,10 @@ import SQLite3
 class Safari: BrowserModule {
         
     let safariDir: URL
-    let fm: FileManager
     let writeFile: URL
     
     init(safariDir: URL, writeFile: URL) {
         self.safariDir = safariDir
-        self.fm = FileManager.default
         self.writeFile = writeFile
     }
     

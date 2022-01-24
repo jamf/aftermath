@@ -12,18 +12,16 @@ class Firefox: BrowserModule {
         
     let writeFile: URL
     let firefoxDir: URL
-    let fm: FileManager
     
     init(firefoxDir: URL, writeFile: URL) {
         self.firefoxDir = firefoxDir
         self.writeFile = writeFile
-        self.fm = FileManager.default
     }
     
     func getContent() {
         let username = NSUserName()
         let profiles = "/Users/\(username)/Library/Application Support/Firefox/Profiles"
-        let files = fm.filesInDirRecursive(path: profiles)
+        let files = filemanager.filesInDirRecursive(path: profiles)
     
         for file in files {
             if file.lastPathComponent == "places.sqlite" {

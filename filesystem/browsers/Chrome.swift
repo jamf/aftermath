@@ -10,12 +10,10 @@ import SQLite3
 class Chrome: BrowserModule {
         
     let chromeDir: URL
-    let fm: FileManager
     let writeFile: URL
     
     init(chromeDir: URL, writeFile: URL) {
         self.chromeDir = chromeDir
-        self.fm = FileManager.default
         self.writeFile = writeFile
     }
     
@@ -109,7 +107,7 @@ class Chrome: BrowserModule {
     func captureExtensions() {
         let username = NSUserName()
         let exdir = "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Extensions"
-        let _ = fm.filesInDirRecursive(path: exdir)
+        let _ = filemanager.filesInDirRecursive(path: exdir)
 //
 //        for file in files {
 //            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)

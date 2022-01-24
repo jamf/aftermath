@@ -22,6 +22,7 @@ protocol AMProto {
 class AftermathModule {
     var users: [User]?
     var activeUser = NSUserName()
+    let filemanager = FileManager.default
     
     init() {
         users = getUsersOnSystem()
@@ -38,7 +39,6 @@ class AftermathModule {
                 users.append(user)
             }
         } else {
-            let filemanager = FileManager.default
             let userPlists = filemanager.filesInDir(path: "/var/db/dslocal/nodes/Default/users/")
             for file in userPlists {
                 let filename = file.lastPathComponent

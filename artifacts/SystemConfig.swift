@@ -10,14 +10,12 @@ import AppKit
 
 class SystemConfig: ArtifactsModule {
     
-    let fm: FileManager
     let systemConfigDir: URL
     let user = NSUserName()
     lazy var writeFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "systemConfig.txt")
     
     init(systemConfigDir: URL) {
         self.systemConfigDir = systemConfigDir
-        self.fm = FileManager.default
     }
     
     func copyHostsFile() {
@@ -46,7 +44,7 @@ class SystemConfig: ArtifactsModule {
     
     func copyKcPassword() {
         let fileString = "/etc/kcpassword"
-        if fm.fileExists(atPath: fileString) {
+        if filemanager.fileExists(atPath: fileString) {
             let _ = copySingleArtifact(path: fileString, isDir: false)
         }
     }
@@ -67,7 +65,7 @@ class SystemConfig: ArtifactsModule {
             self.addTextToFileFromUrl(fromFile: file, toFile: self.writeFile)
         }
         if isDir {
-            let files = fm.filesInDirRecursive(path: path)
+            let files = filemanager.filesInDirRecursive(path: path)
             
             for file in files {
                 if file.lastPathComponent == "moduli" { continue } // used by sshd, unnecessary for us

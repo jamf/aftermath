@@ -13,7 +13,7 @@ class LSQuarantine: ArtifactsModule {
     func getLSQuarantine() {
         self.log("Capturing LSQuarantine data...")
         
-        let fileURL = try! FileManager.default.url(for: .allLibrariesDirectory, in: .allDomainsMask, appropriateFor: nil, create: false).appendingPathComponent("Preferences/com.apple.LaunchServices.QuarantineEventsV2")
+        let fileURL = try! filemanager.url(for: .allLibrariesDirectory, in: .allDomainsMask, appropriateFor: nil, create: false).appendingPathComponent("Preferences/com.apple.LaunchServices.QuarantineEventsV2")
         
         let parsedLSQuarantine = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "lsQuarantine.txt")
         
