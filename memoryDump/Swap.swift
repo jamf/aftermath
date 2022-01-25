@@ -15,9 +15,8 @@ class Swap: MemoryModule {
     }
     
     func captureSwapFile() {
-        let fm = FileManager.default
         let dir = "/private/var/vm/"
-        let files = fm.filesInDirRecursive(path: dir)
+        let files = filemanager.filesInDirRecursive(path: dir)
         
         for file in files {
             self.copyFileToCase(fileToCopy: file, toLocation: self.swapDir)

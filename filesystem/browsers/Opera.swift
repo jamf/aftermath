@@ -10,12 +10,10 @@ import SQLite3
 class Opera: BrowserModule {
         
     let operaDir: URL
-    let fm: FileManager
     let writeFile: URL
     
     init(operaDir: URL, writeFile: URL) {
         self.operaDir = operaDir
-        self.fm = FileManager.default
         self.writeFile = writeFile
     }
     

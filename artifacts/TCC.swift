@@ -16,7 +16,7 @@ class TCC: ArtifactsModule {
     }
     
     func getTCC() {
-        let fileURL = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("com.apple.TCC/TCC.db")
+        let fileURL = try! filemanager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("com.apple.TCC/TCC.db")
         self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir)
         
         let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")

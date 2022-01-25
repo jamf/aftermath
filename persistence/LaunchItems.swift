@@ -31,8 +31,8 @@ class LaunchItems: PersistenceModule {
         let launchDaemonsPath = "/Library/LaunchDaemons/"
         let launchAgentsPath = "/Library/LaunchAgents/"
         let capturedLaunchFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "launchItems.txt")
-        let launchDaemons = FileManager.default.filesInDirRecursive(path: launchDaemonsPath)
-        let launchAgents = FileManager.default.filesInDirRecursive(path: launchAgentsPath)
+        let launchDaemons = filemanager.filesInDirRecursive(path: launchDaemonsPath)
+        let launchAgents = filemanager.filesInDirRecursive(path: launchAgentsPath)
         
         captureLaunchData(urlLocations: launchDaemons, capturedLaunchFile: capturedLaunchFile)
         captureLaunchData(urlLocations: launchAgents, capturedLaunchFile: capturedLaunchFile)
