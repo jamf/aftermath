@@ -20,7 +20,6 @@ class TCC: ArtifactsModule {
         let local_name = username[0].username
         
         let fileURL = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/com.apple.TCC/TCC.db")
-//        let fileURL = try! filemanager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("com.apple.TCC/TCC.db")
         
         self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir)
         
