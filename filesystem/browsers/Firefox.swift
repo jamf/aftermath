@@ -19,8 +19,10 @@ class Firefox: BrowserModule {
     }
     
     func getContent() {
-        let username = NSUserName()
-        let profiles = "/Users/\(username)/Library/Application Support/Firefox/Profiles"
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let profiles = "/Users/\(local_name)/Library/Application Support/Firefox/Profiles"
         let files = filemanager.filesInDirRecursive(path: profiles)
     
         for file in files {
@@ -104,8 +106,10 @@ class Firefox: BrowserModule {
     }
     
     func dumpCookies(file: URL) {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
         
         self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
         

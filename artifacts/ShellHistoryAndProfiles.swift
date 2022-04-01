@@ -26,23 +26,29 @@ class BashProfiles: ArtifactsModule {
         let globalFiles = ["/etc/profile", "/etc/zshenv", "/etc/zprofile", "/etc/zshrc", "/etc/zlogin", "/etc/zlogout"]
         
         // for each user, copy the shell historys and profiles
-        if let users = self.users {
-            for user in users {
-                for filename in userFiles {
-                    let path = URL(fileURLWithPath: "\(user.homedir)/\(filename)")
+        let users = getUsersOnSystem()
+        for user in users {
+            for filename in userFiles {
+                let path = URL(fileURLWithPath: "\(user.homedir)/\(filename)")
+                if (filemanager.fileExists(atPath: path.path)) {
                     let newFileName = "\(user.username)_\(filename)"
                     self.copyFileToCase(fileToCopy: path, toLocation: self.profilesDir, newFileName: newFileName)
-                }
+                } else { continue }
+               
             }
         }
+
         
         // Copy all the global files
         for file in globalFiles {
             let fileUrl = URL(fileURLWithPath: file)
-            let filename = fileUrl.lastPathComponent
-            let newFileName = "etc_\(filename)"
-            self.copyFileToCase(fileToCopy: fileUrl, toLocation: self.profilesDir, newFileName: newFileName)
+            if (filemanager.fileExists(atPath: fileUrl.path)) {
+                let filename = fileUrl.lastPathComponent
+                let newFileName = "etc_\(filename)"
+                self.copyFileToCase(fileToCopy: fileUrl, toLocation: self.profilesDir, newFileName: newFileName)
+            } else { continue }
         }
+        
         
         self.log("Finished collecting shell history and profile information...")
     }

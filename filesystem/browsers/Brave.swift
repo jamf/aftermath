@@ -18,8 +18,10 @@ class Brave: BrowserModule {
     }
     
     func getContents() {
-        let username = NSUserName()
-        let path = "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default"
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let path = "/Users/\(local_name)/Library/Application Support/BraveSoftware/Brave-Browser/Default"
         let files = filemanager.filesInDirRecursive(path: path)
         
         for file in files {
@@ -60,8 +62,10 @@ class Brave: BrowserModule {
     }
     
     func dumpCookies() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
         
         self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
         

@@ -18,8 +18,10 @@ class Safari: BrowserModule {
     }
     
     func getHistory() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Safari/History")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Safari/History")
         
         self.addTextToFile(atUrl: self.writeFile, text: "\n----- Safari History -----\n")
         
@@ -52,8 +54,10 @@ class Safari: BrowserModule {
     }
     
     func dumpImportantPlists() {
-        let username = NSUserName()
-        let files: [URL] = [URL(fileURLWithPath: "/Users/\(username)/Library/Safari/Bookmarks.plist"), URL(fileURLWithPath: "/Users/\(username)/Library/Safari/Downloads.plist"), URL(fileURLWithPath: "/Users/\(username)/Library/Safari/UserNotificationPermissions.plist"), URL(fileURLWithPath: "/Users/\(username)/Library/Safari/LastSession.plist")]
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+
+        let files: [URL] = [URL(fileURLWithPath: "/Users/\(local_name)/Library/Safari/Bookmarks.plist"), URL(fileURLWithPath: "/Users/\(local_name)/Library/Safari/Downloads.plist"), URL(fileURLWithPath: "/Users/\(local_name)/Library/Safari/UserNotificationPermissions.plist"), URL(fileURLWithPath: "/Users/\(local_name)/Library/Safari/LastSession.plist")]
         
         for file in files {
             let plistDict = Aftermath.getPlistAsDict(atUrl: file)

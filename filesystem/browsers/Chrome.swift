@@ -18,8 +18,10 @@ class Chrome: BrowserModule {
     }
     
     func gatherHistory() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/History")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/Google/Chrome/Default/History")
         
         self.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
         
@@ -52,8 +54,10 @@ class Chrome: BrowserModule {
     }
     
     func dumpDownloads() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/History")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/Google/Chrome/Default/History")
         
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
         
@@ -105,8 +109,10 @@ class Chrome: BrowserModule {
     
     // TODO - this needs to be tuned more
     func captureExtensions() {
-        let username = NSUserName()
-        let exdir = "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Extensions"
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let exdir = "/Users/\(local_name)/Library/Application Support/Google/Chrome/Default/Extensions"
         let _ = filemanager.filesInDirRecursive(path: exdir)
 //
 //        for file in files {
@@ -115,8 +121,10 @@ class Chrome: BrowserModule {
     }
     
     func dumpPreferences() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Preferences")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/Google/Chrome/Default/Preferences")
                 
         do {
             let data = try Data(contentsOf: file, options: .mappedIfSafe)
@@ -128,8 +136,10 @@ class Chrome: BrowserModule {
     }
     
     func dumpCookies() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Google/Chrome/Default/Cookies")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/Google/Chrome/Default/Cookies")
         
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
         

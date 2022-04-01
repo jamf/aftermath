@@ -18,8 +18,10 @@ class Opera: BrowserModule {
     }
     
     func gatherHistory() {
-        let username = NSUserName()
-        let file = URL(fileURLWithPath: "/Users/\(username)/Library/Application Support/Opera/com.operasoftware.Opera/History")
+        let username = getUsersOnSystem()
+        let local_name = username[0].username
+        
+        let file = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/Opera/com.operasoftware.Opera/History")
         
         self.addTextToFile(atUrl: self.writeFile, text: "----- Opera History: -----\n")
         
