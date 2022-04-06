@@ -26,5 +26,9 @@ class PersistenceModule: AftermathModule, AMProto {
         self.log("Collecting login hooks...")
         let hooks = LoginHooks(saveToRawDir: persistenceRawDir)
         hooks.run()
+        
+        self.log("Collecting cron jobs...")
+        let cron = Cron(saveToRawDir: persistenceRawDir)
+        cron.run()
     }
 }
