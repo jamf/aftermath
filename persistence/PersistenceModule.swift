@@ -30,5 +30,9 @@ class PersistenceModule: AftermathModule, AMProto {
         self.log("Collecting cron jobs...")
         let cron = Cron(saveToRawDir: persistenceRawDir)
         cron.run()
+        
+        self.log("Collecting overrides...")
+        let overrides = Overrides(saveToRawDir: persistenceRawDir)
+        overrides.run()
     }
 }
