@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct User {
     let username: String
@@ -45,13 +46,39 @@ class AftermathModule {
                 if !filename.hasPrefix("_") {
                     let username = file.deletingPathExtension().lastPathComponent
                     if let homedir = NSHomeDirectoryForUser(username) {
-                        let user = User(username:username, homedir: homedir)
-                        users.append(user)
+                            let user = User(username:username, homedir: homedir)
+                            users.append(user)
+                        }
                     }
                 }
             }
-        }
+        return users
+    }
+    
+    func getBasicUsersOnSystem() -> [User] {
+        var users = [User]()
         
+        // Check Permissions
+        if (activeUser != "root") {
+            self.log("Aftermath being run in non-root mode...")
+            if let homedir = NSHomeDirectoryForUser(activeUser) {
+                let user = User(username:activeUser, homedir: homedir)
+                users.append(user)
+            }
+        } else {
+            let userPlists = filemanager.filesInDir(path: "/var/db/dslocal/nodes/Default/users/")
+            for file in userPlists {
+                let filename = file.lastPathComponent
+                if !filename.hasPrefix("_") {
+                    let username = file.deletingPathExtension().lastPathComponent
+                    if let homedir = NSHomeDirectoryForUser(username) {
+                            let user = User(username:username, homedir: homedir)
+                            if SystemUsers.allCases.contains(where: {$0.rawValue == user.username}) { continue }
+                            users.append(user)
+                        }
+                    }
+                }
+            }
         return users
     }
     
@@ -152,5 +179,10 @@ class AftermathModule {
         if displayOnly == false {
             addTextToFile(atUrl: CaseFiles.logFile, text: entry)
         }
+    }
+    
+    enum SystemUsers: String, CaseIterable {
+        case nobody = "nobody"
+        case daemon = "daemon"
     }
 }

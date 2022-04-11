@@ -26,8 +26,7 @@ class BashProfiles: ArtifactsModule {
         let globalFiles = ["/etc/profile", "/etc/zshenv", "/etc/zprofile", "/etc/zshrc", "/etc/zlogin", "/etc/zlogout"]
         
         // for each user, copy the shell historys and profiles
-        let users = getUsersOnSystem()
-        for user in users {
+        for user in getUsersOnSystem() {
             for filename in userFiles {
                 let path = URL(fileURLWithPath: "\(user.homedir)/\(filename)")
                 if (filemanager.fileExists(atPath: path.path)) {

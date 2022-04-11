@@ -16,69 +16,78 @@ class TCC: ArtifactsModule {
     }
     
     func getTCC() {
-        let username = getUsersOnSystem()
-        let local_name = username[0].username
-        
-        let fileURL = URL(fileURLWithPath: "/Users/\(local_name)/Library/Application Support/com.apple.TCC/TCC.db")
-        
-        self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir)
         
         let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
-        var db : OpaquePointer?
         
-        if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
-            var queryStatement: OpaquePointer? = nil
-            let queryString = "select client, auth_value, auth_reason, service from access"
+        for user in getBasicUsersOnSystem() {
+        
+            var fileURL: URL
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db") {
+                fileURL = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
+            } else { continue }
             
-            if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                var client: String = ""
-                var authValue: String = ""
-                var authReason: String = ""
-                var service: String = ""
+            
+            self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir, newFileName: "tcc_\(user.username)")
+            
+            
+            var db : OpaquePointer?
+            
+            if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
+                var queryStatement: OpaquePointer? = nil
+                let queryString = "select client, auth_value, auth_reason, service from access"
                 
-                while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    let col1 = sqlite3_column_text(queryStatement, 0)
-                    if col1 != nil{
-                        client = String(cString: col1!)
-                    }
+                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                    var client: String = ""
+                    var authValue: String = ""
+                    var authReason: String = ""
+                    var service: String = ""
                     
-                    let col2 = sqlite3_column_text(queryStatement, 1)
-                    if col2 != nil {
-                        authValue = String(cString: col2!)
-                        for item in TCCAuthValue.allCases {
-                            if authValue == String(item.rawValue) {
-                                authValue = String(describing: item)
+                    while sqlite3_step(queryStatement) == SQLITE_ROW {
+                        let col1 = sqlite3_column_text(queryStatement, 0)
+                        if col1 != nil{
+                            client = String(cString: col1!)
+                        }
+                        
+                        let col2 = sqlite3_column_text(queryStatement, 1)
+                        if col2 != nil {
+                            authValue = String(cString: col2!)
+                            for item in TCCAuthValue.allCases {
+                                if authValue == String(item.rawValue) {
+                                    authValue = String(describing: item)
+                                }
                             }
                         }
-                    }
-                    
-                    let col3 = sqlite3_column_text(queryStatement, 2)
-                    if col3 != nil {
-                        authReason = String(cString: col3!)
-                        for item in TCCAuthReason.allCases {
-                            if authReason == String(item.rawValue) {
-                                authReason = String(describing: item)
+                        
+                        let col3 = sqlite3_column_text(queryStatement, 2)
+                        if col3 != nil {
+                            authReason = String(cString: col3!)
+                            for item in TCCAuthReason.allCases {
+                                if authReason == String(item.rawValue) {
+                                    authReason = String(describing: item)
+                                }
                             }
                         }
-                    }
-                    
-                    let col4 = sqlite3_column_text(queryStatement, 3)
-                    if col4 != nil {
-                        service = String(cString: col4!)
-                        for item in TCCService.allCases {
-                            if service == String(item.rawValue) {
-                                service = String(describing: item)
+                        
+                        let col4 = sqlite3_column_text(queryStatement, 3)
+                        if col4 != nil {
+                            service = String(cString: col4!)
+                            for item in TCCService.allCases {
+                                if service == String(item.rawValue) {
+                                    service = String(describing: item)
+                                }
                             }
                         }
+                        
+                        self.addTextToFile(atUrl: capturedTCC, text: "TCC Data for \(user.username)")
+                        self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
                     }
-                    
-                    self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
                 }
+                self.log("Finished capturing TCC data for \(user.username)")
+            } else {
+                self.log("An error occurred when attempting to query the TCC database for user \(user.username)...")
             }
-            self.log("Finished capturing TCC data")
-        } else {
-            self.log("An error occurred when attempting to query the TCC database...")
         }
+        self.log("Finished querying TCC")
     }
     
     override func run() {

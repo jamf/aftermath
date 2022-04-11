@@ -34,5 +34,9 @@ class PersistenceModule: AftermathModule, AMProto {
         self.log("Collecting overrides...")
         let overrides = Overrides(saveToRawDir: persistenceRawDir)
         overrides.run()
+        
+        self.log("Writing system extension urls...")
+        let systemExtensions = SystemExtensions(saveToRawDir: persistenceRawDir)
+        systemExtensions.run()
     }
 }
