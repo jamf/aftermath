@@ -56,30 +56,14 @@ class AftermathModule {
     }
     
     func getBasicUsersOnSystem() -> [User] {
-        var users = [User]()
-        
-        // Check Permissions
-        if (activeUser != "root") {
-            self.log("Aftermath being run in non-root mode...")
-            if let homedir = NSHomeDirectoryForUser(activeUser) {
-                let user = User(username:activeUser, homedir: homedir)
-                users.append(user)
+        var basicUsers = [User]()
+        if let users = self.users {
+            for user in users {
+                if SystemUsers.allCases.contains(where: {$0.rawValue == user.username}) { continue }
+                basicUsers.append(user)
             }
-        } else {
-            let userPlists = filemanager.filesInDir(path: "/var/db/dslocal/nodes/Default/users/")
-            for file in userPlists {
-                let filename = file.lastPathComponent
-                if !filename.hasPrefix("_") {
-                    let username = file.deletingPathExtension().lastPathComponent
-                    if let homedir = NSHomeDirectoryForUser(username) {
-                            let user = User(username:username, homedir: homedir)
-                            if SystemUsers.allCases.contains(where: {$0.rawValue == user.username}) { continue }
-                            users.append(user)
-                        }
-                    }
-                }
-            }
-        return users
+        }
+        return basicUsers
     }
     
     func createNewDirInRoot(dirName: String) -> URL {
