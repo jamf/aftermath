@@ -32,7 +32,7 @@ class BashProfiles: ArtifactsModule {
                 if (filemanager.fileExists(atPath: path.path)) {
                     let newFileName = "\(user.username)_\(filename)"
                     self.copyFileToCase(fileToCopy: path, toLocation: self.profilesDir, newFileName: newFileName)
-                } else { continue }
+                }
                
             }
         }
@@ -45,7 +45,7 @@ class BashProfiles: ArtifactsModule {
                 let filename = fileUrl.lastPathComponent
                 let newFileName = "etc_\(filename)"
                 self.copyFileToCase(fileToCopy: fileUrl, toLocation: self.profilesDir, newFileName: newFileName)
-            } else { continue }
+            }
         }
         
         

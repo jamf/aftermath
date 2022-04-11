@@ -68,7 +68,7 @@ class Safari: BrowserModule {
                     self.addTextToFile(atUrl: self.writeFile, text: "\nFile Name:\n----- \(file) -----\n\n\(plistDict.description)\n----- End of \(file) -----\n")
                     
                     self.copyFileToCase(fileToCopy: file, toLocation: self.safariDir)
-                } else { continue }
+                }
             }
         }
     }
