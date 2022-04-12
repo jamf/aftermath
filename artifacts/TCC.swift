@@ -23,9 +23,7 @@ class TCC: ArtifactsModule {
     
             let tcc_path = URL(fileURLWithPath:"\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
             
-            if filemanager.fileExists(atPath: tcc_path.relativePath) {
-                // use else-statement to break loop if the file does not exist
-            } else { continue }
+            if !filemanager.fileExists(atPath: tcc_path.relativePath) { continue }
             
             
             self.copyFileToCase(fileToCopy: tcc_path, toLocation: tccDir, newFileName: "tcc_\(user.username)")
