@@ -45,14 +45,24 @@ class AftermathModule {
                 if !filename.hasPrefix("_") {
                     let username = file.deletingPathExtension().lastPathComponent
                     if let homedir = NSHomeDirectoryForUser(username) {
-                        let user = User(username:username, homedir: homedir)
-                        users.append(user)
+                            let user = User(username:username, homedir: homedir)
+                            users.append(user)
+                        }
                     }
                 }
             }
-        }
-        
         return users
+    }
+    
+    func getBasicUsersOnSystem() -> [User] {
+        var basicUsers = [User]()
+        if let users = self.users {
+            for user in users {
+                if SystemUsers.allCases.contains(where: {$0.rawValue == user.username}) { continue }
+                basicUsers.append(user)
+            }
+        }
+        return basicUsers
     }
     
     func createNewDirInRoot(dirName: String) -> URL {
@@ -152,5 +162,10 @@ class AftermathModule {
         if displayOnly == false {
             addTextToFile(atUrl: CaseFiles.logFile, text: entry)
         }
+    }
+    
+    enum SystemUsers: String, CaseIterable {
+        case nobody = "nobody"
+        case daemon = "daemon"
     }
 }

@@ -27,7 +27,7 @@ class LoginHooks: PersistenceModule {
                 } else {
                     parsedHooks = hook
                 }
-            } else { continue }
+            }
         }
         
         return parsedHooks

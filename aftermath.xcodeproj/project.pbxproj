@@ -16,6 +16,9 @@
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
 		A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0879956275AD2DC00E885BC /* SystemConfig.swift */; };
+		A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54227F76C58002BB3C8 /* Cron.swift */; };
+		A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54627FE147D002BB3C8 /* Overrides.swift */; };
+		A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */; };
 		A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */; };
 		A0E1E3E6275EC433008D0DC6 /* MemoryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */; };
 		A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */; };
@@ -57,6 +60,9 @@
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
 		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
+		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
+		A0D6D54627FE147D002BB3C8 /* Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overrides.swift; sourceTree = "<group>"; };
+		A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensions.swift; sourceTree = "<group>"; };
 		A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
 		A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryModule.swift; sourceTree = "<group>"; };
 		A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModule.swift; sourceTree = "<group>"; };
@@ -123,6 +129,9 @@
 				A076742B27555FC100ED7066 /* PersistenceModule.swift */,
 				A3745357275730870074B65C /* LaunchItems.swift */,
 				A3745359275735B40074B65C /* LoginHooks.swift */,
+				A0D6D54227F76C58002BB3C8 /* Cron.swift */,
+				A0D6D54627FE147D002BB3C8 /* Overrides.swift */,
+				A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -294,7 +303,10 @@
 				A0759135275985170006766F /* TCC.swift in Sources */,
 				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
+				A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */,
 				A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */,
+				A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */,
+				A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
