@@ -126,29 +126,19 @@ class Firefox: BrowserModule {
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
                         let col1  = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil {
-                            dateTime = String(cString: col1!)
-                        }
+                        if let col1 = col1 { dateTime = String(cString: col1) }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            name = String(cString: col2!)
-                        }
+                        if let col2 = col2 { name = String(cString: col2) }
                         
                         let col3 = sqlite3_column_text(queryStatement, 2)
-                        if col3 != nil {
-                            hostKey = String(cString: col1!)
-                        }
+                        if let col3 = col3 { hostKey = String(cString: col3) }
                         
                         let col4 = sqlite3_column_text(queryStatement, 3)
-                        if col4 != nil {
-                            path = String(cString: col2!)
-                        }
+                        if let col4 = col4 { path = String(cString: col4) }
                         
                         let col5 = sqlite3_column_text(queryStatement, 4)
-                        if col5 != nil {
-                            expireTime = String(cString: col1!)
-                        }
+                        if let col5 = col5 { expireTime = String(cString: col5) }
                         
                         self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                     }

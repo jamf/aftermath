@@ -39,14 +39,10 @@ class Safari: BrowserModule {
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
                         let col1  = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil {
-                            dateTime = String(cString: col1!)
-                        }
+                        if let col1 = col1 { dateTime = String(cString: col1) }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            url = String(cString: col2!)
-                        }
+                        if let col2 = col2 { url = String(cString: col2) }
                         
                         self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
                     }

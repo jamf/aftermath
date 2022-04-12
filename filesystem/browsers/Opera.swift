@@ -35,19 +35,13 @@ class Opera: BrowserModule {
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
                         let col1  = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil {
-                            dateTime = String(cString: col1!)
-                        }
+                        if let col1 = col1 { dateTime = String(cString: col1) }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            currentPath = String(cString: col2!)
-                        }
+                        if let col2 = col2 { currentPath = String(cString: col2) }
                         
                         let col3 = sqlite3_column_text(queryStatement, 2)
-                        if col3 != nil {
-                            url = String(cString: col3!)
-                        }
+                        if let col3 = col3 { url = String(cString: col3) }
                         
                         self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nContent: \(currentPath)\n")
                     }

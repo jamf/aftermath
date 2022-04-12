@@ -20,19 +20,20 @@ class TCC: ArtifactsModule {
         let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
         
         for user in getBasicUsersOnSystem() {
-        
-            var fileURL: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db") {
-                fileURL = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
+    
+            let tcc_path = URL(fileURLWithPath:"\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
+            
+            if filemanager.fileExists(atPath: tcc_path.relativePath) {
+                // use else-statement to break loop if the file does not exist
             } else { continue }
             
             
-            self.copyFileToCase(fileToCopy: fileURL, toLocation: tccDir, newFileName: "tcc_\(user.username)")
+            self.copyFileToCase(fileToCopy: tcc_path, toLocation: tccDir, newFileName: "tcc_\(user.username)")
             
             
             var db : OpaquePointer?
             
-            if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
+            if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
                 var queryStatement: OpaquePointer? = nil
                 let queryString = "select client, auth_value, auth_reason, service from access"
                 
@@ -43,14 +44,13 @@ class TCC: ArtifactsModule {
                     var service: String = ""
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
+                        
                         let col1 = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil{
-                            client = String(cString: col1!)
-                        }
+                        if let col1 = col1 { client = String(cString: col1) }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            authValue = String(cString: col2!)
+                        if let col2 = col2 {
+                            authValue = String(cString: col2)
                             for item in TCCAuthValue.allCases {
                                 if authValue == String(item.rawValue) {
                                     authValue = String(describing: item)
@@ -59,24 +59,24 @@ class TCC: ArtifactsModule {
                         }
                         
                         let col3 = sqlite3_column_text(queryStatement, 2)
-                        if col3 != nil {
-                            authReason = String(cString: col3!)
-                            for item in TCCAuthReason.allCases {
-                                if authReason == String(item.rawValue) {
-                                    authReason = String(describing: item)
+                            if let col3 = col3 {
+                                authReason = String(cString: col3)
+                                for item in TCCAuthReason.allCases {
+                                    if authReason == String(item.rawValue) {
+                                        authReason = String(describing: item)
+                                    }
                                 }
                             }
-                        }
                         
                         let col4 = sqlite3_column_text(queryStatement, 3)
-                        if col4 != nil {
-                            service = String(cString: col4!)
-                            for item in TCCService.allCases {
-                                if service == String(item.rawValue) {
-                                    service = String(describing: item)
+                            if let col4 = col4 {
+                                service = String(cString: col4)
+                                for item in TCCService.allCases {
+                                    if service == String(item.rawValue) {
+                                        service = String(describing: item)
+                                    }
                                 }
                             }
-                        }
                         
                         self.addTextToFile(atUrl: capturedTCC, text: "TCC Data for \(user.username)")
                         self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
