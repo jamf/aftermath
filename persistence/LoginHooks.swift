@@ -22,6 +22,7 @@ class LoginHooks: PersistenceModule {
         for (x,y) in hooksFromFile {
             if x == "LoginHook" || x == "LogoutHook" {
                 let hook = ("\(x): \(y)")
+                self.copyFileToCase(fileToCopy: URL(fileURLWithPath: String(describing: y)), toLocation: self.saveToRawDir)
                 if let _ = parsedHooks {
                     parsedHooks! += hook
                 } else {
@@ -42,6 +43,7 @@ class LoginHooks: PersistenceModule {
             let hooksSaveFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "hooks.txt")
             self.addTextToFile(atUrl: hooksSaveFile, text: hooksParsed)
         }
+        
         
         
         self.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
