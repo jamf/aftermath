@@ -16,6 +16,7 @@
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
 		A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0879956275AD2DC00E885BC /* SystemConfig.swift */; };
+		A09B239C2848F6050062D592 /* Periodic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09B239B2848F6050062D592 /* Periodic.swift */; };
 		A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54227F76C58002BB3C8 /* Cron.swift */; };
 		A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54627FE147D002BB3C8 /* Overrides.swift */; };
 		A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */; };
@@ -60,6 +61,7 @@
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
 		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
+		A09B239B2848F6050062D592 /* Periodic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Periodic.swift; sourceTree = "<group>"; };
 		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
 		A0D6D54627FE147D002BB3C8 /* Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overrides.swift; sourceTree = "<group>"; };
 		A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensions.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				A0D6D54227F76C58002BB3C8 /* Cron.swift */,
 				A0D6D54627FE147D002BB3C8 /* Overrides.swift */,
 				A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */,
+				A09B239B2848F6050062D592 /* Periodic.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */,
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
+				A09B239C2848F6050062D592 /* Periodic.swift in Sources */,
 				A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */,
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,

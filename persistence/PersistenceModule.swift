@@ -38,5 +38,9 @@ class PersistenceModule: AftermathModule, AMProto {
         self.log("Writing system extension urls...")
         let systemExtensions = SystemExtensions(saveToRawDir: persistenceRawDir)
         systemExtensions.run()
+        
+        self.log("Collecting periodic scripts...")
+        let periodicScripts = Periodic(saveToRawDir: persistenceRawDir)
+        periodicScripts.run()
     }
 }
