@@ -30,9 +30,8 @@ class ArtifactsModule: AftermathModule, AMProto {
         let tcc = TCC(tccDir: rawDir)
         tcc.run()
 
-        let lsquarantine = LSQuarantine()
+        let lsquarantine = LSQuarantine(rawDir: rawDir)
         lsquarantine.run()
-        
         
         let systemConf = SystemConfig(systemConfigDir: systemConfigDir)
         systemConf.run()
