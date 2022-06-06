@@ -15,6 +15,8 @@
 		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
+		A08342D6284A8247005E437A /* AnalysisModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08342D5284A8247005E437A /* AnalysisModule.swift */; };
+		A08342D8284E48FC005E437A /* LogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08342D7284E48FC005E437A /* LogFiles.swift */; };
 		A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0879956275AD2DC00E885BC /* SystemConfig.swift */; };
 		A09B239C2848F6050062D592 /* Periodic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09B239B2848F6050062D592 /* Periodic.swift */; };
 		A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54227F76C58002BB3C8 /* Cron.swift */; };
@@ -60,6 +62,8 @@
 		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
+		A08342D5284A8247005E437A /* AnalysisModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisModule.swift; sourceTree = "<group>"; };
+		A08342D7284E48FC005E437A /* LogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFiles.swift; sourceTree = "<group>"; };
 		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
 		A09B239B2848F6050062D592 /* Periodic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Periodic.swift; sourceTree = "<group>"; };
 		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				A0759134275985170006766F /* TCC.swift */,
 				70A44404275A76990035F40E /* LSQuarantine.swift */,
 				70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */,
+				A08342D7284E48FC005E437A /* LogFiles.swift */,
 			);
 			path = artifacts;
 			sourceTree = "<group>";
@@ -137,6 +142,14 @@
 				A09B239B2848F6050062D592 /* Periodic.swift */,
 			);
 			path = persistence;
+			sourceTree = "<group>";
+		};
+		A08342D4284A8211005E437A /* analysis */ = {
+			isa = PBXGroup;
+			children = (
+				A08342D5284A8247005E437A /* AnalysisModule.swift */,
+			);
+			path = analysis;
 			sourceTree = "<group>";
 		};
 		A0E1E3E2275EBBED008D0DC6 /* memoryDump */ = {
@@ -189,6 +202,7 @@
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				A08342D4284A8211005E437A /* analysis */,
 				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
 				A0E1E3F4275ED2D6008D0DC6 /* network */,
 				A0E1E3E2275EBBED008D0DC6 /* memoryDump */,
@@ -310,6 +324,8 @@
 				A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */,
 				A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */,
 				A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */,
+				A08342D6284A8247005E437A /* AnalysisModule.swift in Sources */,
+				A08342D8284E48FC005E437A /* LogFiles.swift in Sources */,
 				A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,8 +23,17 @@ class AftermathModule {
     var users: [User]?
     var activeUser = NSUserName()
     let filemanager = FileManager.default
+    var caseLogSelector: URL
+    var caseDirSelector: URL
     
     init() {
+        if argManager.mode == "--analyze" {
+            caseLogSelector = CaseFiles.analysisLogFile
+            caseDirSelector = CaseFiles.analysisCaseDir
+        } else {
+            caseLogSelector = CaseFiles.logFile
+            caseDirSelector = CaseFiles.caseDir
+        }
         users = getUsersOnSystem()
     }
     
@@ -66,7 +75,7 @@ class AftermathModule {
     }
     
     func createNewDirInRoot(dirName: String) -> URL {
-        let newUrl = CaseFiles.caseDir.appendingPathComponent(dirName)
+        let newUrl = caseDirSelector.appendingPathComponent(dirName)
         
         do {
             try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: true, attributes: nil)
@@ -136,7 +145,7 @@ class AftermathModule {
             return
         }
         
-        var to = CaseFiles.caseDir
+        var to = caseDirSelector
         if let toLocation = toLocation { to = toLocation }
         
         var filename = fileToCopy.lastPathComponent
@@ -156,11 +165,12 @@ class AftermathModule {
     }
     
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
+        
         let module = URL(fileURLWithPath: file).lastPathComponent
         let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
         print(entry)
         if displayOnly == false {
-            addTextToFile(atUrl: CaseFiles.logFile, text: entry)
+            addTextToFile(atUrl: caseLogSelector, text: entry)
         }
     }
     
