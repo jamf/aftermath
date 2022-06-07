@@ -13,6 +13,8 @@ class BrowserModule: AftermathModule, AMProto {
     var description = "A module that gathers artifacts from different web browsers"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
+  
+    
     func run() {
         let firefoxDir = self.createNewDir(dir: moduleDirRoot, dirname: "Firefox")
         let chromeDir = self.createNewDir(dir: moduleDirRoot, dirname: "Chrome")

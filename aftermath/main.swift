@@ -76,8 +76,8 @@ if mode == "default" {
 
     // FileSystem
     mainModule.log("Started gathering file system information...")
-    let browserModule = BrowserModule()
-    browserModule.run()
+    let fileSysModule = FileSystemModule()
+    fileSysModule.run()
     mainModule.log("Finished gathering file system information")
 
 

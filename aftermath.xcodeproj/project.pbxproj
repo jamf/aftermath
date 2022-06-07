@@ -12,6 +12,8 @@
 		70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */; };
 		8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */; };
 		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
+		A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */; };
+		A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BE284FF8CF009E197B /* Slack.swift */; };
 		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
 		A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742B27555FC100ED7066 /* PersistenceModule.swift */; };
 		A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076742E2755798F00ED7066 /* ArtifactsModule.swift */; };
@@ -57,6 +59,8 @@
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
 		8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedLogModule.swift; sourceTree = "<group>"; };
 		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
+		A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemModule.swift; sourceTree = "<group>"; };
+		A05BF3BE284FF8CF009E197B /* Slack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slack.swift; sourceTree = "<group>"; };
 		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
 		A076742B27555FC100ED7066 /* PersistenceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceModule.swift; sourceTree = "<group>"; };
 		A076742E2755798F00ED7066 /* ArtifactsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactsModule.swift; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				A0E1E3E7275EC720008D0DC6 /* browsers */,
+				A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */,
+				A05BF3BE284FF8CF009E197B /* Slack.swift */,
 			);
 			path = filesystem;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
+				A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
@@ -308,6 +315,7 @@
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
+				A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A0E1E3E6275EC433008D0DC6 /* MemoryModule.swift in Sources */,
 				A0759135275985170006766F /* TCC.swift in Sources */,
