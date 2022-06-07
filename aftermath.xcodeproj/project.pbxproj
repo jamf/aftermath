@@ -28,8 +28,6 @@
 		A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EA275EC800008D0DC6 /* Firefox.swift */; };
 		A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EC275EC809008D0DC6 /* Chrome.swift */; };
 		A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3EE275EC810008D0DC6 /* Safari.swift */; };
-		A0E1E3F1275EC818008D0DC6 /* Opera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F0275EC818008D0DC6 /* Opera.swift */; };
-		A0E1E3F3275EC81F008D0DC6 /* Brave.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F2275EC81F008D0DC6 /* Brave.swift */; };
 		A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */; };
 		A0E1E3F8275ED35D008D0DC6 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F7275ED35D008D0DC6 /* Airport.swift */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
@@ -75,8 +73,6 @@
 		A0E1E3EA275EC800008D0DC6 /* Firefox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firefox.swift; sourceTree = "<group>"; };
 		A0E1E3EC275EC809008D0DC6 /* Chrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chrome.swift; sourceTree = "<group>"; };
 		A0E1E3EE275EC810008D0DC6 /* Safari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safari.swift; sourceTree = "<group>"; };
-		A0E1E3F0275EC818008D0DC6 /* Opera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Opera.swift; sourceTree = "<group>"; };
-		A0E1E3F2275EC81F008D0DC6 /* Brave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brave.swift; sourceTree = "<group>"; };
 		A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
 		A0E1E3F7275ED35D008D0DC6 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
@@ -168,8 +164,6 @@
 				A0E1E3EA275EC800008D0DC6 /* Firefox.swift */,
 				A0E1E3EC275EC809008D0DC6 /* Chrome.swift */,
 				A0E1E3EE275EC810008D0DC6 /* Safari.swift */,
-				A0E1E3F0275EC818008D0DC6 /* Opera.swift */,
-				A0E1E3F2275EC81F008D0DC6 /* Brave.swift */,
 			);
 			path = browsers;
 			sourceTree = "<group>";
@@ -295,9 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0E1E3F1275EC818008D0DC6 /* Opera.swift in Sources */,
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
-				A0E1E3F3275EC81F008D0DC6 /* Brave.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,

@@ -14,11 +14,9 @@ class BrowserModule: AftermathModule, AMProto {
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
     func run() {
-        let firefoxDir = self.createNewDir(dir: moduleDirRoot, dirname: "firefox")
-        let chromeDir = self.createNewDir(dir: moduleDirRoot, dirname: "chrome")
-        let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "safari")
-        let operaDir = self.createNewDir(dir: moduleDirRoot, dirname: "opera")
-        let braveDir = self.createNewDir(dir: moduleDirRoot, dirname: "brave")
+        let firefoxDir = self.createNewDir(dir: moduleDirRoot, dirname: "Firefox")
+        let chromeDir = self.createNewDir(dir: moduleDirRoot, dirname: "Chrome")
+        let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "Safari")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
         self.log("Collecting browser information...")
@@ -35,13 +33,6 @@ class BrowserModule: AftermathModule, AMProto {
         let safari = Safari(safariDir: safariDir, writeFile: writeFile)
         safari.run()
         
-        // Check if Opera is installed
-        let opera = Opera(operaDir: operaDir, writeFile: writeFile)
-        opera.run()
-        
-        // Check if Brave is installed
-        let brave = Brave(braveDir: braveDir, writeFile: writeFile)
-        brave.run()
     }
 }
 
