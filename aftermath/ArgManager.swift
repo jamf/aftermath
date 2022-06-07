@@ -33,7 +33,6 @@ class ArgManager {
                     } else {
                         print("Please specify a valid target path")
                     }
-//                    exit(1)
                 }
             } else {
                 print("Unidentified argument " + arg)
