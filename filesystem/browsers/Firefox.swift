@@ -26,13 +26,16 @@ class Firefox: BrowserModule {
         
             for file in files {
                 if file.lastPathComponent == "places.sqlite" {
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir, newFileName: "downloads_and_history_\(user.username)")
                     dumpHistory(file: file)
                     dumpDownloads(file: file)
                 }
                 if file.lastPathComponent == "cookies.sqlite" {
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir, newFileName: "cookies_\(user.username)")
                     dumpCookies(file: file)
                 }
                 if file.lastPathComponent == "extensions.json" {
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir, newFileName: "extensions_\(user.username)")
                     dumpExtensions(file: file)
                 }
             }
@@ -106,7 +109,7 @@ class Firefox: BrowserModule {
     }
     
     func dumpCookies(file: URL) {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Cookies: -----\n")
 
         for user in getBasicUsersOnSystem() {
         
@@ -145,7 +148,7 @@ class Firefox: BrowserModule {
                 }
             }
         }
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Firefox Cookies -----\n")
     }
     
     func dumpExtensions(file: URL) {
@@ -161,7 +164,7 @@ class Firefox: BrowserModule {
     }
     
     override func run() {
-        self.log("Collecting firefox browser information...")
+        self.log("Collecting Firefox browser information...")
         getContent()
     }
 }

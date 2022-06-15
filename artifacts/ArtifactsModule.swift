@@ -26,19 +26,22 @@ class ArtifactsModule: AftermathModule, AMProto {
         let rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
         let systemConfigDir = self.createNewDir(dir: rawDir, dirname: "ssh")
         let profilesDir = self.createNewDir(dir: rawDir, dirname: "profiles")
+        let logFilesDir = self.createNewDir(dir: rawDir, dirname: "logs")
         
         let tcc = TCC(tccDir: rawDir)
         tcc.run()
 
-        let lsquarantine = LSQuarantine()
+        let lsquarantine = LSQuarantine(rawDir: rawDir)
         lsquarantine.run()
-        
         
         let systemConf = SystemConfig(systemConfigDir: systemConfigDir)
         systemConf.run()
         
         let bashProfiles = BashProfiles(profilesDir: profilesDir)
         bashProfiles.run()
+        
+        let logFiles = LogFiles(logFilesDir: logFilesDir)
+        logFiles.run()
     }
 }
 

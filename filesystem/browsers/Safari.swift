@@ -21,8 +21,10 @@ class Safari: BrowserModule {
         
         for user in getBasicUsersOnSystem() {
             var file: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Safari/History") {
-                file = URL(fileURLWithPath: "\(user.homedir)/Library/Safari/History") } else { continue }
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Safari/History.db") {
+                file = URL(fileURLWithPath: "\(user.homedir)/Library/Safari/History.db")
+                self.copyFileToCase(fileToCopy: file, toLocation: self.safariDir, newFileName: "history_\(user.username)")
+            } else { continue }
             
             
             
@@ -54,12 +56,13 @@ class Safari: BrowserModule {
     }
     
     func dumpImportantPlists() {
+        self.addTextToFile(atUrl: self.writeFile, text: "\n-----Safari Bookmarks, Downlaods, UserNotificationPermissions, LastSession-----\n\n")
         for user in getBasicUsersOnSystem() {
 
             let files: [URL] = [URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Bookmarks.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Downloads.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/UserNotificationPermissions.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/LastSession.plist")]
             
             for file in files {
-                if filemanager.fileExists(atPath: file.absoluteString) {
+                if filemanager.fileExists(atPath: file.path) {
                     let plistDict = Aftermath.getPlistAsDict(atUrl: file)
                     self.addTextToFile(atUrl: self.writeFile, text: "\nFile Name:\n----- \(file) -----\n\n\(plistDict.description)\n----- End of \(file) -----\n")
                     

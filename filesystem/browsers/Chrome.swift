@@ -18,11 +18,14 @@ class Chrome: BrowserModule {
     }
     
     func gatherHistory() {
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
+        
         for user in getBasicUsersOnSystem() {
-            
-            let file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
-            
-            self.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
+            var file: URL
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
+                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
+                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)")
+            } else { continue }
             
             var db: OpaquePointer?
             if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -56,8 +59,10 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
         
         for user in getBasicUsersOnSystem() {
-        
-            let file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
+            var file: URL
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
+                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
+            } else { continue }
             
             var db: OpaquePointer?
             if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -96,23 +101,13 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downlaods -----\n")
     }
     
-    // TODO - this needs to be tuned more
-    func captureExtensions() {
-        for user in getBasicUsersOnSystem() {
-        
-            let exdir = "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Extensions"
-            let _ = filemanager.filesInDirRecursive(path: exdir)
-//
-//        for file in files {
-//            self.caseHandler.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir)
-//        }
-        }
-    }
-    
     func dumpPreferences() {
         for user in getBasicUsersOnSystem() {
-            
-            let file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Preferences")
+            var file: URL
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Preferences") {
+                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Preferences")
+                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferenes_\(user.username)")
+            } else { continue }
                     
             do {
                 let data = try Data(contentsOf: file, options: .mappedIfSafe)
@@ -128,8 +123,11 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
 
         for user in getBasicUsersOnSystem() {
-        
-            let file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Cookies")
+            var file: URL
+            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Cookies") {
+                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Cookies")
+                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "cookies_\(user.username)")
+            } else { continue }
                         
             var db: OpaquePointer?
             if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -178,10 +176,9 @@ class Chrome: BrowserModule {
     }
     
     override func run() {
-        self.log("Collecting chrome browser information...")
+        self.log("Collecting Chrome browser information...")
         gatherHistory()
         dumpDownloads()
-        captureExtensions()
         dumpPreferences()
         dumpCookies()
     }

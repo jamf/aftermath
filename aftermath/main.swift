@@ -35,67 +35,92 @@ print(#"""
 """#
 )
 
+
 // Case management creation
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
-
-// Start Aftermath
-CaseFiles.CreateCaseDir()
-let mainModule = AftermathModule()
-mainModule.log("Aftermath Started")
+let mode = argManager.mode
+let analysisDir = argManager.analysisDir
 
 
-// System Recon
-mainModule.log("Started system recon")
-let systemReconModule = SystemReconModule()
-systemReconModule.run()
-mainModule.log("Finished system recon")
 
 
-// Network
-mainModule.log("Started gathering network information...")
-let networkModule = NetworkModule()
-networkModule.run()
-mainModule.log("Finished gathering network information")
+if mode == "default" {
+    // Start Aftermath
+    CaseFiles.CreateCaseDir()
+    let mainModule = AftermathModule()
+    mainModule.log("Aftermath Started")
+    
+    // System Recon
+    mainModule.log("Started system recon")
+    let systemReconModule = SystemReconModule()
+    systemReconModule.run()
+    mainModule.log("Finished system recon")
 
 
-// Processes
+    // Network
+    mainModule.log("Started gathering network information...")
+    let networkModule = NetworkModule()
+    networkModule.run()
+    mainModule.log("Finished gathering network information")
 
 
-// Persistence
-mainModule.log("Starting Persistence Module")
-let persistenceModule = PersistenceModule()
-persistenceModule.run()
-mainModule.log("Finished logging persistence items")
+    // Processes
 
 
-// FileSystem
-mainModule.log("Started gathering file system information...")
-let browserModule = BrowserModule()
-browserModule.run()
-mainModule.log("Finished gathering file system information")
+    // Persistence
+    mainModule.log("Starting Persistence Module")
+    let persistenceModule = PersistenceModule()
+    persistenceModule.run()
+    mainModule.log("Finished logging persistence items")
 
 
-// Artifacts
-mainModule.log("Started gathering artifacts...")
-let artifactModule = ArtifactsModule()
-artifactModule.run()
-mainModule.log("Finished gathering artifacts")
+    // FileSystem
+    mainModule.log("Started gathering file system information...")
+    let fileSysModule = FileSystemModule()
+    fileSysModule.run()
+    mainModule.log("Finished gathering file system information")
 
 
-// Logs
-mainModule.log("Started logging unified logs")
-let unifiedLogModule = UnifiedLogModule()
-unifiedLogModule.run()
-mainModule.log("Finished logging unified logs")
+    // Artifacts
+    mainModule.log("Started gathering artifacts...")
+    let artifactModule = ArtifactsModule()
+    artifactModule.run()
+    mainModule.log("Finished gathering artifacts")
 
 
-// Memory
-mainModule.log("Started memory dump...")
-let memoryModule = MemoryModule()
-memoryModule.run()
-mainModule.log("Finishing memory dump")
+    // Logs
+    mainModule.log("Started logging unified logs")
+    let unifiedLogModule = UnifiedLogModule()
+    unifiedLogModule.run()
+    mainModule.log("Finished logging unified logs")
 
 
-// End Aftermath
-mainModule.log("Aftermath Finished")
+    // Memory
+    mainModule.log("Started memory dump...")
+    let memoryModule = MemoryModule()
+    memoryModule.run()
+    mainModule.log("Finishing memory dump")
+    
+    // End Aftermath
+    mainModule.log("Aftermath Finished")
+
+}
+    
+
+if mode == "--analyze" {
+    // Start Aftermath
+    CaseFiles.CreateAnalysisCaseDir()
+    let mainModule = AftermathModule()
+    mainModule.log("Aftermath Analysis Started")
+    
+    mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
+    let analysisModule = AnalysisModule()
+    analysisModule.run()
+    mainModule.log("Finished analysis module")
+    
+    // End Aftermath
+    mainModule.log("Aftermath Finished")
+    
+}
+
 
