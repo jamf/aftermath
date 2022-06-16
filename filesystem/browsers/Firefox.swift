@@ -55,14 +55,12 @@ class Firefox: BrowserModule {
                 var url: String = ""
                 
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    let col1  = sqlite3_column_text(queryStatement, 0)
-                    if col1 != nil {
-                        dateTime = String(cString: col1!)
+                    if let col1  = sqlite3_column_text(queryStatement, 0) {
+                        dateTime = String(cString: col1)
                     }
                     
-                    let col2 = sqlite3_column_text(queryStatement, 1)
-                    if col2 != nil {
-                        url = String(cString: col2!)
+                    if let col2 = sqlite3_column_text(queryStatement, 1) {
+                        url = String(cString: col2)
                     }
                     
                     self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
@@ -86,19 +84,16 @@ class Firefox: BrowserModule {
                 var url: String = ""
                 
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    let col1  = sqlite3_column_text(queryStatement, 0)
-                    if col1 != nil {
-                        dateAdded = String(cString: col1!)
+                    if let col1  = sqlite3_column_text(queryStatement, 0) {
+                        dateAdded = String(cString: col1)
                     }
                     
-                    let col2 = sqlite3_column_text(queryStatement, 1)
-                    if col2 != nil {
-                        content = String(cString: col2!)
+                    if let col2 = sqlite3_column_text(queryStatement, 1) {
+                        content = String(cString: col2)
                     }
                     
-                    let col3 = sqlite3_column_text(queryStatement, 2)
-                    if col3 != nil {
-                        url = String(cString: col3!)
+                    if let col3 = sqlite3_column_text(queryStatement, 2) {
+                        url = String(cString: col3)
                     }
                     
                     self.addTextToFile(atUrl: self.writeFile, text: "DateAdded: \(dateAdded)\nURL: \(url)\nContent: \(content)\n")
@@ -128,7 +123,7 @@ class Firefox: BrowserModule {
                     var expireTime: String = ""
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        let col1  = sqlite3_column_text(queryStatement, 0)
+                    let col1  = sqlite3_column_text(queryStatement, 0)
                         if let col1 = col1 { dateTime = String(cString: col1) }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)

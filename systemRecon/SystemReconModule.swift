@@ -31,6 +31,7 @@ class SystemReconModule: AftermathModule, AMProto {
         }
 
         self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
+        self.addTextToFile(atUrl: saveFile, text: "\n----------\n")
     }
 
     func installedApps(saveFile: URL) {
@@ -170,6 +171,34 @@ class SystemReconModule: AftermathModule, AMProto {
             return nil
         }
     }
+    
+    func securityAssessment(saveFile: URL) {
+        
+        let fdaApprovedApps = """
+                sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \\
+                  "select client from access where auth_value and service = 'kTCCServiceSystemPolicyAllFiles'"
+                """
+                
+        let dict = ["Gatekeeper Status": "spctl --status",
+                    "SIP Status": "csrutil status",
+                    "Login History": "last",
+                    "Screen Sharing": "sudo launchctl list com.apple.screensharing",
+                    "FDA Approved": "\(fdaApprovedApps)",
+                    "I/O Statistics": "iostat",
+                    "Network Interface Parameters": "ifconfig",
+                    "Firewall Status (Enabled = 1, Disabled = 0)": "defaults read /Library/Preferences/com.apple.alf globalstate",
+                    "Filevault Status": "sudo fdesetup status",
+                    "Airdrop Status": "sudo ifconfig awdl0 | awk '/status/{print $2}'",
+                    "Remote Login": "sudo systemsetup -getremotelogin",
+                    "Network File Shares": "nfsd status"
+        ]
+        
+        for (heading,command) in dict {
+            let output = Aftermath.shell("\(command)")
+            
+            self.addTextToFile(atUrl: saveFile, text: "\n\(heading):\n\(output)")
+        }
+    }
 
     func run() {
         let systemInformationFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "system_information.txt")
@@ -185,6 +214,8 @@ class SystemReconModule: AftermathModule, AMProto {
         installHistory(saveFile: installHistoryFile)
         interfaces(saveFile: interfacesFile)
         environmentVariables(saveFile: environmentVariablesFile)
+        securityAssessment(saveFile: systemInformationFile)
+        
     }
 }
 

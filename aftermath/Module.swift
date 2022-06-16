@@ -27,12 +27,15 @@ class AftermathModule {
     var caseDirSelector: URL
     
     init() {
+        let cf = CaseFiles()
         if argManager.mode == "--analyze" {
-            caseLogSelector = CaseFiles.analysisLogFile
-            caseDirSelector = CaseFiles.analysisCaseDir
+            caseLogSelector = cf.analysisLogFile
+            caseDirSelector = cf.analysisCaseDir
+            
         } else {
-            caseLogSelector = CaseFiles.logFile
-            caseDirSelector = CaseFiles.caseDir
+       
+            caseLogSelector = cf.logFile
+            caseDirSelector = cf.caseDir
         }
         users = getUsersOnSystem()
     }

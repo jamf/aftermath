@@ -23,10 +23,12 @@ class BrowserModule: AftermathModule, AMProto {
         
         self.log("Collecting browser information...")
         
+        
         // Check if Firefox is installed
         let firefox = Firefox(firefoxDir: firefoxDir, writeFile: writeFile)
         firefox.run()
 
+        
         // Check if Chrome is installed
         let chrome = Chrome(chromeDir: chromeDir, writeFile: writeFile)
         chrome.run()

@@ -34,11 +34,8 @@ class LaunchItems: PersistenceModule {
         let launchDaemons = filemanager.filesInDirRecursive(path: launchDaemonsPath)
         let launchAgents = filemanager.filesInDirRecursive(path: launchAgentsPath)
         
+        self.log("Collecting launchagents and launchdaemons...")
         captureLaunchData(urlLocations: launchDaemons, capturedLaunchFile: capturedLaunchFile)
         captureLaunchData(urlLocations: launchAgents, capturedLaunchFile: capturedLaunchFile)
     }
-    
-    // TODO
-    //func pivotToBinary(binaryUrl: URL) { }
-    
 }

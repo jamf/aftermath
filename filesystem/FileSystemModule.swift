@@ -22,7 +22,6 @@ class FileSystemModule: AftermathModule, AMProto {
         browserModule.run()
         
         // get slack data
-        self.log("Collecting Slack information")
         let slackFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "slack_extract.txt")
         let slack = Slack(slackLoc: self.rawDir, writeFile: slackFile)
         slack.run()

@@ -41,12 +41,16 @@ let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 let mode = argManager.mode
 let analysisDir = argManager.analysisDir
 
+let tempDirectory = TempDirectory()
+let location = tempDirectory.createTempDirectory()
+
 
 
 
 if mode == "default" {
     // Start Aftermath
-    CaseFiles.CreateCaseDir()
+//    var casefiles = CaseFiles.caseFiles
+//    CaseFiles.CreateCaseDir()
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
     
@@ -109,7 +113,6 @@ if mode == "default" {
 
 if mode == "--analyze" {
     // Start Aftermath
-    CaseFiles.CreateAnalysisCaseDir()
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Analysis Started")
     

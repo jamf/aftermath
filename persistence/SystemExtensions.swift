@@ -24,6 +24,8 @@ class SystemExtensions: PersistenceModule {
     }
     
     override func run() {
+        self.log("Writing system extension urls...")
+
         let sysExtensionsRaw = self.createNewDir(dir: self.saveToRawDir, dirname: "systemExtensions_dump")
         
         let sysExtensions = filemanager.filesInDirRecursive(path: "/Library/SystemExtensions/")

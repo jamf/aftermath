@@ -26,6 +26,8 @@ class Overrides: PersistenceModule {
     }
     
     override func run() {
+        self.log("Collecting overrides...")
+
         let capturedOverridesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "overrides.txt")
         
         let overrides = filemanager.filesInDirRecursive(path: "/var/db/launchd.db/com.apple.launchd/")

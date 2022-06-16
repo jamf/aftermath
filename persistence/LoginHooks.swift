@@ -35,6 +35,7 @@ class LoginHooks: PersistenceModule {
     }
     
     override func run() {
+        self.log("Collecting login hooks...")
         let userFm = filemanager.homeDirectoryForCurrentUser.path
         let path = "\(userFm)\(self.hooks)"
         let url = URL(fileURLWithPath: path)

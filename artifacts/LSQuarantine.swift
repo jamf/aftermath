@@ -45,40 +45,33 @@ class LSQuarantine: ArtifactsModule {
                     var LSQuarantineSenderAddress: String = ""
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        let col1 = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil {
-                            let timestamp = (String(cString: col1!) as NSString).doubleValue
+                        if let col1 = sqlite3_column_text(queryStatement, 0) {
+                            let timestamp = (String(cString: col1) as NSString).doubleValue
                             LSQuarantineTimeStamp = Aftermath.dateFromTimestamp(timeStamp: timestamp + 978307200)
                         }
                         
-                        let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            LSQuarantineAgentName = String(cString: col2!)
+                        if let col2 = sqlite3_column_text(queryStatement, 1) {
+                            LSQuarantineAgentName = String(cString: col2)
                         }
                         
-                        let col3 = sqlite3_column_text(queryStatement, 2)
-                        if col3 != nil {
-                            LSQuarantineAgentBundleIdentifier = String(cString: col3!)
+                        if let col3 = sqlite3_column_text(queryStatement, 2) {
+                            LSQuarantineAgentBundleIdentifier = String(cString: col3)
                         }
                         
-                        let col4 = sqlite3_column_text(queryStatement, 3)
-                        if col4 != nil {
-                            LSQuarantineDataURLString = String(cString: col4!)
+                        if let col4 = sqlite3_column_text(queryStatement, 3) {
+                            LSQuarantineDataURLString = String(cString: col4)
                         }
                         
-                        let col5 = sqlite3_column_text(queryStatement, 4)
-                        if col5 != nil {
-                            LSQuarantineOriginURLString = String(cString: col5!)
+                        if let col5 = sqlite3_column_text(queryStatement, 4) {
+                            LSQuarantineOriginURLString = String(cString: col5)
                         }
                         
-                        let col6 = sqlite3_column_text(queryStatement, 5)
-                        if col6 != nil {
-                            LSQuarantineSenderName = String(cString: col6!)
+                        if let col6 = sqlite3_column_text(queryStatement, 5) {
+                            LSQuarantineSenderName = String(cString: col6)
                         }
                         
-                        let col7 = sqlite3_column_text(queryStatement, 6)
-                        if col7 != nil {
-                            LSQuarantineSenderAddress = String(cString: col7!)
+                        if let col7 = sqlite3_column_text(queryStatement, 6) {
+                            LSQuarantineSenderAddress = String(cString: col7)
                         }
                         
                         self.addTextToFile(atUrl: parsedLSQuarantine, text: "Timestamp: \(LSQuarantineTimeStamp)\nAgent Name: \(LSQuarantineAgentName)\nAgent Identifier: \(LSQuarantineAgentBundleIdentifier)\nDownload URL: \(LSQuarantineDataURLString)\nOrigin URL: \(LSQuarantineOriginURLString)\nSender Name: \(LSQuarantineSenderName)\nSender Address: \(LSQuarantineSenderAddress)\n")
@@ -92,6 +85,7 @@ class LSQuarantine: ArtifactsModule {
     }
     
     override func run() {
+        self.log("Capturing LSQuarantine data...")
         getLSQuarantine()
     }
 }
