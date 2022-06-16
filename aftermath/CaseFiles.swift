@@ -156,62 +156,7 @@ struct CaseFiles {
             print(error)
         }
     }
-
-//    let analysisCaseDir = URL(fileURLWithPath: "/tmp/Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
-//    let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
-    
-
-//    func CreateCaseDir() {
-//        do {
-//            try FileManager.default.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
-//            print("Aftermath directory created at \(caseDir.relativePath)")
-//        } catch {
-//            print(error)
-//        }
-//    }
-
-//    func CreateCaseDir() {
-//        let destinationURL = URL(fileURLWithPath: "/tmp/")
-//
-//                do {
-//                    let temporaryDirectoryURL =
-//                        try FileManager.default.url(for: .itemReplacementDirectory,
-//                                                    in: .userDomainMask,
-//                                                    appropriateFor: destinationURL,
-//                                                    create: true)
-//                    let temporaryFilename = "Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())"
-//
-//                    let temporaryFileURL =
-//                        temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
-//                    print(temporaryFileURL)
-//                    self.caseDir = temporaryFileURL
-//                    self.logFile = temporaryFileURL.appendingPathComponent("aftermath.log")
-//
-//                } catch {
-//                    print(error)
-//                    exit(1)
-//                }
-//    }
-    // -------------------
-
-
 }
-
-
-
-    // --------------------
-
-
-
-//    func CreateAnalysisCaseDir() {
-//        do {
-//            try FileManager.default.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
-//            print("Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")
-//        } catch {
-//            print(error)
-//        }
-//    }
-//}
 
 
 class TempDirectory {
@@ -226,22 +171,21 @@ class TempDirectory {
                 try FileManager.default.url(for: .itemReplacementDirectory,
                                             in: .userDomainMask,
                                             appropriateFor: destinationURL,
-                                            create: true)
+                                            create: false)
             let temporaryFilename = "Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())"
 
             let temporaryFileURL =
                 temporaryDirectoryURL.appendingPathComponent(temporaryFilename)
-            print(temporaryFileURL)
+            
+            try FileManager.default.createDirectory(at: temporaryFileURL, withIntermediateDirectories: true, attributes: nil)
+            
+            print("Aftermath directory created at \(temporaryFileURL.relativePath)")
             location = temporaryFileURL
             return temporaryFileURL
-          
 
         } catch {
             print(error)
             exit(1)
         }
     }
-    
-      
-
 }
