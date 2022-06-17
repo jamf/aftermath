@@ -44,13 +44,12 @@ let analysisDir = argManager.analysisDir
 let tempDirectory = TempDirectory()
 let location = tempDirectory.createTempDirectory()
 
-
+var url = location.path
 
 
 if mode == "default" {
     // Start Aftermath
-//    var casefiles = CaseFiles.caseFiles
-//    CaseFiles.CreateCaseDir()
+
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
     
@@ -105,11 +104,15 @@ if mode == "default" {
     memoryModule.run()
     mainModule.log("Finishing memory dump")
     
+    // Copy from cache to /tmp
+    let _ = tempDirectory.moveTempDirectory(location: location)
+    
     // End Aftermath
     mainModule.log("Aftermath Finished")
-
+   
+   
 }
-    
+
 
 if mode == "--analyze" {
     // Start Aftermath
@@ -125,5 +128,4 @@ if mode == "--analyze" {
     mainModule.log("Aftermath Finished")
     
 }
-
 
