@@ -41,15 +41,11 @@ let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 let mode = argManager.mode
 let analysisDir = argManager.analysisDir
 
-let tempDirectory = TempDirectory()
-let location = tempDirectory.createTempDirectory()
-
-var url = location.path
-
 
 if mode == "default" {
     // Start Aftermath
 
+    CaseFiles.CreateCaseDir()
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
     
@@ -89,9 +85,9 @@ if mode == "default" {
     let artifactModule = ArtifactsModule()
     artifactModule.run()
     mainModule.log("Finished gathering artifacts")
-
-
-    // Logs
+//
+//
+//    // Logs
     mainModule.log("Started logging unified logs")
     let unifiedLogModule = UnifiedLogModule()
     unifiedLogModule.run()
@@ -105,7 +101,7 @@ if mode == "default" {
     mainModule.log("Finishing memory dump")
     
     // Copy from cache to /tmp
-    let _ = tempDirectory.moveTempDirectory(location: location)
+    CaseFiles.MoveCaseDir()
     
     // End Aftermath
     mainModule.log("Aftermath Finished")
@@ -116,6 +112,10 @@ if mode == "default" {
 
 if mode == "--analyze" {
     // Start Aftermath
+    
+    // Create analysis case file
+    CaseFiles.CreateAnalysisCaseDir()
+    
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Analysis Started")
     
@@ -123,6 +123,9 @@ if mode == "--analyze" {
     let analysisModule = AnalysisModule()
     analysisModule.run()
     mainModule.log("Finished analysis module")
+    
+    // Move analysis directory to tmp
+    CaseFiles.MoveAnalysisCaseDir()
     
     // End Aftermath
     mainModule.log("Aftermath Finished")
