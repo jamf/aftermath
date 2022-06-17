@@ -64,9 +64,11 @@ class TempDirectory {
     }
     
     func moveTempDirectory(location: URL) {
-        print("Moving temp dir from \(location))")
+        let endURL = URL(fileURLWithPath: "/tmp/\(location.lastPathComponent)")
+
+        print("Moving Aftermath directory from \(location.relativePath) to \(endURL.relativePath)")
         do {
-            try FileManager.default.copyItem(at: location, to: URL(fileURLWithPath: "/tmp/\(location.lastPathComponent)"))
+            try FileManager.default.copyItem(at: location, to: endURL)
         } catch {
             print(error)
             exit(1)

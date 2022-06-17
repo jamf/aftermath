@@ -26,6 +26,12 @@ class FileSystemModule: AftermathModule, AMProto {
         let slack = Slack(slackLoc: self.rawDir, writeFile: slackFile)
         slack.run()
         
+        // get data from common directories
+        let commonDirFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "common_directories.txt")
+        let common = CommonDirectories(writeFile: commonDirFile)
+        common.run()
+        
+        
     }
     
 }
