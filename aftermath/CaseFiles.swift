@@ -32,14 +32,21 @@ struct CaseFiles {
         }
     }
     
-    static func MoveCaseDir() {
-        let endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
+    static func MoveCaseDir(outputDir: String) {
         
+        let endURL: URL
+        
+        if outputDir == "default" {
+            endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
+        } else {
+            endURL = URL(fileURLWithPath: "\(outputDir)/\(caseDir.lastPathComponent)")
+        }
         do {
             try FileManager.default.copyItem(at: caseDir, to: endURL)
         } catch {
             print(error)
         }
+
     }
     
     static func MoveAnalysisCaseDir() {

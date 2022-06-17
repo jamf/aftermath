@@ -11,6 +11,7 @@ class ArgManager {
     let availableArgs = ["--analyze", "--cleanup"]
     var mode = "default"
     var analysisDir = ""
+    var outputDir = "default"
     
     init(suppliedArgs: [String]) {
         setArgs(suppliedArgs)
@@ -32,6 +33,12 @@ class ArgManager {
                         mode = arg
                     } else {
                         print("Please specify a valid target path")
+                    }
+                }
+            } else if arg == "-o" {
+                if args.count > x+1 {
+                    if isDirectoryThatExists(path: args[x+1]) {
+                        outputDir = args[x+1]
                     }
                 }
             } else {

@@ -40,6 +40,7 @@ print(#"""
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 let mode = argManager.mode
 let analysisDir = argManager.analysisDir
+let outputDir = argManager.outputDir
 
 
 if mode == "default" {
@@ -81,17 +82,17 @@ if mode == "default" {
 
 
     // Artifacts
-    mainModule.log("Started gathering artifacts...")
-    let artifactModule = ArtifactsModule()
-    artifactModule.run()
-    mainModule.log("Finished gathering artifacts")
+//    mainModule.log("Started gathering artifacts...")
+//    let artifactModule = ArtifactsModule()
+//    artifactModule.run()
+//    mainModule.log("Finished gathering artifacts")
 //
 //
 //    // Logs
-    mainModule.log("Started logging unified logs")
-    let unifiedLogModule = UnifiedLogModule()
-    unifiedLogModule.run()
-    mainModule.log("Finished logging unified logs")
+//    mainModule.log("Started logging unified logs")
+//    let unifiedLogModule = UnifiedLogModule()
+//    unifiedLogModule.run()
+//    mainModule.log("Finished logging unified logs")
 
 
     // Memory
@@ -101,7 +102,7 @@ if mode == "default" {
     mainModule.log("Finishing memory dump")
     
     // Copy from cache to /tmp
-    CaseFiles.MoveCaseDir()
+    CaseFiles.MoveCaseDir(outputDir: outputDir)
     
     // End Aftermath
     mainModule.log("Aftermath Finished")
