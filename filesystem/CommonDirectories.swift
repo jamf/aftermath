@@ -25,22 +25,18 @@ class CommonDirectories: FileSystemModule {
     func dumpTrash(trashRawDir: URL) {
         
         for user in getBasicUsersOnSystem() {
-            
             let path = "\(user.homedir)/.Trash"
 
             for file in filemanager.filesInDirRecursive(path: path) {
                 self.copyFileToCase(fileToCopy: file, toLocation: trashRawDir)
             }
-                
         }
     }
     
     func dumpDownloads(downloadsRawDir: URL) {
         
         for user in getBasicUsersOnSystem() {
-            
             let path = "\(user.homedir)/Downloads"
-            
             
             for file in filemanager.filesInDirRecursive(path: path) {
                 if file.lastPathComponent == ".DS_Store" { continue }
@@ -63,7 +59,5 @@ class CommonDirectories: FileSystemModule {
         self.log("Dumping the Downloads directory")
         let downloadsRawDir = self.createNewDir(dir: self.rawDir, dirname: "downloads")
         dumpDownloads(downloadsRawDir: downloadsRawDir)
-        
     }
-    
 }

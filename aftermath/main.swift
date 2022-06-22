@@ -88,7 +88,7 @@ if mode == "default" {
     mainModule.log("Finished gathering artifacts")
 
     
-//    // Logs
+    // Logs
     mainModule.log("Started logging unified logs")
     let unifiedLogModule = UnifiedLogModule()
     unifiedLogModule.run()
@@ -106,8 +106,6 @@ if mode == "default" {
     
     // End Aftermath
     mainModule.log("Aftermath Finished")
-   
-   
 }
 
 

@@ -215,7 +215,5 @@ class SystemReconModule: AftermathModule, AMProto {
         interfaces(saveFile: interfacesFile)
         environmentVariables(saveFile: environmentVariablesFile)
         securityAssessment(saveFile: systemInformationFile)
-        
     }
 }
-

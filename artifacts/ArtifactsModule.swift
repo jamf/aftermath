@@ -34,7 +34,6 @@ class ArtifactsModule: AftermathModule, AMProto {
         let lsquarantine = LSQuarantine(rawDir: rawDir)
         lsquarantine.run()
         
-        
         let systemConf = SystemConfig(systemConfigDir: systemConfigDir)
         systemConf.run()
         
@@ -45,4 +44,3 @@ class ArtifactsModule: AftermathModule, AMProto {
         logFiles.run()
     }
 }
-

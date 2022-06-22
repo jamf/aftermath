@@ -45,11 +45,7 @@ class FileWalker: FileSystemModule {
         self.log("Finished walkin")
     }
     
-    
     enum ignoreDirectory: String, CaseIterable {
          case Lib = ""
     }
-    
 }
-
-

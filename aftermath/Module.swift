@@ -29,7 +29,7 @@ class AftermathModule {
     init() {
         if argManager.mode == "--analyze" {
             caseLogSelector = CaseFiles.analysisLogFile
-            caseDirSelector = CaseFiles.analysisCaseDir            
+            caseDirSelector = CaseFiles.analysisCaseDir
         } else {
             caseLogSelector = CaseFiles.logFile
             caseDirSelector = CaseFiles.caseDir
