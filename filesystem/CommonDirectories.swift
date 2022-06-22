@@ -10,11 +10,9 @@ import Foundation
 class CommonDirectories: FileSystemModule {
     
     let writeFile: URL
-//    let raw: URL
     
     init(writeFile: URL) {
         self.writeFile = writeFile
-//        self.raw = raw
     }
     
     func dumpTmp(tmpDir: String, tmpRawDir: URL) {
@@ -29,10 +27,11 @@ class CommonDirectories: FileSystemModule {
         for user in getBasicUsersOnSystem() {
             
             let path = "\(user.homedir)/.Trash"
-            
+
             for file in filemanager.filesInDirRecursive(path: path) {
                 self.copyFileToCase(fileToCopy: file, toLocation: trashRawDir)
             }
+                
         }
     }
     
@@ -42,7 +41,9 @@ class CommonDirectories: FileSystemModule {
             
             let path = "\(user.homedir)/Downloads"
             
+            
             for file in filemanager.filesInDirRecursive(path: path) {
+                if file.lastPathComponent == ".DS_Store" { continue }
                 self.copyFileToCase(fileToCopy: file, toLocation: downloadsRawDir)
             }
         }

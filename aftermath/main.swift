@@ -82,17 +82,17 @@ if mode == "default" {
 
 
     // Artifacts
-//    mainModule.log("Started gathering artifacts...")
-//    let artifactModule = ArtifactsModule()
-//    artifactModule.run()
-//    mainModule.log("Finished gathering artifacts")
-//
-//
+    mainModule.log("Started gathering artifacts...")
+    let artifactModule = ArtifactsModule()
+    artifactModule.run()
+    mainModule.log("Finished gathering artifacts")
+
+    
 //    // Logs
-//    mainModule.log("Started logging unified logs")
-//    let unifiedLogModule = UnifiedLogModule()
-//    unifiedLogModule.run()
-//    mainModule.log("Finished logging unified logs")
+    mainModule.log("Started logging unified logs")
+    let unifiedLogModule = UnifiedLogModule()
+    unifiedLogModule.run()
+    mainModule.log("Finished logging unified logs")
 
 
     // Memory

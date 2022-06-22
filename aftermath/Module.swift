@@ -141,7 +141,7 @@ class AftermathModule {
     
     func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil) {
         if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
-            self.log("\(Date().ISO8601Format())-  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
+            self.log("\(Date().ISO8601Format()) -  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
             return
         }
         
@@ -176,7 +176,7 @@ class AftermathModule {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
     }
-    
+       
     enum Color: String {
         case black = "\u{001B}[0;30m"
         case red = "\u{001B}[0;31m"
@@ -188,6 +188,7 @@ class AftermathModule {
         case white = "\u{001B}[0;37m"
         case colorstop = "\u{001B}[0;0m"
     }
+    
     enum SystemUsers: String, CaseIterable {
         case nobody = "nobody"
         case daemon = "daemon"

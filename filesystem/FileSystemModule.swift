@@ -31,7 +31,11 @@ class FileSystemModule: AftermathModule, AMProto {
         let common = CommonDirectories(writeFile: commonDirFile)
         common.run()
         
+        let sysUsers = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "users.txt")
+        for user in getUsersOnSystem() { self.addTextToFile(atUrl: sysUsers, text: "\nUsers\n\(user.username)\n\(user.homedir)\n") }
         
+        let fileWalker = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "file_walker.txt")
+        let walker = FileWalker(writeFile: fileWalker)
+        walker.run()
     }
-    
 }

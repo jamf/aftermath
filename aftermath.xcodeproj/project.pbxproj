@@ -24,6 +24,7 @@
 		A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54227F76C58002BB3C8 /* Cron.swift */; };
 		A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54627FE147D002BB3C8 /* Overrides.swift */; };
 		A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */; };
+		A0DA61B028625E1D00224810 /* FileWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DA61AF28625E1D00224810 /* FileWalker.swift */; };
 		A0E1E3E4275EC3D2008D0DC6 /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */; };
 		A0E1E3E6275EC433008D0DC6 /* MemoryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */; };
 		A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */; };
@@ -72,6 +73,7 @@
 		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
 		A0D6D54627FE147D002BB3C8 /* Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overrides.swift; sourceTree = "<group>"; };
 		A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensions.swift; sourceTree = "<group>"; };
+		A0DA61AF28625E1D00224810 /* FileWalker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWalker.swift; sourceTree = "<group>"; };
 		A0E1E3E3275EC3D2008D0DC6 /* Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
 		A0E1E3E5275EC433008D0DC6 /* MemoryModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryModule.swift; sourceTree = "<group>"; };
 		A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModule.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */,
 				A05BF3BE284FF8CF009E197B /* Slack.swift */,
 				A0E22EF1285CD60A003A411A /* CommonDirectories.swift */,
+				A0DA61AF28625E1D00224810 /* FileWalker.swift */,
 			);
 			path = filesystem;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
 				A09B239C2848F6050062D592 /* Periodic.swift in Sources */,
+				A0DA61B028625E1D00224810 /* FileWalker.swift in Sources */,
 				A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */,
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
