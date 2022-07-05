@@ -41,6 +41,7 @@ let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 let mode = argManager.mode
 let analysisDir = argManager.analysisDir
 let outputDir = argManager.outputDir
+let deepScan = argManager.deep
 
 
 if mode == "default" {
@@ -119,7 +120,7 @@ if mode == "--analyze" {
     mainModule.log("Aftermath Analysis Started")
     
     mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
-    let analysisModule = AnalysisModule()
+    let analysisModule = AnalysisModule(analysisDir: analysisDir)
     analysisModule.run()
     mainModule.log("Finished analysis module")
     
