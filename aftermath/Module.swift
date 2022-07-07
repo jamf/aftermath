@@ -141,7 +141,7 @@ class AftermathModule {
     
     func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil) {
         if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
-            self.log("\(Date().ISO8601Format())-  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
+            self.log("\(Date().ISO8601Format()) -  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
             return
         }
         
@@ -168,10 +168,25 @@ class AftermathModule {
         
         let module = URL(fileURLWithPath: file).lastPathComponent
         let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
-        print(entry)
+        
+        let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
+        print(colorized)
+
         if displayOnly == false {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
+    }
+       
+    enum Color: String {
+        case black = "\u{001B}[0;30m"
+        case red = "\u{001B}[0;31m"
+        case green = "\u{001B}[0;32m"
+        case yellow = "\u{001B}[0;33m"
+        case blue = "\u{001B}[0;34m"
+        case magenta = "\u{001B}[0;35m"
+        case cyan = "\u{001B}[0;36m"
+        case white = "\u{001B}[0;37m"
+        case colorstop = "\u{001B}[0;0m"
     }
     
     enum SystemUsers: String, CaseIterable {

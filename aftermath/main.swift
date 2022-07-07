@@ -40,12 +40,13 @@ print(#"""
 let argManager = ArgManager(suppliedArgs:CommandLine.arguments)
 let mode = argManager.mode
 let analysisDir = argManager.analysisDir
-
-
+let outputDir = argManager.outputDir
+let deepScan = argManager.deep
 
 
 if mode == "default" {
     // Start Aftermath
+
     CaseFiles.CreateCaseDir()
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
@@ -87,7 +88,7 @@ if mode == "default" {
     artifactModule.run()
     mainModule.log("Finished gathering artifacts")
 
-
+    
     // Logs
     mainModule.log("Started logging unified logs")
     let unifiedLogModule = UnifiedLogModule()
@@ -101,26 +102,33 @@ if mode == "default" {
     memoryModule.run()
     mainModule.log("Finishing memory dump")
     
+    // Copy from cache to /tmp
+    CaseFiles.MoveCaseDir(outputDir: outputDir)
+    
     // End Aftermath
     mainModule.log("Aftermath Finished")
-
 }
-    
+
 
 if mode == "--analyze" {
     // Start Aftermath
+    
+    // Create analysis case file
     CaseFiles.CreateAnalysisCaseDir()
+    
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Analysis Started")
     
     mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
-    let analysisModule = AnalysisModule()
+    let analysisModule = AnalysisModule(analysisDir: analysisDir)
     analysisModule.run()
     mainModule.log("Finished analysis module")
+    
+    // Move analysis directory to tmp
+    CaseFiles.MoveAnalysisCaseDir()
     
     // End Aftermath
     mainModule.log("Aftermath Finished")
     
 }
-
 

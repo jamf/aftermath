@@ -38,9 +38,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
                 let logfile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: filtername)
                 self.addTextToFile(atUrl: logfile, text: output)
                 //self.caseHandler.log(module: self.moduleName, "Done filtering for \(filtername) events")
-            } else {
-                //self.caseHandler.log(module: self.moduleName, "No logs found for \(filtername) events")
-            }
+            } else { continue }
         }
     }
     

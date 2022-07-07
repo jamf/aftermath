@@ -32,6 +32,8 @@ class Periodic: PersistenceModule {
     }
         
     override func run() {
+        self.log("Collecting periodic scripts...")
+
         let root = "/etc/periodic/"
         
         let allScripts = ["daily", "weekly", "monthly"]

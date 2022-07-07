@@ -44,4 +44,3 @@ class ArtifactsModule: AftermathModule, AMProto {
         logFiles.run()
     }
 }
-

@@ -14,6 +14,7 @@ class NetworkModule: AftermathModule, AMProto {
     
     func run() {
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "network.txt")
+        
         let airport = Airport(writeFile: writeFile)
         airport.run()
     }

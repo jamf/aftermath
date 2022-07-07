@@ -10,7 +10,9 @@ import Foundation
 class ArgManager {
     let availableArgs = ["--analyze", "--cleanup"]
     var mode = "default"
-    var analysisDir = ""
+    var analysisDir = "default"
+    var outputDir = "default"
+    var deep = false
     
     init(suppliedArgs: [String]) {
         setArgs(suppliedArgs)
@@ -37,6 +39,18 @@ class ArgManager {
             } else {
                 print("Unidentified argument " + arg)
                 exit(1)
+            }
+            
+            if arg == "-o" || arg == "--output" {
+                if args.count > x+1 {
+                    if isDirectoryThatExists(path: args[x+1]) {
+                        outputDir = args[x+1]
+                    }
+                }
+            }
+            
+            if arg == "--deep" || arg == "-d" {
+                deep = true
             }
         }
     }
@@ -69,6 +83,8 @@ class ArgManager {
     }
     
     func printHelp() {
+        print("-o -> specify an output location for Aftermath results")
+        print("     usage: -o Users/user/Desktop")
         print("--analyze -> Analyze the results of the Aftermath results")
         print("     usage: --analyze <path_to_file>")
         print("--cleanup -> Remove Aftermath Response Folders")

@@ -30,6 +30,8 @@ class Cron: PersistenceModule {
     }
     
     override func run() {
+        self.log("Collecting cron jobs...")
+
         let cronRawDir = self.createNewDir(dir: self.saveToRawDir, dirname: "cron_dump")
         
         let capturedCronJobs = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "crontabs.txt")
