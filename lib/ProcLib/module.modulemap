@@ -1,0 +1,4 @@
+module ProcLib {
+  header "ProcLib.h"
+  link "libproc"
+}

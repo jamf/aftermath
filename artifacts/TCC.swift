@@ -15,6 +15,24 @@ class TCC: ArtifactsModule {
         self.tccDir = tccDir
     }
     
+    func getFDAApprovedApps() {
+        let fdaFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
+        
+        for user in getBasicUsersOnSystem() {
+            
+            let tcc_path = URL(fileURLWithPath:"\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
+            
+            if !filemanager.fileExists(atPath: tcc_path.relativePath) { continue }
+            
+        
+           /// let fdaApprovedApps = """
+                //    sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \\
+                //      "select client from access where auth_value and service = 'kTCCServiceSystemPolicyAllFiles'"
+                
+        }
+
+    }
+    
     func getTCC() {
         
         let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")

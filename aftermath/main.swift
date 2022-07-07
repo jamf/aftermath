@@ -66,6 +66,10 @@ if mode == "default" {
 
 
     // Processes
+    mainModule.log("Starting process dump...")
+    let procModule = ProcessModule()
+    procModule.run()
+    mainModule.log("Finished gathering process information")
 
 
     // Persistence
