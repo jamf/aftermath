@@ -180,7 +180,6 @@ class SystemReconModule: AftermathModule, AMProto {
                     "SIP Status": "csrutil status",
                     "Login History": "last",
                     "Screen Sharing": "sudo launchctl list com.apple.screensharing",
-                    "FDA Approved": "\(fdaApprovedApps)",
                     "I/O Statistics": "iostat",
                     "Network Interface Parameters": "ifconfig",
                     "Firewall Status (Enabled = 1, Disabled = 0)": "defaults read /Library/Preferences/com.apple.alf globalstate",
