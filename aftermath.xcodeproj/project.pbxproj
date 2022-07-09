@@ -14,6 +14,8 @@
 		8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A029AB152876A02800649701 /* ProcessModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB142876A02800649701 /* ProcessModule.swift */; };
 		A029AB192876A29600649701 /* Pids.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB182876A29600649701 /* Pids.swift */; };
+		A029AB1C28774CA400649701 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB1B28774CA400649701 /* Tree.swift */; };
+		A029AB2B2877F52D00649701 /* launchdXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = A029AB2A2877F52D00649701 /* launchdXPC.m */; };
 		A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */; };
 		A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BE284FF8CF009E197B /* Slack.swift */; };
 		A0759135275985170006766F /* TCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0759134275985170006766F /* TCC.swift */; };
@@ -63,9 +65,14 @@
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
 		8ABB9E2A27568EB700C0ADD7 /* UnifiedLogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedLogModule.swift; sourceTree = "<group>"; };
 		8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aftermath.swift; sourceTree = "<group>"; };
-		A029AB1228769F8D00649701 /* ProcLib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ProcLib; sourceTree = "<group>"; };
 		A029AB142876A02800649701 /* ProcessModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessModule.swift; sourceTree = "<group>"; };
 		A029AB182876A29600649701 /* Pids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pids.swift; sourceTree = "<group>"; };
+		A029AB1B28774CA400649701 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		A029AB282877F4F400649701 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		A029AB292877F50900649701 /* launchdXPC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = launchdXPC.h; sourceTree = "<group>"; };
+		A029AB2A2877F52D00649701 /* launchdXPC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = launchdXPC.m; sourceTree = "<group>"; };
+		A029AB2D2877F55600649701 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		A029AB2E2877F56E00649701 /* ProcLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcLib.h; sourceTree = "<group>"; };
 		A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemModule.swift; sourceTree = "<group>"; };
 		A05BF3BE284FF8CF009E197B /* Slack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slack.swift; sourceTree = "<group>"; };
 		A0759134275985170006766F /* TCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCC.swift; sourceTree = "<group>"; };
@@ -129,18 +136,39 @@
 		A029AB1128769F6C00649701 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				A029AB1228769F8D00649701 /* ProcLib */,
+				A029AB2C2877F53F00649701 /* ProcLib */,
+				A029AB272877F4C700649701 /* launchdXPC */,
 			);
 			path = libs;
 			sourceTree = "<group>";
 		};
-		A029AB132876A01300649701 /* process */ = {
+		A029AB132876A01300649701 /* processes */ = {
 			isa = PBXGroup;
 			children = (
 				A029AB142876A02800649701 /* ProcessModule.swift */,
 				A029AB182876A29600649701 /* Pids.swift */,
+				A029AB1B28774CA400649701 /* Tree.swift */,
 			);
-			path = process;
+			path = processes;
+			sourceTree = "<group>";
+		};
+		A029AB272877F4C700649701 /* launchdXPC */ = {
+			isa = PBXGroup;
+			children = (
+				A029AB282877F4F400649701 /* module.modulemap */,
+				A029AB292877F50900649701 /* launchdXPC.h */,
+				A029AB2A2877F52D00649701 /* launchdXPC.m */,
+			);
+			path = launchdXPC;
+			sourceTree = "<group>";
+		};
+		A029AB2C2877F53F00649701 /* ProcLib */ = {
+			isa = PBXGroup;
+			children = (
+				A029AB2D2877F55600649701 /* module.modulemap */,
+				A029AB2E2877F56E00649701 /* ProcLib.h */,
+			);
+			path = ProcLib;
 			sourceTree = "<group>";
 		};
 		A076742D2755797800ED7066 /* artifacts */ = {
@@ -230,7 +258,7 @@
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
-				A029AB132876A01300649701 /* process */,
+				A029AB132876A01300649701 /* processes */,
 				A029AB1128769F6C00649701 /* libs */,
 				A08342D4284A8211005E437A /* analysis */,
 				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
@@ -299,6 +327,7 @@
 				TargetAttributes = {
 					A3CD4E51274434EE00869ECB = {
 						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -330,6 +359,7 @@
 				A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
 				A029AB152876A02800649701 /* ProcessModule.swift in Sources */,
+				A029AB1C28774CA400649701 /* Tree.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* main.swift in Sources */,
 				A3A3A3CC27472CD900F8F557 /* ArgManager.swift in Sources */,
 				A374535A275735B40074B65C /* LoginHooks.swift in Sources */,
@@ -339,6 +369,7 @@
 				A0E1E3F8275ED35D008D0DC6 /* Airport.swift in Sources */,
 				A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */,
 				70A44403275707A90035F40E /* SystemReconModule.swift in Sources */,
+				A029AB2B2877F52D00649701 /* launchdXPC.m in Sources */,
 				A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */,
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
@@ -485,12 +516,22 @@
 		A3CD4E5A274434EE00869ECB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				NEW_SETTING = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -498,12 +539,21 @@
 		A3CD4E5B274434EE00869ECB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				NEW_SETTING = "";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
