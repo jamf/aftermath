@@ -35,25 +35,17 @@ class Node<T> {
     
     func printNodeData() -> [String] {
         var val: String
-        
-            if self.procPath.hasSuffix(".plist") {
-                val = "\u{001B}[0;34m\(self.procPath)\u{001B}[0;0m"
-            } else if self.procPath.hasSuffix("Terminated)") {
-                val = "\u{001B}[0;31m\(self.procPath)\u{001B}[0;0m"
-            } else if self.procPath.hasSuffix("(Exec'ed into below process)") {
-                val = "\u{001B}[0;33m\(self.procPath)   \(self.pid)\u{001B}[0;0m"
-            } else {
-                val = "\(self.procPath)   \u{001B}[0;35m\(self.pid)\u{001B}[0;0m"
-            
-                val += "   \u{001B}[0;36m\(self.timestamp)\u{001B}[0;0m"
-            
-           
-                if let source = self.source {
-                    val += "   \u{001B}[0;31m\(source)\u{001B}[0;0m"
-                }
-                
-            }
     
+        if self.procPath.hasSuffix(".plist") || self.procPath.hasSuffix("Terminated)") {
+           val = self.procPath
+        } else {
+           val = "\(self.procPath)   \(self.pid)"
+           val += "   \(self.timestamp)"
+           
+           if let source = self.source {
+               val += "   \(source)"
+           }
+       }
             return [val] + self.children.flatMap{$0.printNodeData()}.map{"    "+$0}
     }
     
