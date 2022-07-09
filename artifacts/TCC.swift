@@ -6,6 +6,7 @@
 
 import Foundation
 import SQLite3
+import AppKit
 
 class TCC: ArtifactsModule {
     
@@ -15,100 +16,97 @@ class TCC: ArtifactsModule {
         self.tccDir = tccDir
     }
     
-    func getFDAApprovedApps() {
-        let fdaFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
+    fileprivate func queryTCC(_ tcc_path: URL, _ capturedTCC: URL, _ appendedName: String) {
+        var db : OpaquePointer?
         
-        for user in getBasicUsersOnSystem() {
+        if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
+            var queryStatement: OpaquePointer? = nil
+            let queryString = "select client, auth_value, auth_reason, service from access"
             
-            let tcc_path = URL(fileURLWithPath:"\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
-            
-            if !filemanager.fileExists(atPath: tcc_path.relativePath) { continue }
-            
-        
-           /// let fdaApprovedApps = """
-                //    sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \\
-                //      "select client from access where auth_value and service = 'kTCCServiceSystemPolicyAllFiles'"
+            if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                var client: String = ""
+                var authValue: String = ""
+                var authReason: String = ""
+                var service: String = ""
                 
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    
+                    let col1 = sqlite3_column_text(queryStatement, 0)
+                    if let col1 = col1 { client = String(cString: col1) }
+                    
+                    let col2 = sqlite3_column_text(queryStatement, 1)
+                    if let col2 = col2 {
+                        authValue = String(cString: col2)
+                        for item in TCCAuthValue.allCases {
+                            if authValue == String(item.rawValue) {
+                                authValue = String(describing: item)
+                            }
+                        }
+                    }
+                    
+                    let col3 = sqlite3_column_text(queryStatement, 2)
+                    if let col3 = col3 {
+                        authReason = String(cString: col3)
+                        for item in TCCAuthReason.allCases {
+                            if authReason == String(item.rawValue) {
+                                authReason = String(describing: item)
+                            }
+                        }
+                    }
+                    
+                    let col4 = sqlite3_column_text(queryStatement, 3)
+                    if let col4 = col4 {
+                        service = String(cString: col4)
+                        for item in TCCService.allCases {
+                            if service == String(item.rawValue) {
+                                service = String(describing: item)
+                            }
+                        }
+                    }
+                    
+                    self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
+                }
+            }
+        } else {
+            self.log("An error occurred when attempting to query the TCC database for \(appendedName)...")
         }
-
     }
     
     func getTCC() {
-        
+
         let capturedTCC = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "tccItems.txt")
         
+        var tcc_paths = [URL(fileURLWithPath: "/Library/Application Support/com.apple.TCC/TCC.db")]
+        
         for user in getBasicUsersOnSystem() {
-    
             let tcc_path = URL(fileURLWithPath:"\(user.homedir)/Library/Application Support/com.apple.TCC/TCC.db")
-            
             if !filemanager.fileExists(atPath: tcc_path.relativePath) { continue }
-            
-            
-            self.copyFileToCase(fileToCopy: tcc_path, toLocation: tccDir, newFileName: "tcc_\(user.username)")
-            
-            
-            var db : OpaquePointer?
-            
-            if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
-                var queryStatement: OpaquePointer? = nil
-                let queryString = "select client, auth_value, auth_reason, service from access"
-                
-                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                    var client: String = ""
-                    var authValue: String = ""
-                    var authReason: String = ""
-                    var service: String = ""
-                    
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        
-                        let col1 = sqlite3_column_text(queryStatement, 0)
-                        if let col1 = col1 { client = String(cString: col1) }
-                        
-                        let col2 = sqlite3_column_text(queryStatement, 1)
-                        if let col2 = col2 {
-                            authValue = String(cString: col2)
-                            for item in TCCAuthValue.allCases {
-                                if authValue == String(item.rawValue) {
-                                    authValue = String(describing: item)
-                                }
-                            }
-                        }
-                        
-                        let col3 = sqlite3_column_text(queryStatement, 2)
-                            if let col3 = col3 {
-                                authReason = String(cString: col3)
-                                for item in TCCAuthReason.allCases {
-                                    if authReason == String(item.rawValue) {
-                                        authReason = String(describing: item)
-                                    }
-                                }
-                            }
-                        
-                        let col4 = sqlite3_column_text(queryStatement, 3)
-                            if let col4 = col4 {
-                                service = String(cString: col4)
-                                for item in TCCService.allCases {
-                                    if service == String(item.rawValue) {
-                                        service = String(describing: item)
-                                    }
-                                }
-                            }
-                        
-                        self.addTextToFile(atUrl: capturedTCC, text: "TCC Data for \(user.username)")
-                        self.addTextToFile(atUrl: capturedTCC, text: "Name: \(client)\nRequested Service: \(service)\nAuth Value: \(authValue)\nAuth Reason: \(authReason)\n")
-                    }
-                }
-                self.log("Finished capturing TCC data for \(user.username)")
-            } else {
-                self.log("An error occurred when attempting to query the TCC database for user \(user.username)...")
-            }
+
+            tcc_paths.append(tcc_path)
         }
+        
+        for tcc_path in tcc_paths {
+            var appendedName: String
+            if tcc_path.pathComponents[1] == "Library" {
+                appendedName = "root"
+            } else {
+                appendedName = tcc_path.pathComponents[2]
+            }
+            
+            self.copyFileToCase(fileToCopy: tcc_path, toLocation: tccDir, newFileName: "tcc_\(appendedName)")
+            
+            self.addTextToFile(atUrl: capturedTCC, text: "TCC Data for \(appendedName)")
+            queryTCC(tcc_path, capturedTCC, appendedName)
+            self.log("Finished TCC query on TCC database for \(appendedName)")
+        }
+    
         self.log("Finished querying TCC")
     }
     
     override func run() {
         self.log("Collecting TCC information...")
         getTCC()
+        
     }
     
     enum TCCAuthValue: String, CaseIterable {
