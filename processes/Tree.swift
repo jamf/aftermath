@@ -2,18 +2,9 @@
 //  tree.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 7/7/22.
-//
-
-import Foundation
-
-//
-//  tree.swift
-//  TrueTree
-//
-//  Created by Jaron Bradley on 11/2/19.
+// The following code (with minor modifications) is from TrueTree, written by Jaron Bradley.
 //  2020 TheMittenMac
-//
+// TrueTree: https://github.com/themittenmac/TrueTree
 // Inspired by https://www.journaldev.com/21383/swift-tree-binary-tree-data-structure
 
 
@@ -62,13 +53,8 @@ class Node<T> {
                 }
                 
             }
-            
-         
-        
-   
+    
             return [val] + self.children.flatMap{$0.printNodeData()}.map{"    "+$0}
-        
-        
     }
     
     func printTree(_ toFile: URL?) {
@@ -220,5 +206,4 @@ class Tree {
         
         return nodePidDict
     }
-
 }
