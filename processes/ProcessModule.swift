@@ -19,7 +19,19 @@ class ProcessModule: AftermathModule {
         
         let saveFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "process.txt")
         
-        let proc = Pids(procRawDir: rawDir, saveFile: saveFile)
-        proc.run()
+        let tree = Tree()
+        
+        // Build nodes
+        let nodePidDict = tree.createNodeDictionary()
+
+        // Declare a variable for the root node
+        
+        
+        let treeRootNode = tree.buildTrueTree(nodePidDict)
+        
+        treeRootNode.printTree(saveFile)
+        
+//        let proc = Pids() // procRawDir: rawDir, saveFile: saveFile
+//        proc.run()
     }
 }
