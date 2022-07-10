@@ -13,6 +13,7 @@ struct CaseFiles {
     static let logFile = caseDir.appendingPathComponent("aftermath.log")
     static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
+    static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
     
     static func CreateCaseDir() {
         do {

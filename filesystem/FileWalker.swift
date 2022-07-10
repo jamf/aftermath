@@ -36,26 +36,8 @@ class FileWalker: FileSystemModule {
             self.log("Querying directory \(p)")
             let directory = filemanager.filesInDirRecursive(path: p)
             for file in directory {
-                if let mditem = MDItemCreate(nil, file.path as CFString),
-                    let mdnames = MDItemCopyAttributeNames(mditem),
-                    let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
-                    
-                    self.addTextToFile(atUrl: self.writeFile, text: "File: \(file.path)")
-                    
-                    if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
-                        self.addTextToFile(atUrl: self.writeFile, text: "Accessed: \(lastAccessed)")
-                    } else {
-                        self.addTextToFile(atUrl: self.writeFile, text: "Accessed: Unknown")
-                    }
-                    if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
-                        self.addTextToFile(atUrl: self.writeFile, text: "Modified: \(lastModified)\n")
-                    } else {
-                        self.addTextToFile(atUrl: self.writeFile, text: "Modified: Unknown\n")
-                    }
-
-                 } else {
-                     print("Can't get attributes for \(file.path)")
-                 }
+                
+                self.getFileMetadata(fromFile: file)
             }
         }
     }
