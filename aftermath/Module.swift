@@ -145,6 +145,9 @@ class AftermathModule {
             return
         }
         
+        // before copying file, capture it's metadata
+        self.getFileMetadata(fromFile: fileToCopy)
+        
         var to = caseDirSelector
         if let toLocation = toLocation { to = toLocation }
         
@@ -162,6 +165,41 @@ class AftermathModule {
             print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
         }
         
+    }
+    
+    func getFileMetadata(fromFile: URL) {
+        
+        // ignore /private/var/audit/ directory
+        if fromFile.pathComponents.contains("audit") {
+            return
+        }
+        
+        var metadata: String
+        
+        if let mditem = MDItemCreate(nil, fromFile.path as CFString),
+            let mdnames = MDItemCopyAttributeNames(mditem),
+            let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
+            
+            metadata = "\(fromFile.path),"
+            
+            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
+                metadata.append("\(lastAccessed),")
+            } else {
+                metadata.append("unknown,")
+            }
+            if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
+                metadata.append("\(lastModified)")
+
+            } else {
+                metadata.append("unknown")
+            }
+            
+            self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)
+
+         } else {
+             print("Can't get attributes for \(fromFile.path)")
+         }
+
     }
     
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {

@@ -174,16 +174,12 @@ class SystemReconModule: AftermathModule, AMProto {
     
     func securityAssessment(saveFile: URL) {
         
-        let fdaApprovedApps = """
-                sqlite3 /Library/Application\\ Support/com.apple.TCC/TCC.db \\
-                  "select client from access where auth_value and service = 'kTCCServiceSystemPolicyAllFiles'"
-                """
+       
                 
         let dict = ["Gatekeeper Status": "spctl --status",
                     "SIP Status": "csrutil status",
                     "Login History": "last",
                     "Screen Sharing": "sudo launchctl list com.apple.screensharing",
-                    "FDA Approved": "\(fdaApprovedApps)",
                     "I/O Statistics": "iostat",
                     "Network Interface Parameters": "ifconfig",
                     "Firewall Status (Enabled = 1, Disabled = 0)": "defaults read /Library/Preferences/com.apple.alf globalstate",

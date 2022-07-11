@@ -44,6 +44,8 @@ let outputDir = argManager.outputDir
 let deepScan = argManager.deep
 
 
+
+
 if mode == "default" {
     // Start Aftermath
 
@@ -51,6 +53,7 @@ if mode == "default" {
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
     
+    mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,accessed,modified")
     // System Recon
     mainModule.log("Started system recon")
     let systemReconModule = SystemReconModule()
@@ -66,6 +69,10 @@ if mode == "default" {
 
 
     // Processes
+    mainModule.log("Starting process dump...")
+    let procModule = ProcessModule()
+    procModule.run()
+    mainModule.log("Finished gathering process information")
 
 
     // Persistence
