@@ -1,4 +1,4 @@
-AfterMath
+
 
           \      _|  |                 \  |         |    |
          _ \    |    __|   _ \   __|  |\/ |   _` |  __|  __ \
@@ -24,3 +24,47 @@ AfterMath
       ;       ;                       +:   ~~--  `:'  -';
                                        `:         : .::/
           ;                            ;;+_  :::. :..;;;
+
+
+# Aftermath
+<logo>
+## About
+Aftermath is a  Swift-based, open-source incident response framework.
+
+Aftermath can be leveraged by defenders in order to collect and subsequently analyze the data from the compromised host.
+
+
+## Usage
+Aftermath needs to be root, as well as full disk access (FDA) in order to run. FDA can be granted to the Terminal application in which it is running. If using an MDM to deploy Aftermath, FDA can be granted through PPPC in your MDM solution.
+
+The default usage of Aftermath runs 
+```bash
+./Aftermath
+```
+To specify certain options
+```bash
+./Aftermath [option1] [option2]
+```
+Example
+```bash
+./Aftermath -o /Users/user/Desktop --deep
+```
+
+## Help Menu
+
+```bash
+-o -> specify an output location for Aftermath results
+     usage: -o Users/user/Desktop
+--analyze -> Analyze the results of the Aftermath results
+     usage: --analyze <path_to_file>
+--cleanup -> Remove Aftermath Response Folders
+```
+
+## Contributors
+- Stuart Ashenbrenner
+- Matt Benyo
+- Jaron Bradley
+- Ferdous Saljooki
+
+## Thank You
+This project leverages the open source [TrueTree](https://github.com/themittenmac/TrueTree) project, written by Jaron Bradley. 
