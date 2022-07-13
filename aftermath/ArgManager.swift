@@ -8,7 +8,7 @@ import Foundation
 
 
 class ArgManager {
-    let availableArgs = ["--analyze", "--cleanup"]
+    let availableArgs = ["--analyze", "--cleanup", "--deep", "-d", "-o", "--output", "-h", "-help"]
     var mode = "default"
     var analysisDir = "default"
     var outputDir = "default"
@@ -18,16 +18,21 @@ class ArgManager {
         setArgs(suppliedArgs)
     }
     
+    
+    
     func setArgs(_ args:[String]) {
         for (x,arg) in (args).enumerated() {
             if x == 0 || !arg.starts(with: "-") {
                 continue
-            } else if arg == "-h" || arg == "-help" {
+            }
+            if arg == "-h" || arg == "-help" {
                 self.printHelp()
-            } else if arg == "--cleanup" {
+            }
+            if arg == "--cleanup" {
                 self.cleanup()
                 exit(1)
-            } else if arg == "--analyze" {
+            }
+            if arg == "--analyze" {
                 if args.count > x+1 {
                     analysisDir = args[x+1]
                     if isDirectoryThatExists(path: analysisDir) {
@@ -36,21 +41,16 @@ class ArgManager {
                         print("Please specify a valid target path")
                     }
                 }
-            } else {
-                print("Unidentified argument " + arg)
-                exit(1)
             }
-            
+            if arg == "--deep" {
+                deep = true
+            }
             if arg == "-o" || arg == "--output" {
                 if args.count > x+1 {
                     if isDirectoryThatExists(path: args[x+1]) {
                         outputDir = args[x+1]
                     }
                 }
-            }
-            
-            if arg == "--deep" || arg == "-d" {
-                deep = true
             }
         }
     }

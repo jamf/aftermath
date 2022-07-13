@@ -31,11 +31,11 @@
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
 
-Aftermath can be leveraged by defenders in order to collect and subsequently analyze the data from the compromised host.
+Aftermath can be leveraged by defenders in order to collect and subsequently analyze the data from the compromised host. Aftermath can be deployed from an MDM (ideally), but it can also run independently. 
 
 
 ## Usage
-Aftermath needs to be root, as well as full disk access (FDA) in order to run. FDA can be granted to the Terminal application in which it is running. If using an MDM to deploy Aftermath, FDA can be granted through PPPC in your MDM solution.
+Aftermath needs to be root, as well as have full disk access (FDA) in order to run. FDA can be granted to the Terminal application in which it is running. If using an MDM to deploy Aftermath, FDA can be granted through PPPC in your MDM solution.
 
 The default usage of Aftermath runs 
 ```bash
@@ -58,6 +58,8 @@ Example
 --analyze -> Analyze the results of the Aftermath results
      usage: --analyze <path_to_file>
 --cleanup -> Remove Aftermath Response Folders
+--deep -> Perform a deep scan of the file system for modified and accessed timestamped metadata
+    WARNING: This will be a time-intensive scan.
 ```
 
 ## Contributors
