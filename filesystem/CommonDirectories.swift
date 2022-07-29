@@ -10,6 +10,7 @@ import Foundation
 class CommonDirectories: FileSystemModule {
     
     let writeFile: URL
+    var isAftermath: Bool = false
     
     init(writeFile: URL) {
         self.writeFile = writeFile
@@ -17,17 +18,35 @@ class CommonDirectories: FileSystemModule {
     
     func dumpTmp(tmpDir: String, tmpRawDir: URL) {
         
+        isAftermath = false
+        
         for file in filemanager.filesInDirRecursive(path: tmpDir) {
+            
+            for p in file.pathComponents {
+                if p.contains("Aftermath") {
+                    isAftermath = true
+                    break
+                }
+            }
+            if isAftermath { continue }
             self.copyFileToCase(fileToCopy: file, toLocation: tmpRawDir)
         }
     }
     
     func dumpTrash(trashRawDir: URL) {
         
+        isAftermath = false
+        
         for user in getBasicUsersOnSystem() {
             let path = "\(user.homedir)/.Trash"
 
             for file in filemanager.filesInDirRecursive(path: path) {
+                for p in file.pathComponents {
+                    if p.contains("Aftermath") {
+                        isAftermath = true
+                        break
+                    }
+                }
                 self.copyFileToCase(fileToCopy: file, toLocation: trashRawDir)
             }
         }

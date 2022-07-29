@@ -182,14 +182,20 @@ class AftermathModule {
             
             metadata = "\(fromFile.path),"
             
-            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
-                metadata.append("\(lastAccessed),")
+            if let birth = mdattrs[kMDItemContentCreationDate as String] {
+                metadata.append("\(birth),")
             } else {
                 metadata.append("unknown,")
             }
+            
             if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
                 metadata.append("\(lastModified)")
-
+            } else {
+                metadata.append("unknown,")
+            }
+            
+            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
+                metadata.append("\(lastAccessed),")
             } else {
                 metadata.append("unknown")
             }

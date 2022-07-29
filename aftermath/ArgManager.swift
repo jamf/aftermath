@@ -1,9 +1,3 @@
-//
-//  ArgParser.swift
-//  aftermath
-//
-//
-
 import Foundation
 
 
@@ -39,6 +33,7 @@ class ArgManager {
                         mode = arg
                     } else {
                         print("Please specify a valid target path")
+                        exit(1)
                     }
                 }
             }
@@ -50,6 +45,9 @@ class ArgManager {
                     if isDirectoryThatExists(path: args[x+1]) {
                         outputDir = args[x+1]
                     }
+                } else {
+                    print("Please specify a valid output directory")
+                    exit(1)
                 }
             }
         }

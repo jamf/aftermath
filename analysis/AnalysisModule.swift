@@ -17,9 +17,15 @@ class AnalysisModule: AftermathModule, AMProto {
     
     init(analysisDir: String) {
         self.analysisDir = analysisDir
-        
     }
+    
     func run() {
         self.log("Running from the analysis module")
+        
+        let parser = Parser(analysisDir: analysisDir)
+        parser.parseMetadata()
+        parser.parseTCC()
+        parser.parseLSQuarantine()
+        parser.timelineLog()
     }
 }

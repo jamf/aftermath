@@ -1,0 +1,341 @@
+//
+//  Parser.swift
+//  aftermath
+//
+//  Created by Stuart Ashenbrenner on 7/16/22.
+//
+
+import Foundation
+import SQLite3
+
+
+class Parser: AftermathModule {
+    
+    let analysisInputDir: String
+    lazy var tccWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "tcc.csv")
+    lazy var quarantineWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "lsquarantine.csv")
+    lazy var timelineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "timeline.txt")
+    
+    init(analysisDir: String) {
+        self.analysisInputDir = analysisDir
+    }
+    
+    
+    func parseTCC() {
+        self.addTextToFile(atUrl: tccWriteFile, text: "name, service, auth_value, auth_reason, last_modified")
+        
+        let rawDir = "\(analysisInputDir)/Artifacts/raw/"
+        var tccFiles = [URL]()
+        for f in filemanager.filesInDir(path: rawDir) {
+            if f.lastPathComponent.contains("tcc") {
+                tccFiles.append(f)
+            }
+        }
+        for tcc_path in tccFiles {
+            
+            self.log("Querying TCC database for path \(tcc_path.path)")
+            var db : OpaquePointer?
+            
+            if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
+                var queryStatement: OpaquePointer? = nil
+                let queryString = "select client, auth_value, auth_reason, service, last_modified from access"
+                
+                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                    var client: String = ""
+                    var authValue: String = ""
+                    var authReason: String = ""
+                    var service: String = ""
+                    var last_modified: String = ""
+//                    var time: Date = Date()
+                    
+                    while sqlite3_step(queryStatement) == SQLITE_ROW {
+                        
+                        let col1 = sqlite3_column_text(queryStatement, 0)
+                        if let col1 = col1 { client = String(cString: col1) }
+                        
+                        let col2 = sqlite3_column_text(queryStatement, 1)
+                        if let col2 = col2 {
+                            authValue = String(cString: col2)
+                            for item in TCCAuthValue.allCases {
+                                if authValue == String(item.rawValue) {
+                                    authValue = String(describing: item)
+                                }
+                            }
+                        }
+                        
+                        let col3 = sqlite3_column_text(queryStatement, 2)
+                        if let col3 = col3 {
+                            authReason = String(cString: col3)
+                            for item in TCCAuthReason.allCases {
+                                if authReason == String(item.rawValue) {
+                                    authReason = String(describing: item)
+                                }
+                            }
+                        }
+                        
+                        let col4 = sqlite3_column_text(queryStatement, 3)
+                        if let col4 = col4 {
+                            service = String(cString: col4)
+                            for item in TCCService.allCases {
+                                if service == String(item.rawValue) {
+                                    service = String(describing: item)
+                                }
+                            }
+                        }
+                        
+                        // in epoch time
+                        let col5 = sqlite3_column_text(queryStatement, 4)
+                        if let col5 = col5 {
+                            last_modified = Aftermath.dateFromEpochTimestamp(timeStamp: (String(cString: col5) as NSString).doubleValue)
+                        }
+                        
+                        self.addTextToFile(atUrl: tccWriteFile, text: "\(client),\(service),\(authValue),\(authReason),\(last_modified)")
+                    }
+                }
+            } else {
+                self.log("An error occurred when attempting to query the raw TCC database for \(tcc_path.path)...")
+            }
+        }
+    }
+    
+    func parseLSQuarantine() {
+        
+        self.addTextToFile(atUrl: self.quarantineWriteFile, text: "timestamp, agent_name, bundle_id, data_url, origin_url, sender_name, sender_address")
+        
+        let rawDir = "\(analysisInputDir)/Artifacts/raw/"
+        var quarantineFiles = [URL]()
+        for f in filemanager.filesInDir(path: rawDir) {
+            if f.lastPathComponent.contains("lsquarantine") {
+                quarantineFiles.append(f)
+            }
+        }
+        
+        for fileURL in quarantineFiles {
+        
+            var db : OpaquePointer?
+            
+            if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
+                var queryStatement: OpaquePointer? = nil
+                let queryString = "select LSQuarantineTimeStamp, LSQuarantineAgentName, LSQuarantineAgentBundleIdentifier, LSQuarantineDataURLString, LSQuarantineOriginURLString, LSQuarantineSenderName, LSQuarantineSenderAddress from LSQuarantineEvent order by LSQuarantineTimeStamp desc"
+                
+                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                    var LSQuarantineTimeStamp: String = ""
+                    var LSQuarantineAgentName: String = ""
+                    var LSQuarantineAgentBundleIdentifier: String = ""
+                    var LSQuarantineDataURLString: String = ""
+                    var LSQuarantineOriginURLString: String = ""
+                    var LSQuarantineSenderName: String = ""
+                    var LSQuarantineSenderAddress: String = ""
+                    
+                    while sqlite3_step(queryStatement) == SQLITE_ROW {
+                        // in CFAbsolute Time / Mac Absolute time
+                        if let col1 = sqlite3_column_text(queryStatement, 0) {
+                            LSQuarantineTimeStamp = Aftermath.dateFromEpochTimestamp(timeStamp: (String(cString: col1) as NSString).doubleValue + 978307200) // adding 978307200 converts CFAbsolute to Epoch
+                        }
+                        
+                        if let col2 = sqlite3_column_text(queryStatement, 1) {
+                            LSQuarantineAgentName = String(cString: col2)
+                        }
+                        
+                        if let col3 = sqlite3_column_text(queryStatement, 2) {
+                            LSQuarantineAgentBundleIdentifier = String(cString: col3)
+                        }
+                        
+                        if let col4 = sqlite3_column_text(queryStatement, 3) {
+                            LSQuarantineDataURLString = String(cString: col4)
+                        }
+                        
+                        if let col5 = sqlite3_column_text(queryStatement, 4) {
+                            LSQuarantineOriginURLString = String(cString: col5)
+                        }
+                        
+                        if let col6 = sqlite3_column_text(queryStatement, 5) {
+                            LSQuarantineSenderName = String(cString: col6)
+                        }
+                        
+                        if let col7 = sqlite3_column_text(queryStatement, 6) {
+                            LSQuarantineSenderAddress = String(cString: col7)
+                        }
+                        
+                        self.addTextToFile(atUrl: self.quarantineWriteFile, text: "\(LSQuarantineTimeStamp),\(LSQuarantineAgentName),\(LSQuarantineAgentBundleIdentifier),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString),\(LSQuarantineSenderName),\(LSQuarantineSenderAddress)")
+                    }
+                }
+                
+            self.log("Finished capturing LSQuarantine data")
+                
+            } else {
+                self.log("An error occurred when attempting to query the LSQuarantine database...")
+            }
+        }
+    }
+    
+    func parseMetadata() {
+        
+        self.log("Parsing metadata file...")
+        let metaPath = "\(analysisInputDir)/metadata.csv"
+        
+        if !filemanager.fileExists(atPath: metaPath) { return }
+        
+        let csvInputRows = Aftermath.readCSVRows(path: metaPath)
+        
+//        print(csvInputRows)
+        
+    }
+    
+    func timelineLog() {
+        
+        
+        let systemLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/system.log"
+        let installLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/install.log"
+        let appfirewallLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/appfirewall.log"
+        
+        var installLogContents = [String]()
+        
+        
+        // install.log
+        do {
+            let contents = try String(contentsOf: URL(fileURLWithPath: installLog))
+            installLogContents = contents.components(separatedBy: "\n")
+            
+            
+            let installLog = "INSTALL"
+             
+            
+            for ind in 0...installLogContents.count - 1 {
+                
+                let splitLine = installLogContents[ind].components(separatedBy: " ")
+                
+                guard let date = splitLine[safe: 0] else { continue }
+                guard let time = splitLine[safe: 1] else { continue }
+                let unformattedDate = date + "T" + time // "2022-03-1516:22:55-07"
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                
+                var info = ""
+                
+                for i in 0...splitLine.count - 1 {
+                    if i == 0 || i == 1  { continue }
+                    info = info.appending(" " + splitLine[i])
+
+                }
+                
+                if let dateString = dateFormatter.date(from: unformattedDate) {
+                    self.addTextToFile(atUrl: self.timelineFile, text: "\(String(describing: dateString)) \(info)")
+                } else {
+                    continue
+                }
+            }
+            
+        } catch {
+            print("Unable to parse contents")
+        }
+        
+        
+        var systemLogContents = [String]()
+        
+        // system.log
+        do {
+            let contents = try String(contentsOf: URL(fileURLWithPath: systemLog))
+            systemLogContents = contents.components(separatedBy: ",")
+        } catch {
+            print("Unable to parse contents")
+        }
+      
+        
+        var appfirewallLogContents = [String]()
+        // appfirewall.log
+        do {
+            let contents = try String(contentsOf: URL(fileURLWithPath: systemLog))
+            appfirewallLogContents = contents.components(separatedBy: ",")
+        } catch {
+            print("Unable to parse contents")
+        }
+        
+    }
+    
+    
+    
+    
+    enum TCCAuthValue: String, CaseIterable {
+        case denied = "0"
+        case unknown = "1"
+        case allowed = "2"
+        case limited = "3"
+    }
+    
+    enum TCCAuthReason: String, CaseIterable {
+        case error = "1"
+        case userConsent = "2"
+        case userSet = "3"
+        case systemSet = "4"
+        case servicePolicy = "5"
+        case mdmPolicy = "6"
+        case overridePolicy = "7"
+        case missingUsageString = "8"
+        case promptTimeout = "9"
+        case preflightUnknown = "10"
+        case entitled = "11"
+        case appTypePolicy = "12"
+    }
+    
+    /*
+     Compiled from /System/Library/PrivateFrameworks/TCC.framework/Resources/en.lproj/Localizable.strings and https://rainforest.engineering/2021-02-09-macos-tcc/
+     */
+    enum TCCService: String, CaseIterable {
+        // critical
+        case location = "kTCCServiceLiverpool"
+        case icloud = "kTCCServiceUbiquity"
+        case sharing = "kTCCServiceShareKit"
+        case fda = "kTCCServiceSystemPolicyAllFiles"
+        
+        // common
+        case accessibility = "kTCCServiceAccessibility"
+        case keystrokes = "kTCCServicePostEvent"
+        case inputMonitoring = "kTCCServiceListenEvent"
+        case developerTools = "kTCCServiceDeveloperTool"
+        case screenCapture = "kTCCServiceScreenCapture"
+        
+        // file access
+        case adminFiles = "kTCCServiceSystemPolicySysAdminFiles"
+        case desktopFolder = "kTCCServiceSystemPolicyDesktopFolder"
+        case developerFiles = "kTCCServiceSystemPolicyDeveloperFiles"
+        case documentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
+        case downloadsFolder = "kTCCServiceSystemPolicyDownloadsFolder"
+        case networkVolumes = "kTCCServiceSystemPolicyNetworkVolumes"
+        
+        // service access
+        case addressBook = "kTCCServiceAddressBook"
+        case appleEvents = "kTCCServiceAppleEvents"
+        case availability = "kTCCServiceUserAvailability"
+        case bluetooth_always = "kTCCServiceBluetoothAlways"
+        case calendar = "kTCCServiceCalendar"
+        case camera = "kTCCServiceCamera"
+        case contacts_full = "kTCCServiceContactsFull"
+        case contacts_limited = "kTCCServiceContactsLimited"
+        case currentLocation = "kTCCServiceLocation"
+        case fileAccess = "kTCCServiceFileProviderDomain"
+        case fileAccess_request = "kTCCServiceFileProviderPresence"
+        case fitness = "kTCCServiceMotion"
+        case focus_notifications = "kTCCServiceFocusStatus"
+        case gamecenter = "kTCCServiceGameCenterFriends"
+        case homeData = "kTCCServiceWillow"
+        case mediaLibrary = "kTCCServiceMediaLibrary"
+        case microphone = "kTCCServiceMicrophone"
+        case photos = "kTCCServicePhotos"
+        case photos_add = "kTCCServicePhotosAdd"
+        case proto3Right = "kTCCServicePrototype3Rights"
+        case reminders = "kTCCServiceReminders"
+        case removableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
+        case siri = "kTCCServiceSiri"
+        case speechRecognition = "kTCCServiceSpeechRecognition"
+    }
+    
+}
+
+extension Collection where Indices.Iterator.Element == Index {
+    subscript (safe index: Index) -> Iterator.Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
