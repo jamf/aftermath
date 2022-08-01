@@ -5,6 +5,11 @@ Aftermath is a  Swift-based, open-source incident response framework.
 
 Aftermath can be leveraged by defenders in order to collect and subsequently analyze the data from the compromised host. Aftermath can be deployed from an MDM (ideally), but it can also run independently from the infected user's command line. 
 
+Results of Aftermath will be compressed into a zip archive. To unzip the archived files, run
+```bash
+unzip <path_to_aftermath_directory>
+```
+
 
 ## Build
 To build Aftermath locally, clone it from the repository

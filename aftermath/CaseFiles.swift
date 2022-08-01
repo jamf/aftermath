@@ -7,6 +7,7 @@
 
 
 import Foundation
+import ZIPFoundation
 
 struct CaseFiles {
     static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
@@ -35,18 +36,25 @@ struct CaseFiles {
     
     static func MoveCaseDir(outputDir: String) {
         
-        let endURL: URL
+        var endURL: URL
+        let fm = FileManager()
         
         if outputDir == "default" {
             endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
         } else {
             endURL = URL(fileURLWithPath: "\(outputDir)/\(caseDir.lastPathComponent)")
+            
         }
+        
+        let zippedURL = endURL.appendingPathExtension("zip")
+
         do {
-            try FileManager.default.copyItem(at: caseDir, to: endURL)
+            try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: false, compressionMethod: .deflate)
+            try fm.moveItem(at: endURL, to: zippedURL)
         } catch {
-            print(error)
+            print("Unable to create archive. Error: \(error)")
         }
+        
 
     }
     

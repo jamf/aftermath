@@ -64,7 +64,7 @@ if mode == "default" {
     // Network
     mainModule.log("Started gathering network information...")
     let networkModule = NetworkModule()
-    networkModule.run()
+//    networkModule.run()
     mainModule.log("Finished gathering network information")
 
 

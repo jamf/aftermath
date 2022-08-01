@@ -18,7 +18,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
         //predicates eventually to be loaded from external file
         self.predicates = [
             "login": "process == \"logind\"",
-            "tcc": "process == \"tccd\"",
+//            "tcc": "process == \"tccd\"",
             "ssh": "process == \"sshd\"",
             "failed_sudo": "process == \"sudo\" and eventMessage CONTAINS \"TTY\" AND eventMessage CONTAINS \"3 incorrect password attempts\"",
             "manual_configuration_profile_install": "subsystem == \"com.apple.ManagedClient\" AND process == \"mdmclient\" AND category == \"MDMDaemon\" and eventMessage CONTAINS \"Installed configuration profile:\" AND eventMessage CONTAINS \"Source: Manual\"",
