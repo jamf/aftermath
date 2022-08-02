@@ -46,7 +46,6 @@ class Parser: AftermathModule {
                     var authReason: String = ""
                     var service: String = ""
                     var last_modified: String = ""
-//                    var time: Date = Date()
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
                         
@@ -169,94 +168,7 @@ class Parser: AftermathModule {
         }
     }
     
-    func parseMetadata() {
-        
-        self.log("Parsing metadata file...")
-        let metaPath = "\(analysisInputDir)/metadata.csv"
-        
-        if !filemanager.fileExists(atPath: metaPath) { return }
-        
-        let csvInputRows = Aftermath.readCSVRows(path: metaPath)
-        
-//        print(csvInputRows)
-        
-    }
-    
-    func timelineLog() {
-        
-        
-        let systemLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/system.log"
-        let installLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/install.log"
-        let appfirewallLog = "\(analysisInputDir)/Artifacts/raw/logs/system_logs/appfirewall.log"
-        
-        var installLogContents = [String]()
-        
-        
-        // install.log
-        do {
-            let contents = try String(contentsOf: URL(fileURLWithPath: installLog))
-            installLogContents = contents.components(separatedBy: "\n")
-            
-            
-            let installLog = "INSTALL"
-             
-            
-            for ind in 0...installLogContents.count - 1 {
-                
-                let splitLine = installLogContents[ind].components(separatedBy: " ")
-                
-                guard let date = splitLine[safe: 0] else { continue }
-                guard let time = splitLine[safe: 1] else { continue }
-                let unformattedDate = date + "T" + time // "2022-03-1516:22:55-07"
-                let dateFormatter = DateFormatter()
-                dateFormatter.locale = Locale(identifier: "en_US")
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                
-                var info = ""
-                
-                for i in 0...splitLine.count - 1 {
-                    if i == 0 || i == 1  { continue }
-                    info = info.appending(" " + splitLine[i])
 
-                }
-                
-                if let dateString = dateFormatter.date(from: unformattedDate) {
-                    self.addTextToFile(atUrl: self.timelineFile, text: "\(String(describing: dateString)) \(info)")
-                } else {
-                    continue
-                }
-            }
-            
-        } catch {
-            print("Unable to parse contents")
-        }
-        
-        
-        var systemLogContents = [String]()
-        
-        // system.log
-        do {
-            let contents = try String(contentsOf: URL(fileURLWithPath: systemLog))
-            systemLogContents = contents.components(separatedBy: ",")
-        } catch {
-            print("Unable to parse contents")
-        }
-      
-        
-        var appfirewallLogContents = [String]()
-        // appfirewall.log
-        do {
-            let contents = try String(contentsOf: URL(fileURLWithPath: systemLog))
-            appfirewallLogContents = contents.components(separatedBy: ",")
-        } catch {
-            print("Unable to parse contents")
-        }
-        
-    }
-    
-    
-    
     
     enum TCCAuthValue: String, CaseIterable {
         case denied = "0"
