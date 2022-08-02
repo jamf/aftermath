@@ -221,6 +221,22 @@ class AftermathModule {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
     }
+    
+    func unzipArchive(location: String) -> String {
+            
+        let collectionZippedDir = URL(fileURLWithPath: location)
+        let unzipped = collectionZippedDir.deletingPathExtension()
+
+        do {
+            try filemanager.unzipItem(at: collectionZippedDir, to: unzipped.deletingLastPathComponent())
+    
+        } catch {
+            print(error)
+        }
+            
+        return unzipped.path
+        
+    }
        
     enum Color: String {
         case black = "\u{001B}[0;30m"

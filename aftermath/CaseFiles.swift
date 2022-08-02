@@ -40,6 +40,7 @@ struct CaseFiles {
         let fm = FileManager()
         
         if outputDir == "default" {
+            
             endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
         } else {
             endURL = URL(fileURLWithPath: "\(outputDir)/\(caseDir.lastPathComponent)")
@@ -49,13 +50,11 @@ struct CaseFiles {
         let zippedURL = endURL.appendingPathExtension("zip")
 
         do {
-            try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: false, compressionMethod: .deflate)
+            try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
         } catch {
             print("Unable to create archive. Error: \(error)")
         }
-        
-
     }
     
     static func MoveAnalysisCaseDir() {

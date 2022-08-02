@@ -29,7 +29,7 @@ class ArgManager {
             if arg == "--analyze" {
                 if args.count > x+1 {
                     analysisDir = args[x+1]
-                    if isDirectoryThatExists(path: analysisDir) {
+                    if FileManager.default.fileExists(atPath: analysisDir) {
                         mode = arg
                     } else {
                         print("Please specify a valid target path")

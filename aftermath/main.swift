@@ -120,8 +120,12 @@ if mode == "--analyze" {
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Analysis Started")
     
-    mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
-    let analysisModule = AnalysisModule(analysisDir: analysisDir)
+    let unzippedDirectory = mainModule.unzipArchive(location: analysisDir)
+    
+//    mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
+//    let analysisModule = AnalysisModule(analysisDir: analysisDir)
+    mainModule.log("Started analysis on Aftermath directory: \(unzippedDirectory)")
+    let analysisModule = AnalysisModule(analysisDir: unzippedDirectory)
     analysisModule.run()
     mainModule.log("Finished analysis module")
     
