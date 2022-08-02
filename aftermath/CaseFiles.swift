@@ -59,9 +59,12 @@ struct CaseFiles {
     
     static func MoveAnalysisCaseDir() {
         let endURL = URL(fileURLWithPath: "/tmp/\(analysisCaseDir.lastPathComponent)")
-        
+        let zippedURL = endURL.appendingPathExtension("zip")
+        let fm = FileManager()
+                
         do {
-            try FileManager.default.copyItem(at: analysisCaseDir, to: endURL)
+            try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
+            try fm.moveItem(at: endURL, to: zippedURL)
         } catch {
             print(error)
         }
