@@ -31,10 +31,9 @@ class FileWalker: FileSystemModule {
         }
     }
     
-    // TODO - FDA
     override func run() {
         
-        var directories = ["/tmp", "/Library/LaunchDaemons", "/Library/LaunchAgents"] // "/opt",
+        var directories = ["/tmp", "/opt", "/Library/LaunchDaemons", "/Library/LaunchAgents"]
         
         self.log("Crawling directories for modified and accessed timestamps")
        
@@ -52,7 +51,7 @@ class FileWalker: FileSystemModule {
             self.log("Performing a default scan...")
             
             for user in getBasicUsersOnSystem() {
-//                directories.append("\(user.homedir)/Library/Application Support")
+                directories.append("\(user.homedir)/Library/Application Support")
                 directories.append("\(user.homedir)/Library/LaunchAgents")
                 directories.append("\(user.homedir)/Downloads")
                 directories.append("\(user.homedir)/Documents")

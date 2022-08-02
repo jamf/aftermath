@@ -54,6 +54,8 @@ if mode == "default" {
     mainModule.log("Aftermath Started")
     
     mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed")
+    
+    
     // System Recon
     mainModule.log("Started system recon")
     let systemReconModule = SystemReconModule()
@@ -64,7 +66,7 @@ if mode == "default" {
     // Network
     mainModule.log("Started gathering network information...")
     let networkModule = NetworkModule()
-//    networkModule.run()
+    networkModule.run()
     mainModule.log("Finished gathering network information")
 
 
@@ -122,8 +124,6 @@ if mode == "--analyze" {
     
     let unzippedDirectory = mainModule.unzipArchive(location: analysisDir)
     
-//    mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
-//    let analysisModule = AnalysisModule(analysisDir: analysisDir)
     mainModule.log("Started analysis on Aftermath directory: \(unzippedDirectory)")
     let analysisModule = AnalysisModule(analysisDir: unzippedDirectory)
     analysisModule.run()

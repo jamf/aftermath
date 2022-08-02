@@ -52,11 +52,6 @@ class Aftermath {
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
     }
-//    
-//    static func dateFromStandardTimestamp(timeStamp: Date) -> String {
-//        
-//
-//    }
     
     static func readCSVRows(path: String) -> [String] {
         var rowContent = [String]()
