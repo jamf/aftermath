@@ -19,7 +19,7 @@ class CommonDirectories: FileSystemModule {
     func dumpTmp(tmpDir: String, tmpRawDir: URL) {
                 
         for file in filemanager.filesInDirRecursive(path: tmpDir) {
-            if isAftermath { continue }
+            if isAftermathDir(directory: file) { continue }
             self.copyFileToCase(fileToCopy: file, toLocation: tmpRawDir)
         }
     }
