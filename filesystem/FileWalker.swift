@@ -60,6 +60,6 @@ class FileWalker: FileSystemModule {
             runScanner(directories: directories)
         }
 
-        self.log("Finished walkin")
+        self.log("Finished walking directories.")
     }
 }

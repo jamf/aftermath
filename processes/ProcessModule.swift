@@ -14,10 +14,11 @@ class ProcessModule: AftermathModule {
     var description = "A module that performs process analysis"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     lazy var rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
+    lazy var processFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "process_dump.txt")
     
     func run() {
         
-        let saveFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "true_tree.txt")
+        let saveFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "true_tree_output.txt")
         
         let tree = Tree()
         let nodePidDict = tree.createNodeDictionary()
