@@ -19,6 +19,7 @@ class AnalysisModule: AftermathModule, AMProto {
         self.analysisDir = analysisDir
         
     }
+    
     func run() {
         self.log("Running from the analysis module")
     }
