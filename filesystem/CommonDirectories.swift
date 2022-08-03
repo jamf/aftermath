@@ -22,12 +22,8 @@ class CommonDirectories: FileSystemModule {
         
         for file in filemanager.filesInDirRecursive(path: tmpDir) {
             
-            for p in file.pathComponents {
-                if p.contains("Aftermath") {
-                    isAftermath = true
-                    break
-                }
-            }
+     
+            
             if isAftermath { continue }
             self.copyFileToCase(fileToCopy: file, toLocation: tmpRawDir)
         }
@@ -41,12 +37,7 @@ class CommonDirectories: FileSystemModule {
             let path = "\(user.homedir)/.Trash"
 
             for file in filemanager.filesInDirRecursive(path: path) {
-                for p in file.pathComponents {
-                    if p.contains("Aftermath") {
-                        isAftermath = true
-                        break
-                    }
-                }
+                if isAftermathDir(directory: file) { continue }
                 self.copyFileToCase(fileToCopy: file, toLocation: trashRawDir)
             }
         }
@@ -58,10 +49,24 @@ class CommonDirectories: FileSystemModule {
             let path = "\(user.homedir)/Downloads"
             
             for file in filemanager.filesInDirRecursive(path: path) {
+                if isAftermathDir(directory: file) { continue }
                 if file.lastPathComponent == ".DS_Store" { continue }
                 self.copyFileToCase(fileToCopy: file, toLocation: downloadsRawDir)
             }
         }
+    }
+    
+    private func isAftermathDir(directory: URL) -> Bool {
+        
+        var isAftermath: Bool = false
+        for component in directory.pathComponents {
+            if component.contains("Aftermath") {
+                isAftermath = true
+            } else {
+                continue
+            }
+        }
+        return isAftermath
     }
     
     override func run() {
