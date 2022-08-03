@@ -17,22 +17,15 @@ class CommonDirectories: FileSystemModule {
     }
     
     func dumpTmp(tmpDir: String, tmpRawDir: URL) {
-        
-        isAftermath = false
-        
+                
         for file in filemanager.filesInDirRecursive(path: tmpDir) {
-            
-     
-            
             if isAftermath { continue }
             self.copyFileToCase(fileToCopy: file, toLocation: tmpRawDir)
         }
     }
     
     func dumpTrash(trashRawDir: URL) {
-        
-        isAftermath = false
-        
+                
         for user in getBasicUsersOnSystem() {
             let path = "\(user.homedir)/.Trash"
 
