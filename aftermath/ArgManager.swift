@@ -37,7 +37,7 @@ class ArgManager {
                     }
                 }
             }
-            if arg == "--deep" {
+            if arg == "--deep" || arg == "-d" {
                 deep = true
             }
             if arg == "-o" || arg == "--output" {
