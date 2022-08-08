@@ -65,19 +65,24 @@ class ArgManager {
     }
     
     func cleanup() {
-        let enumerator = FileManager.default.enumerator(atPath: "/tmp")
-        while let element = enumerator?.nextObject() as? String {
-            if element.hasPrefix("Aftermath_") {
-                let dirToRemove = URL(fileURLWithPath: "/tmp/\(element)")
-                do {
-                    try FileManager.default.removeItem(at: dirToRemove)
-                    print("Removed \(dirToRemove.relativePath)")
-                } catch {
-                    print("\(Date().ISO8601Format()) - Error removing \(dirToRemove.relativePath)")
-                    print(error)
+        
+        let potentialPaths = ["/tmp", "/var/folders/zz"]
+        for p in potentialPaths {
+            let enumerator = FileManager.default.enumerator(atPath: p)
+            while let element = enumerator?.nextObject() as? String {
+                if element.contains("Aftermath_") {
+                    let dirToRemove = URL(fileURLWithPath: "\(p)/\(element)")
+                    do {
+                        try FileManager.default.removeItem(at: dirToRemove)
+                        print("Removed \(dirToRemove.relativePath)")
+                    } catch {
+                        print("\(Date().ISO8601Format()) - Error removing \(dirToRemove.relativePath)")
+                        print(error)
+                    }
                 }
             }
         }
+      
     }
     
     func printHelp() {
