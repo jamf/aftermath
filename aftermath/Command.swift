@@ -6,16 +6,16 @@
 
 import Foundation
 
-struct AftermathOptions: OptionSet {
+struct Options: OptionSet {
     let rawValue: Int
 
-    static let deep = AftermathOptions(rawValue: 1 << 0)
-    static let output = AftermathOptions(rawValue: 1 << 1)
-    static let analyze = AftermathOptions(rawValue: 1 << 2)
+    static let deep = Options(rawValue: 1 << 0)
+    static let output = Options(rawValue: 1 << 1)
+    static let analyze = Options(rawValue: 1 << 2)
 }
 
 class Command {
-    static var options: AftermathOptions = []
+    static var options: Options = []
     static var analysisDir: String? = nil
     static var outputDir: String? = nil
 
