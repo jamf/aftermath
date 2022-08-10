@@ -27,7 +27,7 @@ class AftermathModule {
     var caseDirSelector: URL
     
     init() {
-        if argManager.mode == "--analyze" {
+        if Command.options.contains(.analyze) {
             caseLogSelector = CaseFiles.analysisLogFile
             caseDirSelector = CaseFiles.analysisCaseDir
         } else {

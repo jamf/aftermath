@@ -47,7 +47,7 @@ class FileWalker: FileSystemModule {
     override func run() {
         self.log("Crawling directories for modified and accessed timestamps")
        
-        if (deepScan == true) {
+        if Command.options.contains(.deep) {
             self.log("Performing a deep scan...")
             deepScanner()
         } else {
