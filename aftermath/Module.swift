@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Accelerate
 
 struct User {
     let username: String
@@ -139,14 +140,16 @@ class AftermathModule {
         }
     }
     
-    func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil) {
+    func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil, isAnalysis: Bool? = false) {
         if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
             self.log("\(Date().ISO8601Format()) -  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
             return
         }
         
-        // before copying file, capture it's metadata
-        self.getFileMetadata(fromFile: fileToCopy)
+        if !(isAnalysis ?? false) {
+            // before copying file, capture it's metadata
+            self.getFileMetadata(fromFile: fileToCopy)
+        }
         
         var to = caseDirSelector
         if let toLocation = toLocation { to = toLocation }
@@ -175,23 +178,41 @@ class AftermathModule {
         }
         
         var metadata: String
+        var birthTimestamp: String
+        var lastModifiedTimestamp: String
+        var lastAccessedTimestamp: String
         
         if let mditem = MDItemCreate(nil, fromFile.path as CFString),
             let mdnames = MDItemCopyAttributeNames(mditem),
             let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
             
-            metadata = "\(fromFile.path),"
+            if fromFile.path.contains(",") {
+                let sanitized = fromFile.path.replacingOccurrences(of: ",", with: " ")
+                metadata = "\(sanitized),"
+            } else {
+                metadata = "\(fromFile.path),"
+            }
             
-            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
-                metadata.append("\(lastAccessed),")
+            
+            if let birth = mdattrs[kMDItemContentCreationDate as String] {
+                birthTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: birth))
+                metadata.append("\(birthTimestamp),")
             } else {
                 metadata.append("unknown,")
             }
+            
             if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
-                metadata.append("\(lastModified)")
-
+                lastModifiedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastModified))
+                metadata.append("\(lastModifiedTimestamp),")
             } else {
-                metadata.append("unknown")
+                metadata.append("unknown,")
+            }
+            
+            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
+                lastAccessedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastAccessed))
+                metadata.append("\(lastAccessedTimestamp),")
+            } else {
+                metadata.append("unknown,")
             }
             
             self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)
@@ -199,7 +220,23 @@ class AftermathModule {
          } else {
              print("Can't get attributes for \(fromFile.path)")
          }
-
+    }
+    
+    private func standardizeMetadataTimestamp(timeStamp: String) -> String {
+        // yyyy-MM-dd'T'HH:mm:ss
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        if let date = dateFormatter.date(from: timeStamp) {
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let dateString = dateFormatter.string(from: date as Date)
+            return dateString
+        } else {
+            return "unknown"
+        }
     }
     
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
@@ -213,6 +250,22 @@ class AftermathModule {
         if displayOnly == false {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
+    }
+    
+    func unzipArchive(location: String) -> String {
+            
+        let zippedURL = URL(fileURLWithPath: location)
+        let unzipped = zippedURL.deletingPathExtension()
+
+        do {
+            try filemanager.unzipItem(at: zippedURL, to: unzipped.deletingLastPathComponent())
+    
+        } catch {
+            print(error)
+        }
+            
+        return unzipped.path
+        
     }
        
     enum Color: String {

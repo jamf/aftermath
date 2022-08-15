@@ -19,6 +19,8 @@ int getSubmittedPid(int pid);
 //hit up launchd (via XPC) to get process info
 NSString* getSubmittedByPlist(unsigned long pid);
 
+NSDictionary* getProcessArgs(unsigned long pid);
+
 //launchd structs/functions
 // inspired by: http://newosxbook.com/articles/jlaunchctl.html
 struct xpc_global_data {

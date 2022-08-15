@@ -7,6 +7,7 @@
 
 
 import Foundation
+import ZIPFoundation
 
 struct CaseFiles {
     static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
@@ -14,10 +15,11 @@ struct CaseFiles {
     static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
+    static let fm = FileManager.default
     
     static func CreateCaseDir() {
         do {
-            try FileManager.default.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
+            try fm.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
             print("Aftermath directory created at \(caseDir.relativePath)")
         } catch {
             print(error)
@@ -26,7 +28,7 @@ struct CaseFiles {
     
     static func CreateAnalysisCaseDir() {
         do {
-            try FileManager.default.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
+            try fm.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
             print("Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")
         } catch {
             print(error)
@@ -35,26 +37,33 @@ struct CaseFiles {
     
     static func MoveCaseDir(outputDir: String) {
         
-        let endURL: URL
+        var endURL: URL
         
         if outputDir == "default" {
+            
             endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
         } else {
             endURL = URL(fileURLWithPath: "\(outputDir)/\(caseDir.lastPathComponent)")
+            
         }
-        do {
-            try FileManager.default.copyItem(at: caseDir, to: endURL)
-        } catch {
-            print(error)
-        }
+        
+        let zippedURL = endURL.appendingPathExtension("zip")
 
+        do {
+            try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
+            try fm.moveItem(at: endURL, to: zippedURL)
+        } catch {
+            print("Unable to create archive. Error: \(error)")
+        }
     }
     
     static func MoveAnalysisCaseDir() {
         let endURL = URL(fileURLWithPath: "/tmp/\(analysisCaseDir.lastPathComponent)")
-        
+        let zippedURL = endURL.appendingPathExtension("zip")
+                
         do {
-            try FileManager.default.copyItem(at: analysisCaseDir, to: endURL)
+            try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
+            try fm.moveItem(at: endURL, to: zippedURL)
         } catch {
             print(error)
         }

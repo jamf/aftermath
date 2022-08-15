@@ -22,7 +22,6 @@ class LogFiles: ArtifactsModule {
         let auditRawDir = self.createNewDir(dir: self.logFilesDir, dirname: "audit_logs")
         let aslRawDir = self.createNewDir(dir: self.logFilesDir, dirname: "asl_logs")
         
-        
         let varLogPaths = ["/var/log/wifi.log", "/var/log/appfirewall.log", "/var/log/fsck_apfs.log", "/var/log/fsck_apfs_error.log", "/var/log/fsck_hfs.log", "/var/log/install.log", "/var/log/hdiejectd.log", "/var/log/apache2/access_log", "/var/log/apache2/error_log", "/var/log/system.log"]
         let auditLogs = filemanager.filesInDirRecursive(path: "/var/audit/")
         let aslLogs = filemanager.filesInDirRecursive(path: "/var/log/asl/")

@@ -16,21 +16,10 @@ class FileWalker: FileSystemModule {
         self.writeFile = writeFile
     }
     
-    func deepScanner() {
+    func runScanner(directories: [String]) {
         
-    }
-    
-    func defaultScanner() {
-        
-        var directories = ["/tmp", "/opt", "/Library/LaunchDaemons", "/Library/LaunchAgents"]
-        
-        for user in getBasicUsersOnSystem() {
-            directories.append("\(user.homedir)/Library/Application Support")
-            directories.append("\(user.homedir)/Library/LaunchAgents")
-            directories.append("\(user.homedir)/Downloads")
-            directories.append("\(user.homedir)/Documents")
-        }
-        self.log("Scanning default directories...")
+      
+        self.log("Scanning requested directories...")
         
         for p in directories {
             self.log("Querying directory \(p)")
@@ -42,20 +31,35 @@ class FileWalker: FileSystemModule {
         }
     }
     
-    // TODO - FDA
-    // in utc
     override func run() {
+        
+        var directories = ["/tmp", "/opt", "/Library/LaunchDaemons", "/Library/LaunchAgents"]
+        
         self.log("Crawling directories for modified and accessed timestamps")
        
         if (deepScan == true) {
+            // deep scan will walk the entire user's home directory
             self.log("Performing a deep scan...")
-            deepScanner()
+            
+            for user in getBasicUsersOnSystem() {
+                directories.append("\(user.homedir)")
+            }
+            
+            runScanner(directories: directories)
+            
         } else {
             self.log("Performing a default scan...")
+            
+            for user in getBasicUsersOnSystem() {
+                directories.append("\(user.homedir)/Library/Application Support")
+                directories.append("\(user.homedir)/Library/LaunchAgents")
+                directories.append("\(user.homedir)/Downloads")
+                directories.append("\(user.homedir)/Documents")
+            }
 
-            defaultScanner()
+            runScanner(directories: directories)
         }
 
-        self.log("Finished walkin")
+        self.log("Finished walking directories.")
     }
 }

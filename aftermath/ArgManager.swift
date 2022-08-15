@@ -1,14 +1,8 @@
-//
-//  ArgParser.swift
-//  aftermath
-//
-//
-
 import Foundation
 
 
 class ArgManager {
-    let availableArgs = ["--analyze", "--cleanup"]
+    let availableArgs = ["--analyze", "--cleanup", "--deep", "-d", "-o", "--output", "-h", "-help"]
     var mode = "default"
     var analysisDir = "default"
     var outputDir = "default"
@@ -18,39 +12,43 @@ class ArgManager {
         setArgs(suppliedArgs)
     }
     
+    
+    
     func setArgs(_ args:[String]) {
         for (x,arg) in (args).enumerated() {
             if x == 0 || !arg.starts(with: "-") {
                 continue
-            } else if arg == "-h" || arg == "-help" {
+            }
+            if arg == "-h" || arg == "-help" {
                 self.printHelp()
-            } else if arg == "--cleanup" {
+            }
+            if arg == "--cleanup" {
                 self.cleanup()
                 exit(1)
-            } else if arg == "--analyze" {
+            }
+            if arg == "--analyze" {
                 if args.count > x+1 {
                     analysisDir = args[x+1]
-                    if isDirectoryThatExists(path: analysisDir) {
+                    if FileManager.default.fileExists(atPath: analysisDir) {
                         mode = arg
                     } else {
                         print("Please specify a valid target path")
+                        exit(1)
                     }
                 }
-            } else {
-                print("Unidentified argument " + arg)
-                exit(1)
             }
-            
+            if arg == "--deep" || arg == "-d" {
+                deep = true
+            }
             if arg == "-o" || arg == "--output" {
                 if args.count > x+1 {
                     if isDirectoryThatExists(path: args[x+1]) {
                         outputDir = args[x+1]
                     }
+                } else {
+                    print("Please specify a valid output directory")
+                    exit(1)
                 }
-            }
-            
-            if arg == "--deep" || arg == "-d" {
-                deep = true
             }
         }
     }
@@ -67,19 +65,24 @@ class ArgManager {
     }
     
     func cleanup() {
-        let enumerator = FileManager.default.enumerator(atPath: "/tmp")
-        while let element = enumerator?.nextObject() as? String {
-            if element.hasPrefix("Aftermath_") {
-                let dirToRemove = URL(fileURLWithPath: "/tmp/\(element)")
-                do {
-                    try FileManager.default.removeItem(at: dirToRemove)
-                    print("Removed \(dirToRemove.relativePath)")
-                } catch {
-                    print("\(Date().ISO8601Format()) - Error removing \(dirToRemove.relativePath)")
-                    print(error)
+        
+        let potentialPaths = ["/tmp", "/var/folders/zz"]
+        for p in potentialPaths {
+            let enumerator = FileManager.default.enumerator(atPath: p)
+            while let element = enumerator?.nextObject() as? String {
+                if element.contains("Aftermath_") {
+                    let dirToRemove = URL(fileURLWithPath: "\(p)/\(element)")
+                    do {
+                        try FileManager.default.removeItem(at: dirToRemove)
+                        print("Removed \(dirToRemove.relativePath)")
+                    } catch {
+                        print("\(Date().ISO8601Format()) - Error removing \(dirToRemove.relativePath)")
+                        print(error)
+                    }
                 }
             }
         }
+      
     }
     
     func printHelp() {

@@ -53,7 +53,9 @@ if mode == "default" {
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Started")
     
-    mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,accessed,modified")
+    mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed")
+    
+    
     // System Recon
     mainModule.log("Started system recon")
     let systemReconModule = SystemReconModule()
@@ -101,13 +103,7 @@ if mode == "default" {
     let unifiedLogModule = UnifiedLogModule()
     unifiedLogModule.run()
     mainModule.log("Finished logging unified logs")
-
-
-    // Memory
-    mainModule.log("Started memory dump...")
-    let memoryModule = MemoryModule()
-    memoryModule.run()
-    mainModule.log("Finishing memory dump")
+    
     
     // Copy from cache to /tmp
     CaseFiles.MoveCaseDir(outputDir: outputDir)
@@ -126,8 +122,10 @@ if mode == "--analyze" {
     let mainModule = AftermathModule()
     mainModule.log("Aftermath Analysis Started")
     
-    mainModule.log("Started analysis on Aftermath directory: \(analysisDir)")
-    let analysisModule = AnalysisModule(analysisDir: analysisDir)
+    let unzippedDirectory = mainModule.unzipArchive(location: analysisDir)
+    
+    mainModule.log("Started analysis on Aftermath directory: \(unzippedDirectory)")
+    let analysisModule = AnalysisModule(analysisDir: unzippedDirectory)
     analysisModule.run()
     mainModule.log("Finished analysis module")
     

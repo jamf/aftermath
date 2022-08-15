@@ -40,7 +40,7 @@ class Aftermath {
         return plistDict
     }
     
-    static func dateFromTimestamp(timeStamp : Double) -> String {
+    static func dateFromEpochTimestamp(timeStamp : Double) -> String {
         
         let date = NSDate(timeIntervalSince1970: timeStamp)
         
@@ -51,5 +51,18 @@ class Aftermath {
         
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
+    }
+    
+    static func readCSVRows(path: String) -> [String] {
+        var rowContent = [String]()
+        
+        do {
+            let csvData = try String(contentsOf: URL(fileURLWithPath: path))
+            rowContent = csvData.components(separatedBy: "\n")
+            
+        } catch {
+            print("File count not be parsed")
+        }
+        return rowContent
     }
 }

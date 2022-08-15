@@ -13,10 +13,13 @@ class NetworkModule: AftermathModule, AMProto {
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
     func run() {
-        let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "network.txt")
         
-        let airport = Airport(writeFile: writeFile)
-        airport.run()
+        let rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "raw")
+        
+        let network = NetworkConnections(rawDir: rawDir)
+        network.run()
+        
+        
     }
 }
 
