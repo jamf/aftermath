@@ -12,8 +12,6 @@ class ArgManager {
         setArgs(suppliedArgs)
     }
     
-    
-    
     func setArgs(_ args:[String]) {
         for (x,arg) in (args).enumerated() {
             if x == 0 || !arg.starts(with: "-") {
@@ -65,7 +63,6 @@ class ArgManager {
     }
     
     func cleanup() {
-        
         let potentialPaths = ["/tmp", "/var/folders/zz"]
         for p in potentialPaths {
             let enumerator = FileManager.default.enumerator(atPath: p)
@@ -82,7 +79,6 @@ class ArgManager {
                 }
             }
         }
-      
     }
     
     func printHelp() {

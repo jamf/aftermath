@@ -37,7 +37,7 @@ class FileWalker: FileSystemModule {
         
         self.log("Crawling directories for modified and accessed timestamps")
        
-        if (deepScan == true) {
+        if Command.options.contains(.deep) {
             // deep scan will walk the entire user's home directory
             self.log("Performing a deep scan...")
             

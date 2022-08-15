@@ -13,18 +13,23 @@ class AnalysisModule: AftermathModule, AMProto {
     let dirName = "Analysis"
     let description = "A module for analyzing results of Aftermath"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
-    let analysisDir: String
+    let collectionDir: String
+    lazy var timelineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "timeline.csv")
     
-    init(analysisDir: String) {
+    init(collectionDir: String) {
         
-        self.analysisDir = analysisDir
+        self.collectionDir = collectionDir
     }
     
     func run() {
-        self.log("Running from the analysis module")
-                
-        let parser = Parser(analysisDir: analysisDir)
-        parser.parseTCC()
-        parser.parseLSQuarantine()
+        self.log("Running analysis on collected aftermath files")
+        
+
+        let dbParser = DatabaseParser(collectionDir: collectionDir, timelineFile: timelineFile)
+        dbParser.run()
+        
+        let timeline = Timeline(collectionDir: collectionDir, timelineFile: timelineFile)
+        timeline.run()
+        
     }
 }

@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftcsv",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftcsv/SwiftCSV",
+      "state" : {
+        "revision" : "048a1d3c2950b9c151ef9364b36f91baadc2c28c",
+        "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "zipfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weichsel/ZIPFoundation",
+      "state" : {
+        "revision" : "7254c74b49cec2cb81520523ba993c671f71b066",
+        "version" : "0.9.14"
+      }
+    }
+  ],
+  "version" : 2
+}

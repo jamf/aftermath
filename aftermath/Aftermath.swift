@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import SwiftCSV
 
 class Aftermath {
     //function for calling bash commands
@@ -40,7 +41,7 @@ class Aftermath {
         return plistDict
     }
     
-    static func dateFromEpochTimestamp(timeStamp : Double) -> String {
+    static func dateFromEpochTimestamp(timeStamp: Double) -> String {
         
         let date = NSDate(timeIntervalSince1970: timeStamp)
         
@@ -53,16 +54,16 @@ class Aftermath {
         return dateString
     }
     
-    static func readCSVRows(path: String) -> [String] {
-        var rowContent = [String]()
-        
+    
+    static func readCSVRows(path: String) -> NamedCSV {
+
         do {
-            let csvData = try String(contentsOf: URL(fileURLWithPath: path))
-            rowContent = csvData.components(separatedBy: "\n")
-            
+            let csvFile = try NamedCSV(url: URL(fileURLWithPath: path), delimiter: .comma, encoding: .utf8)
+            return csvFile
+           
         } catch {
-            print("File count not be parsed")
+            print(error)
+            exit(1)
         }
-        return rowContent
     }
 }

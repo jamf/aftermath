@@ -18,9 +18,14 @@ class Chrome: BrowserModule {
     }
     
     func gatherHistory() {
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Chrome History: -----\n")
+
+        let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
+        self.addTextToFile(atUrl: historyOutput, text: "datetime,url")
         
         for user in getBasicUsersOnSystem() {
+            
+            
+            
             var file: URL
             if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
                 file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
@@ -47,16 +52,18 @@ class Chrome: BrowserModule {
                             url = String(cString: col2!)
                         }
                         
-                        self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n\n")
+                        self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(url)")
                     }
                 }
             }
         }
-        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Chrome History -----\n")
     }
     
     func dumpDownloads() {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
+        
+        let downlaodsRaw = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "downloads_output.csv")
+        self.addTextToFile(atUrl: downlaodsRaw, text: "datetime,url,target_path,danger_type,opened")
         
         for user in getBasicUsersOnSystem() {
             var file: URL
@@ -92,7 +99,7 @@ class Chrome: BrowserModule {
                         let col5 = sqlite3_column_text(queryStatement, 4)
                         if let col5 = col5 { opened = String(cString: col5) }
                         
-                        self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\nTargetPath: \(targetPath)\nDangerType:\(dangerType)\nOpened: \(opened)\n\n")
+                        self.addTextToFile(atUrl: downlaodsRaw, text: " \(dateTime), \(url), \(targetPath),\(dangerType), \(opened)")
                     }
                 }
             }

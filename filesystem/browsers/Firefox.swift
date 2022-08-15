@@ -43,7 +43,9 @@ class Firefox: BrowserModule {
     }
     
     func dumpHistory(file: URL) {
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- Firefox History: -----\n")
+        
+        let historyOutput = self.createNewCaseFile(dirUrl: self.firefoxDir, filename: "history_output.csv")
+        self.addTextToFile(atUrl: historyOutput, text: "datetime,url")
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
@@ -63,11 +65,10 @@ class Firefox: BrowserModule {
                         url = String(cString: col2)
                     }
                     
-                    self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nURL: \(url)\n")
+                    self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(url)")
                 }
             }
         }
-        self.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox History -----")
     }
     
     func dumpDownloads(file: URL) {
