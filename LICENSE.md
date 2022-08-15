@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 Jamf Open Source Community
+Copyright 2022 Jamf Open Source Community
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
