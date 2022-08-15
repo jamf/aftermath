@@ -2,8 +2,7 @@
 //  CaseFiles.swift
 //  aftermath
 //
-//  Created by Jaron Bradley on 12/10/21.
-
+//  Copyright  2022 JAMF Software, LLC
 
 
 import Foundation

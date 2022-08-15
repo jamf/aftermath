@@ -2,8 +2,7 @@
 //  AnalysisModule.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 6/3/22.
-//
+//  Copyright  2022 JAMF Software, LLC//
 
 import Foundation
 

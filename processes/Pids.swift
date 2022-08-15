@@ -2,6 +2,8 @@
 //  Process.swift
 //  aftermath
 //
+//  Copyright  2022 JAMF Software, LLC
+//
 // The following code (with minor modifications) is from TrueTree, written by Jaron Bradley.
 //  2020 TheMittenMac
 // TrueTree: https://github.com/themittenmac/TrueTree
@@ -13,7 +15,7 @@ import ProcLib
 class Pids {
     
     let MaxPathLen = Int(4 * MAXPATHLEN)
-    typealias rpidFunc = @convention(c) (CInt) -> CInt
+    typealias rpidFunc = @convention (CInt) -> CInt
     let InfoSize = Int32(MemoryLayout<proc_bsdinfo>.stride)
     
     
