@@ -2,7 +2,7 @@
 //  FileWalker.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 6/21/22.
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation

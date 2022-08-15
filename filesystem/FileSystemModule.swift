@@ -2,7 +2,7 @@
 //  FileSystemModule.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 6/7/22.
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation

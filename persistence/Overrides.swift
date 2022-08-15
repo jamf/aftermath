@@ -2,7 +2,7 @@
 //  Overrides.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 4/6/22.
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation
