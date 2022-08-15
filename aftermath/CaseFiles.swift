@@ -15,10 +15,11 @@ struct CaseFiles {
     static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
+    static let fm = FileManager.default
     
     static func CreateCaseDir() {
         do {
-            try FileManager.default.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
+            try fm.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
             print("Aftermath directory created at \(caseDir.relativePath)")
         } catch {
             print(error)
@@ -27,7 +28,7 @@ struct CaseFiles {
     
     static func CreateAnalysisCaseDir() {
         do {
-            try FileManager.default.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
+            try fm.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
             print("Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")
         } catch {
             print(error)
@@ -37,7 +38,6 @@ struct CaseFiles {
     static func MoveCaseDir(outputDir: String) {
         
         var endURL: URL
-        let fm = FileManager()
         
         if outputDir == "default" {
             
@@ -60,7 +60,6 @@ struct CaseFiles {
     static func MoveAnalysisCaseDir() {
         let endURL = URL(fileURLWithPath: "/tmp/\(analysisCaseDir.lastPathComponent)")
         let zippedURL = endURL.appendingPathExtension("zip")
-        let fm = FileManager()
                 
         do {
             try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
