@@ -2,8 +2,7 @@
 //  Module.swift
 //  aftermath
 //
-//  Created by Jaron Bradley on 12/8/21.
-//
+//  Copyright  2022 JAMF Software, LLC
 
 import Foundation
 import Accelerate

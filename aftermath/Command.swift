@@ -14,6 +14,7 @@
      static let analyze = Options(rawValue: 1 << 2)
  }
 
+@main
 class Command {
      static var options: Options = []
      static var analysisDir: String? = nil
@@ -41,7 +42,7 @@ class Command {
          }
      }
 
-     static func start() {
+     static func main() {
          if Self.options.contains(.analyze) {
              CaseFiles.CreateAnalysisCaseDir()
 
