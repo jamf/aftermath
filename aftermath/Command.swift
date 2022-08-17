@@ -37,14 +37,18 @@ class Command {
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)
-                     Self.outputDir = args[index]
+                     Self.outputDir = args[index + 1]
                  }
              case "--analyze":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.analyze)
-                     Self.analysisDir = args[index]
+                     Self.analysisDir = args[index + 1]
                  }
-             default: print("Unidentified argument: \(arg)")
+             default:
+                 if !arg.starts(with: "-") {
+                 } else {
+                     print("Unidentified argument: \(arg)")
+                 }
              }
          }
      }
@@ -80,7 +84,7 @@ class Command {
          } else {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
-             mainModule.log("Aftermath Started from command")
+             mainModule.log("Aftermath Started")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed")
 
              // System Recon
