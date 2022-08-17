@@ -19,9 +19,16 @@ class Command {
      static var options: Options = []
      static var analysisDir: String? = nil
      static var outputDir: String? = nil
+    
+    static func main() {
+        setup(with: CommandLine.arguments)
+        start()
+    }
 
-     static func setup(with args: [String]) {
+    static func setup(with fullArgs: [String]) {
 
+        let args = [String](fullArgs.dropFirst())
+      
          args.forEach { arg in
              switch arg {
              case "-h", "--help": Self.printHelp()
@@ -42,7 +49,7 @@ class Command {
          }
      }
 
-     static func main() {
+     static func start() {
          if Self.options.contains(.analyze) {
              CaseFiles.CreateAnalysisCaseDir()
 
