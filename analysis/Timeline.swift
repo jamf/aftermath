@@ -115,7 +115,7 @@ class Timeline: AftermathModule {
     func run() {
         
         organizeMetadata()
-        sortTimeline()
+//        sortTimeline()
     }
     
 }
