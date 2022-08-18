@@ -176,7 +176,7 @@ class AftermathModule {
             return
         }
         
-        var filePermissions = FilePermissions()
+        var helpers = CHelpers()
         var metadata: String
         var birthTimestamp: String
         var lastModifiedTimestamp: String
@@ -216,10 +216,22 @@ class AftermathModule {
                 metadata.append("unknown,")
             }
             
-            if let permissions = filePermissions.getFilePermissions(fromFile: fromFile) {
+            if let permissions = helpers.getFilePermissions(fromFile: fromFile) {
                 metadata.append("\(String(permissions).dropFirst(3)),")
             } else {
                 metadata.append("unknwon,")
+            }
+            
+            if let uid = mdattrs[kMDItemFSOwnerUserID as String] {
+                metadata.append("\(uid),")
+            } else {
+                metadata.append("unknwon,")
+            }
+        
+            if let gid = mdattrs[kMDItemFSOwnerGroupID as String] {
+                metadata.append("\(gid),")
+            } else {
+                metadata.append("unknown,")
             }
             
             self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)

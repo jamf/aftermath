@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FilePermissions {
+class CHelpers {
     
     
     func getFilePermissions(fromFile: URL) -> Int? {
@@ -22,8 +22,23 @@ class FilePermissions {
             return FileMode(rawValue: status.st_mode)
         }
     }
+    
+    func getFileUid(fromFile: URL) -> Int? {
+        return fromFile.path.withCString { cs in
+            var status = stat()
+            stat(cs, &status)
+            return Int(status.st_uid)
+        }
+    }
+    
+    func getFileGid(fromFile: URL) -> Int? {
+        return fromFile.path.withCString { cs in
+            var status = stat()
+            stat(cs, &status)
+            return Int(status.st_gid)
+        }
+    }
 }
-
 
 
 struct FileMode: OptionSet {

@@ -85,7 +85,7 @@ class Command {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
              mainModule.log("Aftermath Started")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions")
+             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid")
 
              // System Recon
              mainModule.log("Started system recon")
