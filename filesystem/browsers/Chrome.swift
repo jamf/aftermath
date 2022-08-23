@@ -43,9 +43,9 @@ class Chrome: BrowserModule {
                     var url: String = ""
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        let col1  = sqlite3_column_text(queryStatement, 0)
-                        if col1 != nil {
-                            dateTime = String(cString: col1!)
+                        if let col1  = sqlite3_column_text(queryStatement, 0) {
+                            let unformattedDatetime = String(cString: col1)
+                            dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
                         }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
@@ -85,8 +85,10 @@ class Chrome: BrowserModule {
                     var opened: String = ""
                     
                     while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        let col1  = sqlite3_column_text(queryStatement, 0)
-                        if let col1 = col1 { dateTime = String(cString: col1) }
+                        if let col1  = sqlite3_column_text(queryStatement, 0) {
+                            let unformattedDatetime = String(cString: col1)
+                            dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
+                        }
                         
                         let col2 = sqlite3_column_text(queryStatement, 1)
                         if let col2 = col2 { url = String(cString: col2) }

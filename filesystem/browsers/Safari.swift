@@ -21,7 +21,7 @@ class Safari: BrowserModule {
     func getHistory() {
         
         let historyOutput = self.createNewCaseFile(dirUrl: self.safariDir, filename: "history_output.csv")
-        self.addTextToFile(atUrl: historyOutput, text: "datetime,url")
+        self.addTextToFile(atUrl: historyOutput, text: "timestamp,url")
         
         for user in getBasicUsersOnSystem() {
             
@@ -86,28 +86,31 @@ class Safari: BrowserModule {
                 var timestamp: String = "unknown"
                 var url: String = "unknown"
                 for (key,value) in plistDict {
-                    print("in the for loop")
-                    print(type(of: value))
-                    print(value)
-                    
                     for i in (value as! NSArray) {
-                        print("next")
-                        print(type(of: i))
-                        print(i)
+
+                        let valuePlist = i as! NSDictionary
+                        
+                        for (key,value) in valuePlist {
+                            if key as! String == "DownloadEntryDateFinishedKey" {
+                                let dateTimestamp = value as! Date
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.locale = Locale(identifier: "en_US")
+                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss Z"
+                                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                                
+                                let dateString = dateFormatter.string(from: dateTimestamp as Date)
+                                timestamp = dateString
+                            }
+                            if key as! String == "DownloadEntryURL" {
+                                url = value as! String
+                            }
+                        }
+                        self.addTextToFile(atUrl: safariDownloads, text: "\(timestamp),\(url)")
+
                     }
-//                    if value == "DownloadEntryDateFinishedKey" {
-//                        timestamp = String(describing: value.value)
-//                    }
-//                    if value.key == "DownloadEntryURL" {
-//                        url = String(describing: value.value)
-//                    }
-                    self.addTextToFile(atUrl: safariDownloads, text: "\(timestamp),\(url)")
-//                    print("Time: \(timestamp)\nURL:\(url)\n\n")
                 }
             }
-
         }
-        
     }
     
     override func run() {

@@ -18,7 +18,7 @@
 class Command {
      static var options: Options = []
      static var analysisDir: String? = nil
-     static var outputDir: String? = nil
+     static var outputDir: String = "/tmp"
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -64,7 +64,7 @@ class Command {
                  mainModule.log("Analysis directory not provided")
                  return
              }
-             guard isDirectoryThatExists(path: dir) else {
+             guard isFileThatExists(path: dir) else {
                  mainModule.log("Analysis directory is not a valid directory that exists")
                  return
              }
@@ -85,7 +85,7 @@ class Command {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
              mainModule.log("Aftermath Started")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid")
+             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
 
              // System Recon
              mainModule.log("Started system recon")
@@ -137,15 +137,15 @@ class Command {
 
 
              // Copy from cache to /tmp
-             guard let dir = Self.outputDir else {
-                 mainModule.log("Output directory not provided")
-                 return
-             }
-             guard isDirectoryThatExists(path: dir) else {
+//             let dir =  else {
+//                 mainModule.log("Output directory not provided")
+//                 return
+//             }
+             guard isDirectoryThatExists(path: Self.outputDir) else {
                  mainModule.log("Output directory is not a valid directory that exists")
                  return
              }
-             CaseFiles.MoveCaseDir(outputDir: dir)
+             CaseFiles.MoveCaseDir(outputDir: Self.outputDir)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -169,6 +169,7 @@ class Command {
                  }
              }
          }
+         exit(1)
      }
 
      static func isDirectoryThatExists(path: String) -> Bool {
@@ -176,6 +177,11 @@ class Command {
          let pathExists = FileManager.default.fileExists(atPath: path, isDirectory:&isDir)
          return pathExists && isDir.boolValue
      }
+    
+    static func isFileThatExists(path: String) -> Bool {
+        let fileExists = FileManager.default.fileExists(atPath: path)
+        return fileExists
+    }
 
      static func printHelp() {
          print("-o -> specify an output location for Aftermath results")

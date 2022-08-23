@@ -43,7 +43,6 @@ class Aftermath {
     }
     
     static func dateFromEpochTimestamp(timeStamp: Double) -> String {
-        
         let date = NSDate(timeIntervalSince1970: timeStamp)
         
         let dateFormatter = DateFormatter()
@@ -53,6 +52,23 @@ class Aftermath {
         
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
+    }
+    
+    static func standardizeMetadataTimestamp(timeStamp: String) -> String {
+        // yyyy-MM-dd'T'HH:mm:ss
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z" //"yyyy-MM-dd HH:mm:ss Z"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        if let date = dateFormatter.date(from: timeStamp) {
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let dateString = dateFormatter.string(from: date as Date)
+            return dateString
+        } else {
+            return "unknown"
+        }
     }
     
     
@@ -66,5 +82,17 @@ class Aftermath {
             print(error)
             exit(1)
         }
+    }
+    
+    
+    static func sortCSV(unsortedArr: [[String]]) throws -> [[String]] {
+        var arr = unsortedArr
+        try arr.sort { lhs, rhs in
+            guard let lhsStr = lhs.first, let rhsStr = rhs.first else { return false }
+            let lhsDate = try Date("\(lhsStr)Z", strategy: .iso8601)
+            let rhsDate = try Date("\(rhsStr)Z", strategy: .iso8601)
+            return lhsDate > rhsDate
+        }
+        return arr
     }
 }

@@ -14,11 +14,11 @@ class DatabaseParser: AftermathModule {
     lazy var tccWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "tcc.csv")
     lazy var quarantineWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "lsquarantine.csv")
     let collectionDir: String
-    let timelineFile: URL
+    let storylineFile: URL
  
-    init(collectionDir: String, timelineFile: URL) {
+    init(collectionDir: String, storylineFile: URL) {
         self.collectionDir = collectionDir
-        self.timelineFile = timelineFile
+        self.storylineFile = storylineFile
     }
     
     func parseTCC() {
@@ -90,7 +90,7 @@ class DatabaseParser: AftermathModule {
                         
                         self.addTextToFile(atUrl: tccWriteFile, text: "\(client),\(service),\(authValue),\(authReason),\(last_modified)")
                         
-                        self.addTextToFile(atUrl: timelineFile, text: "\(last_modified),tcc_request_\(authValue),requestor_\(service),\(client)")
+                        self.addTextToFile(atUrl: storylineFile , text: "\(last_modified),tcc,\(authValue),\(service),\(client)")
                     }
                 }
             } else {
@@ -161,7 +161,7 @@ class DatabaseParser: AftermathModule {
                         self.addTextToFile(atUrl: self.quarantineWriteFile, text: "\(LSQuarantineTimeStamp),\(LSQuarantineAgentName),\(LSQuarantineAgentBundleIdentifier),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString),\(LSQuarantineSenderName),\(LSQuarantineSenderAddress)")
                         
                         if LSQuarantineDataURLString != "" || LSQuarantineOriginURLString != "" {
-                            self.addTextToFile(atUrl: timelineFile, text: "\(LSQuarantineTimeStamp),download_name_\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
+                            self.addTextToFile(atUrl: storylineFile, text: "\(LSQuarantineTimeStamp),lsquarantine,\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
                         }
                         
                     }

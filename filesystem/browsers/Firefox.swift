@@ -31,10 +31,6 @@ class Firefox: BrowserModule {
                     dumpHistory(file: file)
                     dumpDownloads(file: file)
                 }
-                if file.lastPathComponent == "cookies.sqlite" {
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir, newFileName: "cookies_\(user.username)")
-                    dumpCookies(file: file)
-                }
                 if file.lastPathComponent == "extensions.json" {
                     self.copyFileToCase(fileToCopy: file, toLocation: self.firefoxDir, newFileName: "extensions_\(user.username)")
                     dumpExtensions(file: file)
@@ -59,7 +55,9 @@ class Firefox: BrowserModule {
                 
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
                     if let col1  = sqlite3_column_text(queryStatement, 0) {
-                        dateTime = String(cString: col1)
+                        let unformattedDateTime = String(cString: col1)
+                        
+                        dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDateTime)
                     }
                     
                     if let col2 = sqlite3_column_text(queryStatement, 1) {
@@ -74,78 +72,42 @@ class Firefox: BrowserModule {
     
     func dumpDownloads(file: URL) {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Downloads: -----\n")
+        let downloadsOutput = self.createNewCaseFile(dirUrl: self.firefoxDir, filename: "downloads_output.csv")
+        self.addTextToFile(atUrl: downloadsOutput, text: "datetime,url,contents")
+
         
         var db: OpaquePointer?
         if sqlite3_open(file.path, &db) == SQLITE_OK {
             var queryStatement: OpaquePointer? = nil
-            let queryString = "SELECT moz_annos.dateAdded, moz_annos.content, moz_places.url FROM moz_annos, moz_places WHERE moz_places.id = moz_annos.place_id AND anno_attribute_id=1;"
+            let queryString = "SELECT moz_annos.dateAdded, moz_places.url, moz_annos.content FROM moz_places JOIN moz_annos WHERE moz_places.id = moz_annos.place_id AND anno_attribute_id=1;"
             
             if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
                 var dateAdded: String = ""
-                var content: String = ""
                 var url: String = ""
+                var content: String = ""
                 
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    if let col1  = sqlite3_column_text(queryStatement, 0) {
-                        dateAdded = String(cString: col1)
+                    let col1  = sqlite3_column_text(queryStatement, 0)
+                    if let col1 = col1 {
+                        let intDate = Int(String(cString: col1))
+                        let secondsConvert = Double(intDate!/1000000)
+                        dateAdded = Aftermath.dateFromEpochTimestamp(timeStamp: secondsConvert)
                     }
                     
                     if let col2 = sqlite3_column_text(queryStatement, 1) {
-                        content = String(cString: col2)
+                        url = String(cString: col2)
                     }
                     
                     if let col3 = sqlite3_column_text(queryStatement, 2) {
-                        url = String(cString: col3)
+                        content = String(cString: col3)
                     }
                     
                     self.addTextToFile(atUrl: self.writeFile, text: "DateAdded: \(dateAdded)\nURL: \(url)\nContent: \(content)\n")
+                    self.addTextToFile(atUrl: downloadsOutput, text: "\(dateAdded),\(url),\(content)")
                 }
             }
         }
         self.addTextToFile(atUrl: self.writeFile, text: "----- End of Firefox Downloads -----")
-    }
-    
-    func dumpCookies(file: URL) {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Firefox Cookies: -----\n")
-
-        for user in getBasicUsersOnSystem() {
-        
-            let file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/Default/Cookies")
-                        
-            var db: OpaquePointer?
-            if sqlite3_open(file.path, &db) == SQLITE_OK {
-                var queryStatement: OpaquePointer? = nil
-                let queryString = "select datetime(creation_utc/1000000-11644473600, 'unixepoch'), name,  host_key, path, datetime(expires_utc/1000000-11644473600, 'unixepoch') from cookies;"
-            
-                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                    var dateTime: String = ""
-                    var name: String = ""
-                    var hostKey: String = ""
-                    var path: String = ""
-                    var expireTime: String = ""
-                    
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    let col1  = sqlite3_column_text(queryStatement, 0)
-                        if let col1 = col1 { dateTime = String(cString: col1) }
-                        
-                        let col2 = sqlite3_column_text(queryStatement, 1)
-                        if let col2 = col2 { name = String(cString: col2) }
-                        
-                        let col3 = sqlite3_column_text(queryStatement, 2)
-                        if let col3 = col3 { hostKey = String(cString: col3) }
-                        
-                        let col4 = sqlite3_column_text(queryStatement, 3)
-                        if let col4 = col4 { path = String(cString: col4) }
-                        
-                        let col5 = sqlite3_column_text(queryStatement, 4)
-                        if let col5 = col5 { expireTime = String(cString: col5) }
-                        
-                        self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
-                    }
-                }
-            }
-        }
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Firefox Cookies -----\n")
     }
     
     func dumpExtensions(file: URL) {

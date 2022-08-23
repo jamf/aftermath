@@ -160,11 +160,12 @@ class AftermathModule {
         
         let dest = to.appendingPathComponent(filename)
         
+        if filemanager.fileExists(atPath: dest.path) { return }
         
         do {
             try FileManager.default.copyItem(at:fileToCopy, to:dest)
         } catch {
-            print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
+            self.log("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
         }
         
     }
@@ -176,7 +177,7 @@ class AftermathModule {
             return
         }
         
-        var helpers = CHelpers()
+        let helpers = CHelpers()
         var metadata: String
         var birthTimestamp: String
         var lastModifiedTimestamp: String
@@ -194,28 +195,34 @@ class AftermathModule {
                 metadata = "\(fromFile.path),"
             }
             
-            
             if let birth = mdattrs[kMDItemContentCreationDate as String] {
-                birthTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: birth))
+                birthTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: birth))
+                metadata.append("\(birthTimestamp),")
+            } else if let birthFS = mdattrs[kMDItemFSCreationDate as String] {
+                birthTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: birthFS))
                 metadata.append("\(birthTimestamp),")
             } else {
                 metadata.append("unknown,")
             }
             
             if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
-                lastModifiedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastModified))
+                lastModifiedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastModified))
+                metadata.append("\(lastModifiedTimestamp),")
+            } else if let lastModifiedFS = mdattrs[kMDItemFSContentChangeDate as String] {
+                lastModifiedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastModifiedFS))
                 metadata.append("\(lastModifiedTimestamp),")
             } else {
                 metadata.append("unknown,")
             }
             
             if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
-                lastAccessedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastAccessed))
+                lastAccessedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastAccessed))
                 metadata.append("\(lastAccessedTimestamp),")
             } else {
                 metadata.append("unknown,")
             }
             
+           
             if let permissions = helpers.getFilePermissions(fromFile: fromFile) {
                 metadata.append("\(String(permissions).dropFirst(3)),")
             } else {
@@ -234,6 +241,18 @@ class AftermathModule {
                 metadata.append("unknown,")
             }
             
+            // this is last in case array is longer than 1 or 2 items
+            if let downloadedFrom = mdattrs[kMDItemWhereFroms as String] {
+                if let downloadedArr = downloadedFrom as Any as? [String] {
+                    for downloaded in downloadedArr {
+                        metadata.append("\(downloaded),")
+                    }
+                }
+            } else {
+                metadata.append("unknown,")
+            }
+            
+            
             self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)
 
          } else {
@@ -242,22 +261,22 @@ class AftermathModule {
     }
     
     
-    private func standardizeMetadataTimestamp(timeStamp: String) -> String {
-        // yyyy-MM-dd'T'HH:mm:ss
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        if let date = dateFormatter.date(from: timeStamp) {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            let dateString = dateFormatter.string(from: date as Date)
-            return dateString
-        } else {
-            return "unknown"
-        }
-    }
+//    func standardizeMetadataTimestamp(timeStamp: String) -> String {
+//        // yyyy-MM-dd'T'HH:mm:ss
+//        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en_US")
+//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+//        
+//        if let date = dateFormatter.date(from: timeStamp) {
+//            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//            let dateString = dateFormatter.string(from: date as Date)
+//            return dateString
+//        } else {
+//            return "unknown"
+//        }
+//    }
     
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
         
@@ -305,6 +324,7 @@ class AftermathModule {
     enum SystemUsers: String, CaseIterable {
         case nobody = "nobody"
         case daemon = "daemon"
+        case empty = "empty"
     }
 }
 //
@@ -313,7 +333,7 @@ class AftermathModule {
 //    init(rawValue: mode_t) {
 //        self.rawValue = rawValue
 //    }
-//    
+//
 //    static let userAll = FileMode(rawValue: S_IRWXU) /* RWX mask for owner */
 //    static let userRead = FileMode(rawValue: S_IRUSR) /* R for owner */
 //    static let userWrite = FileMode(rawValue: S_IWUSR) /* W for owner */

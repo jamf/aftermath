@@ -19,7 +19,7 @@ struct CaseFiles {
     static func CreateCaseDir() {
         do {
             try fm.createDirectory(at: caseDir, withIntermediateDirectories: true, attributes: nil)
-            print("Aftermath directory created at \(caseDir.relativePath)")
+            print("Temporary Aftermath directory created at \(caseDir.relativePath)")
         } catch {
             print(error)
         }
@@ -28,7 +28,7 @@ struct CaseFiles {
     static func CreateAnalysisCaseDir() {
         do {
             try fm.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
-            print("Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")
+            print("Temporary Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")
         } catch {
             print(error)
         }
@@ -51,6 +51,7 @@ struct CaseFiles {
         do {
             try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
+            print("Aftermath archive moved to \(zippedURL.path)")
         } catch {
             print("Unable to create archive. Error: \(error)")
         }
@@ -63,6 +64,7 @@ struct CaseFiles {
         do {
             try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
+            print("Aftermath analysis archive moved to \(zippedURL.path)")
         } catch {
             print(error)
         }
