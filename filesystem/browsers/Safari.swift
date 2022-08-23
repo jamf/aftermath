@@ -85,7 +85,7 @@ class Safari: BrowserModule {
                 
                 var timestamp: String = "unknown"
                 var url: String = "unknown"
-                for (key,value) in plistDict {
+                for (_ ,value) in plistDict {
                     for i in (value as! NSArray) {
 
                         let valuePlist = i as! NSDictionary

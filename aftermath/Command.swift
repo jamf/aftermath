@@ -135,6 +135,8 @@ class Command {
              let unifiedLogModule = UnifiedLogModule()
              unifiedLogModule.run()
              mainModule.log("Finished logging unified logs")
+             
+             mainModule.log("Finished running Aftermath collection")
 
 
              // Copy from cache to /tmp
