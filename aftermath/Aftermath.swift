@@ -59,8 +59,16 @@ class Aftermath {
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
-//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z" //"yyyy-MM-dd HH:mm:ss Z"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z" //"yyyy-MM-dd HH:mm:ss Z"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        if let date = dateFormatter.date(from: timeStamp) {
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let dateString = dateFormatter.string(from: date as Date)
+            return dateString
+        }
+            
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         if let date = dateFormatter.date(from: timeStamp) {
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -69,6 +77,7 @@ class Aftermath {
         } else {
             return "unknown"
         }
+        
     }
     
     

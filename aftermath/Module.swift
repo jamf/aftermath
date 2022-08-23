@@ -260,24 +260,6 @@ class AftermathModule {
          }
     }
     
-    
-//    func standardizeMetadataTimestamp(timeStamp: String) -> String {
-//        // yyyy-MM-dd'T'HH:mm:ss
-//        
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en_US")
-//        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-//        
-//        if let date = dateFormatter.date(from: timeStamp) {
-//            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//            let dateString = dateFormatter.string(from: date as Date)
-//            return dateString
-//        } else {
-//            return "unknown"
-//        }
-//    }
-    
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
         
         let module = URL(fileURLWithPath: file).lastPathComponent
@@ -307,8 +289,6 @@ class AftermathModule {
         
     }
     
-    
-       
     enum Color: String {
         case black = "\u{001B}[0;30m"
         case red = "\u{001B}[0;31m"
@@ -327,29 +307,3 @@ class AftermathModule {
         case empty = "empty"
     }
 }
-//
-//struct FileMode: OptionSet {
-//    let rawValue: mode_t
-//    init(rawValue: mode_t) {
-//        self.rawValue = rawValue
-//    }
-//
-//    static let userAll = FileMode(rawValue: S_IRWXU) /* RWX mask for owner */
-//    static let userRead = FileMode(rawValue: S_IRUSR) /* R for owner */
-//    static let userWrite = FileMode(rawValue: S_IWUSR) /* W for owner */
-//    static let userExecute = FileMode(rawValue: S_IXUSR) /* X for owner */
-//
-//    static let groupAll = FileMode(rawValue: S_IRWXG) /* RWX mask for group */
-//    static let groupRead = FileMode(rawValue: S_IRGRP) /* R for group */
-//    static let groupWrite = FileMode(rawValue: S_IWGRP) /* W for group */
-//    static let groupExecute = FileMode(rawValue: S_IXGRP) /* X for group */
-//
-//    static let otherAll = FileMode(rawValue: S_IRWXO) /* RWX mask for other */
-//    static let otherRead = FileMode(rawValue: S_IROTH) /* R for other */
-//    static let otherWrite = FileMode(rawValue: S_IWOTH) /* W for other */
-//    static let otherExecute = FileMode(rawValue: S_IXOTH) /* X for other */
-//
-//    static let setUserIdOnExe = FileMode(rawValue: S_ISUID) /* set user id on execution */
-//    static let setGroupIdOnExe = FileMode(rawValue: S_ISGID) /* set group id on execution */
-//    static let saveSwappedTextAfterUse = FileMode(rawValue: S_ISVTX) /* save swapped text even after use */
-//}
