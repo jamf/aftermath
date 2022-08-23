@@ -109,14 +109,6 @@ class Storyline: AftermathModule {
         }
     }
     
-    func addInstallLog() {
-        
-    }
-    
-    func addSystemLog() {
-        
-    }
-    
     func sortStoryline() {
         
         self.log("Sorting the storyline...")
