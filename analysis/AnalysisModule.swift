@@ -2,7 +2,8 @@
 //  AnalysisModule.swift
 //  aftermath
 //
-//  Copyright  2022 JAMF Software, LLC//
+//  Copyright 2022 JAMF Software, LLC
+//
 
 import Foundation
 
@@ -25,9 +26,7 @@ class AnalysisModule: AftermathModule, AMProto {
     
     func run() {
         self.log("Running analysis on collected aftermath files")
-        
-//        self.copyFileToCase(fileToCopy: URL(fileURLWithPath: "\(self.collectionDir)/metadata.csv"), toLocation: CaseFiles.analysisCaseDir, newFileName: "raw_metadata.csv")
-        
+
         // ex: timestamp, tcc_update, com.jamf.aftermath, <updates>
        addTextToFile(atUrl: storylineFile, text: "timestamp,type,other,path")
 
