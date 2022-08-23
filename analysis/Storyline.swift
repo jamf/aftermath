@@ -136,25 +136,11 @@ class Storyline: AftermathModule {
             print(error)
         }
     }
-    
-//    func insertFileTimeline() {
-//
-//        let timelineCSV = Aftermath.readCSVRows(path: self.timelineFile.path)
-//
-//        for r in timelineCSV.rows {
-//
-//
-//
-//        }
-//    }
 
-    
     func run() {
         addSafariData()
         addFirefoxData()
         addChromeData()
         sortStoryline()
     }
-    
-    
 }
