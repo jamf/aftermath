@@ -15,7 +15,7 @@ import ProcLib
 class Pids {
     
     let MaxPathLen = Int(4 * MAXPATHLEN)
-    typealias rpidFunc = @convention (CInt) -> CInt
+    typealias rpidFunc = @convention(c) (CInt) -> CInt
     let InfoSize = Int32(MemoryLayout<proc_bsdinfo>.stride)
     
     

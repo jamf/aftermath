@@ -160,11 +160,12 @@ class AftermathModule {
         
         let dest = to.appendingPathComponent(filename)
         
-        
+        if filemanager.fileExists(atPath: dest.path) { return }
         do {
             try FileManager.default.copyItem(at:fileToCopy, to:dest)
         } catch {
-            print("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
+            self.log("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
+            print(error)
         }
         
     }
@@ -183,8 +184,8 @@ class AftermathModule {
         
         if let mditem = MDItemCreate(nil, fromFile.path as CFString),
             let mdnames = MDItemCopyAttributeNames(mditem),
-            let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
-            
+           let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
+
             if fromFile.path.contains(",") {
                 let sanitized = fromFile.path.replacingOccurrences(of: ",", with: " ")
                 metadata = "\(sanitized),"
@@ -192,9 +193,11 @@ class AftermathModule {
                 metadata = "\(fromFile.path),"
             }
             
-            
             if let birth = mdattrs[kMDItemContentCreationDate as String] {
                 birthTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: birth))
+                metadata.append("\(birthTimestamp),")
+            } else if let birthFS = mdattrs[kMDItemFSCreationDate as String] {
+                birthTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: birthFS))
                 metadata.append("\(birthTimestamp),")
             } else {
                 metadata.append("unknown,")
@@ -203,7 +206,11 @@ class AftermathModule {
             if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
                 lastModifiedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastModified))
                 metadata.append("\(lastModifiedTimestamp),")
-            } else {
+            } else if let lastModifiedFS = mdattrs[kMDItemFSContentChangeDate as String] {
+                lastModifiedTimestamp = standardizeMetadataTimestamp(timeStamp: String(describing: lastModifiedFS))
+                metadata.append("\(lastModifiedTimestamp),")
+            }
+                else {
                 metadata.append("unknown,")
             }
             
