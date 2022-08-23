@@ -2,6 +2,7 @@
 //  SystemReconModule.swift
 //  aftermath
 //
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation
@@ -195,6 +196,22 @@ class SystemReconModule: AftermathModule, AMProto {
             self.addTextToFile(atUrl: saveFile, text: "\n\(heading):\n\(output)")
         }
     }
+    
+    func installedUsers(saveFile: URL) {
+        self.addTextToFile(atUrl: saveFile, text: "Users:\n")
+
+        for user in getUsersOnSystem() {
+            self.addTextToFile(atUrl: saveFile, text: "\(user.username)\n\(user.homedir)\n\n")
+        }
+        
+        let passwdWriteFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "etc_passwd.txt")
+        do {
+            let etcContents = try String(contentsOfFile: "/etc/passwd")
+            self.addTextToFile(atUrl: passwdWriteFile, text: "\(etcContents)")
+        } catch {
+            print(error)
+        }
+    }
 
     func run() {
         let systemInformationFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "system_information.txt")
@@ -203,6 +220,7 @@ class SystemReconModule: AftermathModule, AMProto {
         let interfacesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "interfaces.txt")
         let environmentVariablesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "environment_variables.txt")
         let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.txt")
+        let installedUsersFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "users.txt")
         
         systemInformation(saveFile: systemInformationFile)
         installedApps(saveFile: installedAppsFile)
@@ -211,5 +229,6 @@ class SystemReconModule: AftermathModule, AMProto {
         interfaces(saveFile: interfacesFile)
         environmentVariables(saveFile: environmentVariablesFile)
         securityAssessment(saveFile: systemInformationFile)
+        installedUsers(saveFile: installedUsersFile)
     }
 }

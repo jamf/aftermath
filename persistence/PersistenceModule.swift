@@ -2,6 +2,7 @@
 //  PersistenceHandler.swift
 //  aftermath
 //
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation
@@ -20,7 +21,6 @@ class PersistenceModule: AftermathModule, AMProto {
         let launch = LaunchItems(saveToRawDir: persistenceRawDir)
         launch.run()
         
-        
         // get the login and logout hooks
         let hooks = LoginHooks(saveToRawDir: persistenceRawDir)
         hooks.run()
@@ -36,5 +36,11 @@ class PersistenceModule: AftermathModule, AMProto {
         
         let periodicScripts = Periodic(saveToRawDir: persistenceRawDir)
         periodicScripts.run()
+        
+        let emond = Emond(saveToRawDir: persistenceRawDir)
+        emond.run()
+        
+        let loginItems = LoginItems(saveToRawDir: persistenceRawDir)
+        loginItems.run()
     }
 }

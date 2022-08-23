@@ -2,6 +2,8 @@
 //  tree.swift
 //  aftermath
 //
+//  Copyright  2022 JAMF Software, LLC
+//
 // The following code (with minor modifications) is from TrueTree, written by Jaron Bradley.
 //  2020 TheMittenMac
 // TrueTree: https://github.com/themittenmac/TrueTree
@@ -12,7 +14,7 @@ import Foundation
 import LaunchdXPC
 
 
-class Node<T> {
+class Node<T>: ProcessModule {
     var pid: T
     var ppid: UInt32
     weak var parent: Node?
@@ -66,7 +68,7 @@ class Node<T> {
 }
 
 
-class Tree {
+class Tree: ProcessModule {
     func buildStandardTree(_ nodePidDict:[Int:Node<Any>]) -> Node<Any> {
         // Builds a tree using standard unix pids and ppids
         for (_, node) in nodePidDict {
@@ -87,12 +89,15 @@ class Tree {
     func buildTrueTree(_ nodePidDict:[Int:Node<Any>]) -> Node<Any> {
         // Empty dictionary to hold plist items
         var nodePlistDict = [String:Node<Any>]()
+
+        
         
         // Builds a tree based on the TrueTree concept and returns the root node
         for (pid, node) in nodePidDict {
             if pid == 1 {
                 continue
             }
+            
             // If a plist was responsible for the creation of a process add the plist as a node entry
             // Pids don't matter as we will only reference the procPath
             if let submittedByPlist = node.submittedByPlist {
@@ -157,7 +162,7 @@ class Tree {
     func createNodeDictionary() -> [Int:Node<Any>] {
         
         let pids = Pids()
-        
+        self.addTextToFile(atUrl: processFile, text: "TIMESTAMP  PID  PPID  RESP_PID  SUBMITTED_PID  PROC_PATH  ARGS") //\(node.timestamp) \(node.pid) \(node.ppid) \(node.responsiblePid) \(subNode) \(node.procPath)
         var nodePidDict = [Int:Node<Any>]()
         
         // Go through each pid and create an initial tree node for it with all of the pid info we can find
@@ -181,10 +186,13 @@ class Tree {
             defer { p.deallocate() }
             
             let node = Node<Any>(pid as Any, ppid:ppid, procPath:path, responsiblePid: responsiblePid, timestamp: ts)
+            var subNode: Int = 0
             
             let submitted = getSubmittedPid(Int32(pid))
             if submitted != 0 {
                 node.submittedByPid = Int(submitted)
+                subNode = Int(submitted)
+                
             }
             
             if let launchctlPlist = getSubmittedByPlist(UInt(pid)) {
@@ -192,6 +200,23 @@ class Tree {
                     node.submittedByPlist = launchctlPlist
                 }
             }
+            
+            
+            // get the arguments of the process
+            let processArguments = getProcessArgs(UInt(pid))
+            var allArgs: String = ""
+            
+            // a dict of dict - which is why the value.value
+            if processArguments != nil {
+                for (value) in processArguments ?? [:] {
+                    let singleArg = String(describing: value.value)
+                    allArgs = allArgs + " " + singleArg
+                }
+            }
+            
+            
+            self.addTextToFile(atUrl: processFile, text: "\(node.timestamp) \(node.pid) \(node.ppid) \(node.responsiblePid) \(subNode) \(node.procPath) \(allArgs)")
+
             
             nodePidDict[pid] = node
         }

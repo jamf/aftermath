@@ -2,7 +2,7 @@
 //  LogFiles.swift
 //  aftermath
 //
-//  Created by Stuart Ashenbrenner on 6/6/22.
+//  Copyright  2022 JAMF Software, LLC
 //
 
 import Foundation
@@ -21,7 +21,6 @@ class LogFiles: ArtifactsModule {
         let systemRawDir = self.createNewDir(dir: self.logFilesDir, dirname: "system_logs")
         let auditRawDir = self.createNewDir(dir: self.logFilesDir, dirname: "audit_logs")
         let aslRawDir = self.createNewDir(dir: self.logFilesDir, dirname: "asl_logs")
-        
         
         let varLogPaths = ["/var/log/wifi.log", "/var/log/appfirewall.log", "/var/log/fsck_apfs.log", "/var/log/fsck_apfs_error.log", "/var/log/fsck_hfs.log", "/var/log/install.log", "/var/log/hdiejectd.log", "/var/log/apache2/access_log", "/var/log/apache2/error_log", "/var/log/system.log"]
         let auditLogs = filemanager.filesInDirRecursive(path: "/var/audit/")

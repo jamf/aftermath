@@ -2,7 +2,9 @@
 //  Cron.swift
 //  aftermath
 //
+//  Copyright  2022 JAMF Software, LLC
 //
+
 import Foundation
 
 
@@ -14,7 +16,7 @@ class Cron: PersistenceModule {
         self.saveToRawDir = saveToRawDir
     }
     
-    func captureCronJobs(urlLocations: [URL], rawLoc: URL, captured: URL) {
+    func captureCronTabs(urlLocations: [URL], rawLoc: URL, captured: URL) {
         for url in urlLocations {
             // copy the files to the persistence directory
             do {
@@ -29,16 +31,39 @@ class Cron: PersistenceModule {
         }
     }
     
+    func captureCronJobs(urlLocations: [URL], rawLoc: URL) {
+        for url in urlLocations {
+            self.copyFileToCase(fileToCopy: url, toLocation: rawLoc)
+        }
+    }
+    
+    func captureAtTabs(urlLocations: [URL], rawLoc: URL) {
+        for url in urlLocations {
+            self.copyFileToCase(fileToCopy: url, toLocation: rawLoc)
+        }
+    }
+    
     override func run() {
         self.log("Collecting cron jobs...")
 
-        let cronRawDir = self.createNewDir(dir: self.saveToRawDir, dirname: "cron_dump")
+        let cronRawDir = self.createNewDir(dir: self.saveToRawDir, dirname: "cron")
+        let cronTabsRawDir = self.createNewDir(dir: cronRawDir, dirname: "cron_tabs")
+        let cronJobsRawDir = self.createNewDir(dir: cronRawDir, dirname: "cron_jobs")
+        let atRawDir = self.createNewDir(dir: cronRawDir, dirname: "at_tabs")
         
-        let capturedCronJobs = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "crontabs.txt")
+        let capturedCronTabs = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "crontabs.txt")
         
-        let cronjobsPath = "/usr/lib/cron/tabs/"
-        let cronjobs = filemanager.filesInDirRecursive(path: cronjobsPath)
+        let cronTabsPath = "/usr/lib/cron/tabs/"
+        let crontabs = filemanager.filesInDirRecursive(path: cronTabsPath)
         
-        captureCronJobs(urlLocations: cronjobs, rawLoc: cronRawDir, captured: capturedCronJobs)
+        let cronJobsPath = "/usr/lib/cron/jobs/"
+        let cronjobs = filemanager.filesInDirRecursive(path: cronJobsPath)
+        
+        let atTabsPath = "/var/at/tabs/"
+        let tabs = filemanager.filesInDirRecursive(path: atTabsPath)
+        
+        captureCronTabs(urlLocations: crontabs, rawLoc: cronTabsRawDir, captured: capturedCronTabs)
+        captureCronJobs(urlLocations: cronjobs, rawLoc: cronJobsRawDir)
+        captureAtTabs(urlLocations: tabs, rawLoc: atRawDir)
     }
 }
