@@ -22,10 +22,11 @@ class FileWalker: FileSystemModule {
         self.log("Scanning requested directories...")
         
         for p in directories {
+            
             self.log("Querying directory \(p)")
             let directory = filemanager.filesInDirRecursive(path: p)
             for file in directory {
-                
+                if file.path.contains("homebrew") { continue }
                 self.getFileMetadata(fromFile: file)
             }
         }

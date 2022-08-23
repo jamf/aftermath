@@ -56,7 +56,6 @@ class Firefox: BrowserModule {
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
                     if let col1  = sqlite3_column_text(queryStatement, 0) {
                         let unformattedDateTime = String(cString: col1)
-                        
                         dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDateTime)
                     }
                     
