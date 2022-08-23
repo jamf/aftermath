@@ -22,7 +22,6 @@ class Timeline: AftermathModule {
     
     func organizeMetadata() {
         self.log("Parsing metadata...")
-//        self.copyFileToCase(fileToCopy: URL(fileURLWithPath: "\(self.collectionDir)/metadata.csv"), toLocation: CaseFiles.analysisCaseDir, isAnalysis: true)
 
         let metadataPath = "\(self.collectionDir)/metadata.csv"
         let metadataFileContents = Aftermath.readCSVRows(path: metadataPath)
@@ -35,11 +34,6 @@ class Timeline: AftermathModule {
             var file: String = ""
             var timestamp: String = ""
             var status: String = ""
-//            var permissions: String = ""
-//            var uid: String = ""
-//            var gid: String = ""
-//            var downloadedFrom: String = ""
-            
             
             for (header, contents) in r {
                 if contents == "unknown" { continue }
@@ -54,29 +48,8 @@ class Timeline: AftermathModule {
                     timestamp = contents
                 }
                 
-//                if header == "permissions" {
-//                  permissions = contents
-//                    continue
-//                }
-//
-//                if header == "uid" {
-//                    uid = contents
-//                    continue
-//                }
-//
-//                if header == "gid" {
-//                    gid = contents
-//                    continue
-//                }
-//
-//                if header == "downloadedFrom" {
-//                    downloadedFrom = contents
-//                    continue
-//                }
-                
-                
                 if file != "" && timestamp != "" && status != "" {
-                    self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)") //,\(permissions),\(uid),\(gid),\(downloadedFrom)
+                    self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)")
                     self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),\(status),\(file)")
                     break
                 } else { continue }
@@ -107,18 +80,6 @@ class Timeline: AftermathModule {
             print(error)
         }
     }
-    
-//    func organizeTimeline(unsortedArr: [[String]]) throws -> [[String]] {
-//        var arr = unsortedArr
-//        try arr.sort { lhs, rhs in
-//            guard let lhsStr = lhs.first, let rhsStr = rhs.first else { return false }
-//            let lhsDate = try Date("\(lhsStr)Z", strategy: .iso8601)
-//            let rhsDate = try Date("\(rhsStr)Z", strategy: .iso8601)
-//            return lhsDate > rhsDate
-//        }
-//        return arr
-//    }
-    
     
     func run() {
         
