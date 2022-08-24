@@ -54,7 +54,7 @@ sudo ./aftermath --analyze <path_to_collection_zip>
 ## Help Menu
 
 ```
--o or --output -> specify an output location for Aftermath collection results
+-o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
 --analyze -> Analyze the results of the Aftermath results
      usage: --analyze <path_to_aftermath_collection_file>
