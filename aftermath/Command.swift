@@ -184,7 +184,7 @@ class Command {
     }
 
      static func printHelp() {
-         print("-o -> specify an output location for Aftermath results")
+         print("-o -> specify an output location for Aftermath results (defaults to /tmp)")
          print("     usage: -o Users/user/Desktop")
          print("--analyze -> Analyze the results of the Aftermath results")
          print("     usage: --analyze <path_to_file>")

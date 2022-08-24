@@ -304,6 +304,5 @@ class AftermathModule {
     enum SystemUsers: String, CaseIterable {
         case nobody = "nobody"
         case daemon = "daemon"
-        case empty = "empty"
     }
 }

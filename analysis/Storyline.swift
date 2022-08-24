@@ -26,6 +26,8 @@ class Storyline: AftermathModule {
         
         for (title,p) in safariPaths {
             
+            if !filemanager.fileExists(atPath: p) { continue }
+            
             let csvContents = Aftermath.readCSVRows(path: p)
             
             for r in csvContents.rows {
@@ -56,6 +58,8 @@ class Storyline: AftermathModule {
         
         for (title,p) in chromePaths {
             
+            if !filemanager.fileExists(atPath: p) { continue }
+            
             let csvContents = Aftermath.readCSVRows(path: p)
             
             for r in csvContents.rows {
@@ -84,6 +88,8 @@ class Storyline: AftermathModule {
         let chromePaths = ["history":"\(collectionDir)/Browser/Chrome/history_output.csv","downloads":"\(collectionDir)/Browser/Chrome/downloads_output.csv"]
         
         for (title,p) in chromePaths {
+            
+            if !filemanager.fileExists(atPath: p) { continue }
             
             let csvContents = Aftermath.readCSVRows(path: p)
             
