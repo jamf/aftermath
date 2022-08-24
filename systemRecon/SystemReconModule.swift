@@ -54,6 +54,8 @@ class SystemReconModule: AftermathModule, AMProto {
     func installHistory(saveFile: URL) {
         let installPath = "/Library/Receipts/InstallHistory.plist"
         
+        self.addTextToFile(atUrl: saveFile, text: "ProcessName,Datetime,ContentType,DisplayName,DisplayVersion,PackageIdentifers")
+        
         let data = filemanager.contents(atPath: installPath)
         let installDict = try! PropertyListSerialization.propertyList(from: data!, options: [], format: nil) as! Array<[String: Any]>
 
@@ -66,53 +68,76 @@ class SystemReconModule: AftermathModule, AMProto {
         var processName:String = ""
         
         for data in installDict {
-            let dateFormater = DateFormatter()
-            dateFormater.dateFormat = "yyyy-mm-dd hh:mm:ss"
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US")
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//
+//            var procName: String
+//            var dateString: String
+//            var type: String
+//            var name: String
+//            var version: String
+//            var package: String
             
             if data["processName"] != nil {
                 processName = data["processName"]! as! String
-                installHistoryArray.append("ProcessName: \(processName)")
+//                procName = processName
+//                installHistoryArray.append("ProcessName: \(processName)")
             } else {
-                installHistoryArray.append("ProcessName: ")
+//                installHistoryArray.append("ProcessName: ")
+                processName = "unknown"
             }
             
             if data["date"] != nil {
-                date = dateFormater.string(from: data["date"]! as! Date)
-                installHistoryArray.append("Date: \(date)")
+                date = dateFormatter.string(from: data["date"]! as! Date)
+//                dateString = date
+//                installHistoryArray.append("Date: \(date)")
             } else {
-                installHistoryArray.append("Date: ")
+//                installHistoryArray.append("Date: ")
+                date = "unknown"
             }
             
             if data["contentType"] != nil {
                 contentType = data["contentType"]! as! String
-                installHistoryArray.append("ContentType: \(contentType)")
+//                type = contentType
+//                installHistoryArray.append("ContentType: \(contentType)")
             } else {
-                installHistoryArray.append("ContentType: ")
+//                installHistoryArray.append("ContentType: ")
+                contentType = "unknown"
             }
             
             if data["displayName"] != nil {
                 displayName = data["displayName"]! as! String
-                installHistoryArray.append("DisplayName: \(displayName)")
+//                name = displayName
+//                installHistoryArray.append("DisplayName: \(displayName)")
             } else {
-                installHistoryArray.append("DisplayName: ")
+//                installHistoryArray.append("DisplayName: ")
+                displayName = "unknown"
             }
             
             if data["displayVersion"] != nil {
                 displayVersion = data["displayVersion"]! as! String
-                installHistoryArray.append("DisplayVersion: \(displayVersion)")
+//                version = displayName
+//                installHistoryArray.append("DisplayVersion: \(displayVersion)")
             } else {
-                installHistoryArray.append("DisplayVersion: ")
+//                installHistoryArray.append("DisplayVersion: ")
+                displayVersion = "unknown"
             }
             
             if data["packageIdentifiers"] != nil {
                 packageIdentifiers = data["packageIdentifiers"]! as! Array<String>
-                installHistoryArray.append("PackageIdentifiers: \(packageIdentifiers.joined(separator: ", "))\n")
+//                package = packageIdentifiers.joined(separator: ",")
+//                installHistoryArray.append("PackageIdentifiers: \(packageIdentifiers.joined(separator: ", "))\n")
 
             } else {
-                installHistoryArray.append("PackageIdentifiers: \n")
+//                installHistoryArray.append("PackageIdentifiers: \n")
+                packageIdentifiers = ["unknown"]
             }
+            self.addTextToFile(atUrl: saveFile, text: "\(processName),\(date),\(contentType),\(displayName),\(displayVersion),\(packageIdentifiers.joined(separator: ","))")
+
         }
-        self.addTextToFile(atUrl: saveFile, text: installHistoryArray.joined(separator: "\n"))
+//        self.addTextToFile(atUrl: saveFile, text: installHistoryArray.joined(separator: "\n"))
     }
 
     func runningApps(saveFile: URL) {
@@ -219,7 +244,7 @@ class SystemReconModule: AftermathModule, AMProto {
         let runningAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "running_apps.txt")
         let interfacesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "interfaces.txt")
         let environmentVariablesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "environment_variables.txt")
-        let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.txt")
+        let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.csv")
         let installedUsersFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "users.txt")
         
         systemInformation(saveFile: systemInformationFile)
