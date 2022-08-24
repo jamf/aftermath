@@ -139,15 +139,12 @@ class Command {
              mainModule.log("Finished running Aftermath collection")
 
 
-             // Copy from cache to /tmp
-//             let dir =  else {
-//                 mainModule.log("Output directory not provided")
-//                 return
-//             }
              guard isDirectoryThatExists(path: Self.outputDir) else {
                  mainModule.log("Output directory is not a valid directory that exists")
                  return
              }
+             
+             // Copy from cache to /tmp
              CaseFiles.MoveCaseDir(outputDir: Self.outputDir)
 
              // End Aftermath
