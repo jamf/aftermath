@@ -64,11 +64,11 @@ sudo ./aftermath --analyze <path_to_collection_zip>
 ```
 
 ## Contributors
-- [Stuart Ashenbrenner](https://github.com/stuartjash)
-- [Jaron Bradley](https://github.com/jbradley89)
-- [Maggie Zirnhelt](https://github.com/c7bercat)
-- [Matt Benyo](https://github.com/mattbenyo)
-- [Ferdous Saljooki](https://github.com/saljooki)
+- Stuart Ashenbrenner
+- Jaron Bradley
+- Maggie Zirnhelt
+- Matt Benyo
+- Ferdous Saljooki
 
 ## Thank You
 This project leverages the open source [TrueTree](https://github.com/themittenmac/TrueTree) project, written by Jaron Bradley. 
