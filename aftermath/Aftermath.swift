@@ -9,6 +9,9 @@ import Foundation
 import SwiftCSV
 
 class Aftermath {
+
+    static var fm: FileManager = .default
+
     //function for calling bash commands
     static func shell(_ command: String) -> String {
         let task = Process()
@@ -30,7 +33,7 @@ class Aftermath {
         var data = Data()
         var plistDict = [String:Any]()
         
-        if FileManager.default.fileExists(atPath: atUrl.relativePath) {
+        if fm.fileExists(atPath: atUrl.relativePath) {
             do {
                 data = try Data(contentsOf: atUrl)
                 plistDict = try PropertyListSerialization.propertyList(from: data, format: nil) as! [String:Any]
