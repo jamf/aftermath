@@ -53,8 +53,8 @@ sudo ./aftermath --analyze <path_to_collection_zip>
 
 If deploying from an MDM solution, deploy a PPPC configuration profile with the Terminal given full disk access. You can then push a policy to deploy and trigger aftermath.
 
-## Release
-There is an Aftermath.pkg available under [Release](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
+## Releases
+There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
 ```bash
 sudo aftermath [option1] [option2]
 ```
