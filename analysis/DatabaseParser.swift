@@ -9,22 +9,22 @@ import Foundation
 import SQLite3
 
 
-class Parser: AftermathModule {
+class DatabaseParser: AftermathModule {
     
-    let analysisInputDir: String
     lazy var tccWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "tcc.csv")
     lazy var quarantineWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "lsquarantine.csv")
-    lazy var timelineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "timeline.txt")
-    
-    init(analysisDir: String) {
-        self.analysisInputDir = analysisDir
+    let collectionDir: String
+    let storylineFile: URL
+ 
+    init(collectionDir: String, storylineFile: URL) {
+        self.collectionDir = collectionDir
+        self.storylineFile = storylineFile
     }
-    
     
     func parseTCC() {
         self.addTextToFile(atUrl: tccWriteFile, text: "name, service, auth_value, auth_reason, last_modified")
         
-        let rawDir = "\(analysisInputDir)/Artifacts/raw/"
+        let rawDir = "\(self.collectionDir)/Artifacts/raw/"
         var tccFiles = [URL]()
         for f in filemanager.filesInDir(path: rawDir) {
             if f.lastPathComponent.contains("tcc") {
@@ -38,7 +38,7 @@ class Parser: AftermathModule {
             
             if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
                 var queryStatement: OpaquePointer? = nil
-                let queryString = "select client, auth_value, auth_reason, service, last_modified from access"
+                let queryString = "select client, auth_value, auth_reason, service, last_modified from access order by last_modified desc"
                 
                 if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
                     var client: String = ""
@@ -89,6 +89,8 @@ class Parser: AftermathModule {
                         }
                         
                         self.addTextToFile(atUrl: tccWriteFile, text: "\(client),\(service),\(authValue),\(authReason),\(last_modified)")
+                        
+                        self.addTextToFile(atUrl: storylineFile , text: "\(last_modified),tcc,\(authValue),\(service),\(client)")
                     }
                 }
             } else {
@@ -101,7 +103,7 @@ class Parser: AftermathModule {
         
         self.addTextToFile(atUrl: self.quarantineWriteFile, text: "timestamp, agent_name, bundle_id, data_url, origin_url, sender_name, sender_address")
         
-        let rawDir = "\(analysisInputDir)/Artifacts/raw/"
+        let rawDir = "\(self.collectionDir)/Artifacts/raw/"
         var quarantineFiles = [URL]()
         for f in filemanager.filesInDir(path: rawDir) {
             if f.lastPathComponent.contains("lsquarantine") {
@@ -157,6 +159,11 @@ class Parser: AftermathModule {
                         }
                         
                         self.addTextToFile(atUrl: self.quarantineWriteFile, text: "\(LSQuarantineTimeStamp),\(LSQuarantineAgentName),\(LSQuarantineAgentBundleIdentifier),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString),\(LSQuarantineSenderName),\(LSQuarantineSenderAddress)")
+                        
+                        if LSQuarantineDataURLString != "" || LSQuarantineOriginURLString != "" {
+                            self.addTextToFile(atUrl: storylineFile, text: "\(LSQuarantineTimeStamp),lsquarantine,\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
+                        }
+                        
                     }
                 }
                 
@@ -166,6 +173,15 @@ class Parser: AftermathModule {
                 self.log("An error occurred when attempting to query the LSQuarantine database...")
             }
         }
+    }
+    
+    func run() {
+        self.log("Parsing collected database files...")
+        self.log("Parsing LSQuarantine database")
+        parseLSQuarantine()
+        
+        self.log("Parsing TCC database")
+        parseTCC()
     }
     
 

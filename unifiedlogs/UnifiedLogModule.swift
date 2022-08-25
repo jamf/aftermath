@@ -36,7 +36,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
             let output = Aftermath.shell("\(command)")
 
             if output.components(separatedBy: "\n").count > 2 {
-                let logfile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: filtername)
+                let logfile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "\(filtername).txt")
                 self.addTextToFile(atUrl: logfile, text: output)
                 //self.caseHandler.log(module: self.moduleName, "Done filtering for \(filtername) events")
             } else { continue }

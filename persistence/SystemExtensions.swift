@@ -19,7 +19,7 @@ class SystemExtensions: PersistenceModule {
         let capturedSystemExtensions = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "systemExtensions.txt")
         self.addTextToFile(atUrl: capturedSystemExtensions, text: "System Extension URLs\n-----\n\n")
         for url in urlLocations {
-            self.addTextToFile(atUrl: capturedSystemExtensions, text: "\(url.absoluteString)\n")
+            self.addTextToFile(atUrl: capturedSystemExtensions, text: "\(url.path)\n")
         }
     }
     
