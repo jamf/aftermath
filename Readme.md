@@ -51,6 +51,9 @@ sudo ./aftermath -o /Users/user/Desktop --deep
 sudo ./aftermath --analyze <path_to_collection_zip>
 ```
 
+## Release
+There is an Aftermath.pkg available under [Release](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM.
+
 ## Help Menu
 
 ```
