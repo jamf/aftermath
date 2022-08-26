@@ -59,7 +59,6 @@ class SystemReconModule: AftermathModule, AMProto {
         let data = filemanager.contents(atPath: installPath)
         let installDict = try! PropertyListSerialization.propertyList(from: data!, options: [], format: nil) as! Array<[String: Any]>
 
-        var installHistoryArray = [String]()
         var date:String = ""
         var contentType:String = ""
         var displayName:String = ""
@@ -72,72 +71,47 @@ class SystemReconModule: AftermathModule, AMProto {
             dateFormatter.locale = Locale(identifier: "en_US")
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//
-//            var procName: String
-//            var dateString: String
-//            var type: String
-//            var name: String
-//            var version: String
-//            var package: String
+
             
             if data["processName"] != nil {
                 processName = data["processName"]! as! String
-//                procName = processName
-//                installHistoryArray.append("ProcessName: \(processName)")
             } else {
-//                installHistoryArray.append("ProcessName: ")
                 processName = "unknown"
             }
             
             if data["date"] != nil {
                 date = dateFormatter.string(from: data["date"]! as! Date)
-//                dateString = date
-//                installHistoryArray.append("Date: \(date)")
             } else {
-//                installHistoryArray.append("Date: ")
                 date = "unknown"
             }
             
             if data["contentType"] != nil {
                 contentType = data["contentType"]! as! String
-//                type = contentType
-//                installHistoryArray.append("ContentType: \(contentType)")
             } else {
-//                installHistoryArray.append("ContentType: ")
                 contentType = "unknown"
             }
             
             if data["displayName"] != nil {
                 displayName = data["displayName"]! as! String
-//                name = displayName
-//                installHistoryArray.append("DisplayName: \(displayName)")
             } else {
-//                installHistoryArray.append("DisplayName: ")
                 displayName = "unknown"
             }
             
             if data["displayVersion"] != nil {
                 displayVersion = data["displayVersion"]! as! String
-//                version = displayName
-//                installHistoryArray.append("DisplayVersion: \(displayVersion)")
             } else {
-//                installHistoryArray.append("DisplayVersion: ")
                 displayVersion = "unknown"
             }
             
             if data["packageIdentifiers"] != nil {
                 packageIdentifiers = data["packageIdentifiers"]! as! Array<String>
-//                package = packageIdentifiers.joined(separator: ",")
-//                installHistoryArray.append("PackageIdentifiers: \(packageIdentifiers.joined(separator: ", "))\n")
 
             } else {
-//                installHistoryArray.append("PackageIdentifiers: \n")
                 packageIdentifiers = ["unknown"]
             }
             self.addTextToFile(atUrl: saveFile, text: "\(processName),\(date),\(contentType),\(displayName),\(displayVersion),\(packageIdentifiers.joined(separator: ","))")
 
         }
-//        self.addTextToFile(atUrl: saveFile, text: installHistoryArray.joined(separator: "\n"))
     }
 
     func runningApps(saveFile: URL) {
@@ -204,15 +178,15 @@ class SystemReconModule: AftermathModule, AMProto {
                 
         let dict = ["Gatekeeper Status": "spctl --status",
                     "SIP Status": "csrutil status",
-                    "Login History": "last",
                     "Screen Sharing": "sudo launchctl list com.apple.screensharing",
-                    "I/O Statistics": "iostat",
-                    "Network Interface Parameters": "ifconfig",
                     "Firewall Status (Enabled = 1, Disabled = 0)": "defaults read /Library/Preferences/com.apple.alf globalstate",
                     "Filevault Status": "sudo fdesetup status",
                     "Airdrop Status": "sudo ifconfig awdl0 | awk '/status/{print $2}'",
                     "Remote Login": "sudo systemsetup -getremotelogin",
-                    "Network File Shares": "nfsd status"
+                    "Network File Shares": "nfsd status",
+                    "I/O Statistics": "iostat",
+                    "Login History": "last",
+                    "Network Interface Parameters": "ifconfig"
         ]
         
         for (heading,command) in dict {
