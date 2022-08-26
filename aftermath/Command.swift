@@ -1,9 +1,9 @@
 //
- //  Command.swift
- //  aftermath
- //
+//  Command.swift
+//  aftermath
+//
 //  Copyright 2022 JAMF Software, LLC
- //
+//
 
  import Foundation
 
@@ -13,6 +13,8 @@
      static let deep = Options(rawValue: 1 << 0)
      static let output = Options(rawValue: 1 << 1)
      static let analyze = Options(rawValue: 1 << 2)
+     static let pretty = Options(rawValue: 1 << 3)
+     
  }
 
 @main
@@ -35,6 +37,7 @@ class Command {
              case "-h", "--help": Self.printHelp()
              case "--cleanup": Self.cleanup()
              case "-d", "--deep": Self.options.insert(.deep)
+             case "--pretty": Self.options.insert(.pretty)
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)

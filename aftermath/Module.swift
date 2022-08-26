@@ -25,6 +25,7 @@ class AftermathModule {
     let filemanager = FileManager.default
     var caseLogSelector: URL
     var caseDirSelector: URL
+    var isPretty: Bool = false
     
     init() {
         if Command.options.contains(.analyze) {
@@ -34,6 +35,10 @@ class AftermathModule {
             caseLogSelector = CaseFiles.logFile
             caseDirSelector = CaseFiles.caseDir
         }
+        if Command.options.contains(.pretty) {
+            isPretty = true
+        }
+            
         users = getUsersOnSystem()
     }
     
@@ -265,9 +270,14 @@ class AftermathModule {
         let module = URL(fileURLWithPath: file).lastPathComponent
         let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
         
-        let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
-        print(colorized)
-
+        if isPretty {
+            let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
+            print(colorized)
+        } else {
+            let plainText = "\(Date().ISO8601Format()) - \(module) - \(note)"
+            print(plainText)
+        }
+        
         if displayOnly == false {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
