@@ -78,6 +78,7 @@ class Command {
              mainModule.log("Started analysis on Aftermath directory: \(unzippedDir)")
              let analysisModule = AnalysisModule(collectionDir: unzippedDir)
              analysisModule.run()
+
              mainModule.log("Finished analysis module")
 
              // Move analysis directory to tmp

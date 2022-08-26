@@ -117,9 +117,9 @@ class Storyline: AftermathModule {
     
     func sortStoryline() {
         
-        self.log("Sorting the storyline...")
+        self.log("Creating the storyline...")
         
-        let sortedStoryline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "sorted_storyline.csv")
+        let sortedStoryline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "storyline.csv")
         
         do {
             let csvFile = try EnumeratedCSV(url: self.storylineFile)
@@ -129,9 +129,20 @@ class Storyline: AftermathModule {
                 let line = row.joined(separator: ",")
                 self.addTextToFile(atUrl: sortedStoryline, text: "\(line)")
             }
-            self.log("Finished sorting the storyline")
+            self.log("Finished creating the storyline")
         } catch {
             print(error)
+        }
+    }
+    
+    func removeUnsorted() {
+        
+        do {
+            if filemanager.fileExists(atPath: self.storylineFile.path) {
+                try filemanager.removeItem(at: self.storylineFile)
+            }
+        } catch {
+            print("Unable to remove unsorted timeline file at \(self.storylineFile.path) due to error\n\(error)")
         }
     }
 
@@ -140,5 +151,6 @@ class Storyline: AftermathModule {
         addFirefoxData()
         addChromeData()
         sortStoryline()
+        removeUnsorted()
     }
 }

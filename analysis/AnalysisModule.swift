@@ -14,8 +14,9 @@ class AnalysisModule: AftermathModule, AMProto {
     let description = "A module for analyzing results of Aftermath"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     let collectionDir: String
-    lazy var timelineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "timeline.csv")
-    lazy var storylineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "storyline.csv")
+    lazy var timelineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "temp_timeline.csv")
+    lazy var storylineFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "temp_storyline.csv")
+    
     
     init(collectionDir: String) {
         
@@ -26,12 +27,16 @@ class AnalysisModule: AftermathModule, AMProto {
     
     func run() {
         self.log("Running analysis on collected aftermath files")
-
+        
+        let _ = self.copyFileToCase(fileToCopy: URL(fileURLWithPath: "\(collectionDir)/Recon/system_information.txt"), toLocation: CaseFiles.analysisCaseDir, isAnalysis: true)
         // ex: timestamp, tcc_update, com.jamf.aftermath, <updates>
        addTextToFile(atUrl: storylineFile, text: "timestamp,type,other,path")
 
         let dbParser = DatabaseParser(collectionDir: collectionDir, storylineFile: storylineFile)
         dbParser.run()
+        
+        let logParser = LogParser(collectionDir: collectionDir, storylineFile: storylineFile)
+        logParser.run()
         
         let timeline = Timeline(collectionDir: collectionDir, timelineFile: timelineFile, storylineFile: storylineFile)
         timeline.run()
