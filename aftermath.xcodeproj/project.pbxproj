@@ -45,6 +45,7 @@
 		A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */; };
 		A0E1E3F8275ED35D008D0DC6 /* NetworkConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */; };
 		A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22EF1285CD60A003A411A /* CommonDirectories.swift */; };
+		A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FAEEFD28B94B2C00AC655F /* LogParser.swift */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
@@ -107,6 +108,7 @@
 		A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnections.swift; sourceTree = "<group>"; };
 		A0E22EF1285CD60A003A411A /* CommonDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectories.swift; sourceTree = "<group>"; };
 		A0E46B8A288F55A600975EC8 /* aftermath.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermath.entitlements; sourceTree = "<group>"; };
+		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				A006B5A02882FBA70091FAA1 /* DatabaseParser.swift */,
 				A0C930D328A4318F0011FB87 /* Timeline.swift */,
 				A02509F028AD93DA0030D6A7 /* Storyline.swift */,
+				A0FAEEFD28B94B2C00AC655F /* LogParser.swift */,
 			);
 			path = analysis;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				A3CD4E56274434EE00869ECB /* Command.swift in Sources */,
 				A0C2E89728AAAE33008FA597 /* ProcLib.h in Sources */,
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
+				A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */,
 				A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */,
 				A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
