@@ -16,7 +16,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
     let predicates: [String: String]
     
     override init() {
-        //predicates eventually to be loaded from external file
+
         self.predicates = [
             "login": "process == \"logind\"",
             "tcc": "process == \"tccd\"",
@@ -38,7 +38,6 @@ class UnifiedLogModule: AftermathModule, AMProto {
             if output.components(separatedBy: "\n").count > 2 {
                 let logfile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "\(filtername).txt")
                 self.addTextToFile(atUrl: logfile, text: output)
-                //self.caseHandler.log(module: self.moduleName, "Done filtering for \(filtername) events")
             } else { continue }
         }
     }
