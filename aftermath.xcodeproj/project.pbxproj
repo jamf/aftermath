@@ -50,6 +50,9 @@
 		A190FFD628B80C3900B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
 		A190FFE228B8151F00B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
 		A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
+		A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
+		A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = A1E433DA28B919A400E2B510 /* SwiftCSV */; };
+		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
@@ -116,6 +119,7 @@
 		A190FFD228B8094600B9EF9A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A190FFD528B80C3900B9EF9A /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		A190FFDB28B8151300B9EF9A /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1E433E428B9270800E2B510 /* dummyPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dummyPlist.plist; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +289,7 @@
 		A190FFCD28B8080100B9EF9A /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				A1E433DE28B91E2C00E2B510 /* resources */,
 				A190FFD428B80C2D00B9EF9A /* mocks */,
 				A190FFCE28B8083600B9EF9A /* aftermath */,
 			);
@@ -312,6 +318,14 @@
 				A190FFD528B80C3900B9EF9A /* MockFileManager.swift */,
 			);
 			path = mocks;
+			sourceTree = "<group>";
+		};
+		A1E433DE28B91E2C00E2B510 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				A1E433E428B9270800E2B510 /* dummyPlist.plist */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 		A374535B2757C1110074B65C /* extensions */ = {
@@ -382,6 +396,9 @@
 			dependencies = (
 			);
 			name = tests;
+			packageProductDependencies = (
+				A1E433DA28B919A400E2B510 /* SwiftCSV */,
+			);
 			productName = aftermathTests;
 			productReference = A190FFDB28B8151300B9EF9A /* tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -454,6 +471,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */,
 				A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */,
 				A190FFE228B8151F00B9EF9A /* MockFileManager.swift in Sources */,
 			);
@@ -782,6 +801,11 @@
 			productName = ZIPFoundation;
 		};
 		A0C930D628A543F80011FB87 /* SwiftCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
+			productName = SwiftCSV;
+		};
+		A1E433DA28B919A400E2B510 /* SwiftCSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
 			productName = SwiftCSV;
