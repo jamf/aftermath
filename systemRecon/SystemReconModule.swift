@@ -30,8 +30,13 @@ class SystemReconModule: AftermathModule, AMProto {
             self.log("Error has occured, MRT returned nil")
             return
         }
+        
+        guard let xprotectRemediatorVersion = XProtectRemediator(key: "CFBundleShortVersionString") else {
+            self.log("Error has occured, XProtect Remediator returned nil")
+            return
+        }
 
-        self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
+        self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nXProtect Remediator Version: \(xprotectRemediatorVersion)\nMRT Version: \(mrtVersion)")
         self.addTextToFile(atUrl: saveFile, text: "\n----------\n")
     }
 
@@ -171,11 +176,21 @@ class SystemReconModule: AftermathModule, AMProto {
             return nil
         }
     }
+
+    func XProtectRemediator(key: String) -> String? {
+        let xprotectRemediatorPath = URL(fileURLWithPath: "/Library/Apple/System/Library/CoreServices/XProtect.app/Contents/version.plist")
+
+        let xprotectRemediatorDict = Aftermath.getPlistAsDict(atUrl: xprotectRemediatorPath)
+        
+        if let xprotectRemKeyValue = xprotectRemediatorDict[key] {
+            return String(describing:xprotectRemKeyValue)
+        } else {
+            self.log("Error has occured reading xprotect remediator plist")
+            return nil
+        }
+    }
     
     func securityAssessment(saveFile: URL) {
-        
-       
-                
         let dict = ["Gatekeeper Status": "spctl --status",
                     "SIP Status": "csrutil status",
                     "Screen Sharing": "sudo launchctl list com.apple.screensharing",
