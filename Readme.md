@@ -1,5 +1,5 @@
 # Aftermath
-<logo>
+
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
 
@@ -47,13 +47,15 @@ Example
 ## Help Menu
 
 ```bash
--o -> specify an output location for Aftermath collection results
+-o -> specify an output location for Aftermath results (defaults to /tmp)
      usage: -o Users/user/Desktop
 --analyze -> Analyze the results of the Aftermath results
-     usage: --analyze <path_to_aftermath_collection_file>
---cleanup -> Remove Aftermath Response Folders
---deep -> Perform a deep scan of the file system for modified and accessed timestamped metadata
-    WARNING: This will be a time-intensive scan.
+     usage: --analyze <path_to_file>
+--collect-dirs -> specify locations of (space-separated) directories to dump those raw files
+    usage: --collect-dirs /Users/<USER>/Downloads /tmp
+--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)
+--pretty -> colorize Terminal output
+--cleanup -> remove Aftermath Folders in default locations
 ```
 
 ## Contributors

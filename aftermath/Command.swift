@@ -206,8 +206,9 @@ class Command {
          print("     usage: --analyze <path_to_file>")
          print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
          print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
-         print("--pretty -> Colorize Terminal output")
-         print("--cleanup -> Remove Aftermath Folders in default locations")
+         print("--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)")
+         print("--pretty -> colorize Terminal output")
+         print("--cleanup -> remove Aftermath Folders in default locations")
          exit(1)
      }
  }
