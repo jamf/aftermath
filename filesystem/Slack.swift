@@ -34,7 +34,7 @@ class Slack: FileSystemModule {
         }
     }
     
-    override func run() {
+    func run() {
         self.log("Collecting Slack information")
         extractSlackPrefs()
     }

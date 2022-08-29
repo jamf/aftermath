@@ -14,14 +14,16 @@
      static let output = Options(rawValue: 1 << 1)
      static let analyze = Options(rawValue: 1 << 2)
      static let pretty = Options(rawValue: 1 << 3)
+     static let collectDirs = Options(rawValue: 1 << 4)
      
  }
 
 @main
 class Command {
-     static var options: Options = []
-     static var analysisDir: String? = nil
-     static var outputDir: String = "/tmp"
+    static var options: Options = []
+    static var analysisDir: String? = nil
+    static var outputDir: String = "/tmp"
+    static var collectDirs: [String] = []
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -47,6 +49,15 @@ class Command {
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.analyze)
                      Self.analysisDir = args[index + 1]
+                 }
+             case "--collect-dirs":
+                 if let index = args.firstIndex(of: arg) {
+                     self.options.insert(.collectDirs)
+                     var i = 1
+                     while (index + i) < args.count  && !args[index + i].starts(with: "-") {
+                         self.collectDirs.append(contentsOf: [args[index + i]])
+                         i += 1
+                     }
                  }
              default:
                  if !arg.starts(with: "-") {
@@ -89,8 +100,9 @@ class Command {
          } else {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
-             mainModule.log("Aftermath Started")
+             mainModule.log("Aftermath Collection Started")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
+             
 
              // System Recon
              mainModule.log("Started system recon")
@@ -119,11 +131,11 @@ class Command {
              persistenceModule.run()
              mainModule.log("Finished logging persistence items")
 
-
+             
              // FileSystem
              mainModule.log("Started gathering file system information...")
              let fileSysModule = FileSystemModule()
-             fileSysModule.run()
+             fileSysModule.run(collectDirs: self.collectDirs)
              mainModule.log("Finished gathering file system information")
 
 

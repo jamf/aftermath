@@ -32,7 +32,7 @@ class FileWalker: FileSystemModule {
         }
     }
     
-    override func run() {
+    func run() {
         
         var directories = ["/tmp", "/opt", "/Library/LaunchDaemons", "/Library/LaunchAgents"]
         
