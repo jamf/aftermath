@@ -16,13 +16,8 @@ class FileSystemModule: AftermathModule, AMProto {
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     lazy var rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
     
-//    let deepScan: Bool
-//    
-//    init(deepScan: Bool) {
-//        self.deepScan = deepScan
-//    }
     
-    func run(collectDirs: [String]) {
+    func run() {
         // run browser module
         let browserModule = BrowserModule()
         browserModule.run()
@@ -34,7 +29,7 @@ class FileSystemModule: AftermathModule, AMProto {
         
         // get data from common directories
         let commonDirFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "common_directories.txt")
-        let common = CommonDirectories(writeFile: commonDirFile, collectDirs: collectDirs)
+        let common = CommonDirectories(writeFile: commonDirFile)
         common.run()
         
         // get users on system

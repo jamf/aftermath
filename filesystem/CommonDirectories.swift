@@ -11,11 +11,9 @@ class CommonDirectories: FileSystemModule {
     
     let writeFile: URL
     var isAftermath: Bool = false
-    let collectDirs: [String]
     
-    init(writeFile: URL, collectDirs: [String]) {
+    init(writeFile: URL) {
         self.writeFile = writeFile
-        self.collectDirs = collectDirs
     }
     
     func writeTmpPaths(tmpDir: String) {
@@ -83,11 +81,11 @@ class CommonDirectories: FileSystemModule {
         
     }
     
-    func run() {
+    override func run() {
         self.log("Capturing data from common directories...")
-        
-        if collectDirs != [] {
-            for dir in collectDirs {
+      
+        if Command.options.contains(.collectDirs) {
+            for dir in Command.collectDirs {
                 self.log("Dumping the contents from directory \(dir)")
                 collectContents(directory: dir)
             }

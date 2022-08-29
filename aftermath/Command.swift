@@ -135,7 +135,7 @@ class Command {
              // FileSystem
              mainModule.log("Started gathering file system information...")
              let fileSysModule = FileSystemModule()
-             fileSysModule.run(collectDirs: self.collectDirs)
+             fileSysModule.run()
              mainModule.log("Finished gathering file system information")
 
 
@@ -204,7 +204,10 @@ class Command {
          print("     usage: -o Users/user/Desktop")
          print("--analyze -> Analyze the results of the Aftermath results")
          print("     usage: --analyze <path_to_file>")
-         print("--cleanup -> Remove Aftermath Response Folders")
+         print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
+         print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
+         print("--pretty -> Colorize Terminal output")
+         print("--cleanup -> Remove Aftermath Folders in default locations")
          exit(1)
      }
  }
