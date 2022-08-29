@@ -38,8 +38,31 @@ class CHelpers {
             return Int(status.st_gid)
         }
     }
-}
+    
+    func getFileBirth(fromFile: URL) -> Double? {
+        return fromFile.path.withCString { cs in
+            var status = stat()
+            stat(cs, &status)
+            return Double(status.st_birthtimespec.tv_sec)
+        }
+    }
 
+    func getFileLastAccessed(fromFile: URL) -> Double? {
+        return fromFile.path.withCString { cs in
+            var status = stat()
+            stat(cs, &status)
+            return Double(status.st_atimespec.tv_sec)
+        }
+    }
+
+    func getFileLastModified(fromFile: URL) -> Double? {
+        return fromFile.path.withCString { cs in
+            var status = stat()
+            stat(cs, &status)
+            return Double(status.st_mtimespec.tv_sec)
+        }
+    }
+}
 
 struct FileMode: OptionSet {
     let rawValue: mode_t
