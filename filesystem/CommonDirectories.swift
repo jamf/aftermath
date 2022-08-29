@@ -83,8 +83,6 @@ class CommonDirectories: FileSystemModule {
         
     }
     
-    
-    
     func run() {
         self.log("Capturing data from common directories...")
         
