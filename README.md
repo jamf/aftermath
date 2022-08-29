@@ -5,6 +5,10 @@ Aftermath is a  Swift-based, open-source incident response framework.
 
 Aftermath can be leveraged by defenders in order to collect and subsequently analyze the data from the compromised host. Aftermath can be deployed from an MDM (ideally), but it can also run independently from the infected user's command line. 
 
+Aftermath first runs a series of modules for collection. The output of this will either be written to the location of your choice, via the `-o` or `--output` option, or by default, it is written to the `/tmp` directory.
+
+Once collection is complete, the final zip/archive file can be pulled from the end user's disk. This file can then be analyzed using the `--analyze` argument pointed at the archive file. The results of this will be written to the `/tmp` directory. The administrator can then unzip that analysis directory and see a parsed view of the locally collected databases, a timeline of files with the file creation, last accessed, and last modified dates (if they're available), and a storyline which includes the file metadata, database changes, and browser information to potentially track down the infection vector.
+
 
 ## Build
 To build Aftermath locally, clone it from the repository
@@ -29,39 +33,53 @@ sudo ./aftermath
 ```
 
 ## Usage
-Aftermath needs to be root, as well as have full disk access (FDA) in order to run. FDA can be granted to the Terminal application in which it is running. If using an MDM to deploy Aftermath, FDA can be granted through PPPC in your MDM solution.
+Aftermath needs to be root, as well as have *full disk access (FDA)* in order to run. FDA can be granted to the Terminal application in which it is running.
 
 The default usage of Aftermath runs 
 ```bash
-./aftermath
+sudo ./aftermath
 ```
 To specify certain options
 ```bash
-./aftermath [option1] [option2]
+sudo ./aftermath [option1] [option2]
 ```
-Example
+Examples
 ```bash
-./aftermath -o /Users/user/Desktop --deep
+sudo ./aftermath -o /Users/user/Desktop --deep
+```
+```bash
+sudo ./aftermath --analyze <path_to_collection_zip>
+```
+
+If deploying from an MDM solution, deploy a PPPC configuration profile with the Terminal given full disk access. You can then push a policy to deploy and trigger aftermath.
+
+## Releases
+There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
+```bash
+sudo aftermath [option1] [option2]
 ```
 
 ## Help Menu
 
-```bash
--o -> specify an output location for Aftermath results (defaults to /tmp)
-     usage: -o Users/user/Desktop
---analyze -> Analyze the results of the Aftermath results
-     usage: --analyze <path_to_file>
+```
+--analyze -> analyze the results of the Aftermath results
+     usage: --analyze <path_to_aftermath_collection_file>
 --collect-dirs -> specify locations of (space-separated) directories to dump those raw files
-    usage: --collect-dirs /Users/<USER>/Downloads /tmp
---deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)
+    usage: --collect-dirs <path_to_dir> <path_to_another_dir>
+--deep or -d -> perform a deep scan of the file system for modified and accessed timestamped metadata
+    WARNING: This will be a time-intensive, memory-consuming scan.
+-o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
+     usage: -o Users/user/Desktop
 --pretty -> colorize Terminal output
---cleanup -> remove Aftermath Folders in default locations
+--cleanup -> remove Aftermath Response Folders
+
 ```
 
 ## Contributors
 - Stuart Ashenbrenner
-- Matt Benyo
 - Jaron Bradley
+- Maggie Zirnhelt
+- Matt Benyo
 - Ferdous Saljooki
 
 ## Thank You
