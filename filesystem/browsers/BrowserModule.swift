@@ -14,7 +14,6 @@ class BrowserModule: AftermathModule, AMProto {
     var description = "A module that gathers artifacts from different web browsers"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-  
     
     func run() {
         let firefoxDir = self.createNewDir(dir: moduleDirRoot, dirname: "Firefox")
@@ -22,7 +21,7 @@ class BrowserModule: AftermathModule, AMProto {
         let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "Safari")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
-        self.log("Collecting browser information...")
+        self.log("Collecting browser information. Make sure browsers are closed to prevent file data from being locked.")
         
         
         // Check if Firefox is installed
@@ -40,4 +39,3 @@ class BrowserModule: AftermathModule, AMProto {
         
     }
 }
-
