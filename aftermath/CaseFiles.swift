@@ -36,6 +36,8 @@ struct CaseFiles {
     
     static func MoveCaseDir(outputDir: String) {
         
+        print("Moving the case directory from its temporary location. This may take some time. Please wait...")
+        
         var endURL: URL
         
         if outputDir == "default" {
