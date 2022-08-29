@@ -114,7 +114,7 @@
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
 		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
 		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		A3A3A3CD274754B400F8F557 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		A3A3A3CD274754B400F8F557 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3CD4E55274434EE00869ECB /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,7 +290,7 @@
 				A029AB132876A01300649701 /* processes */,
 				70A44401275707800035F40E /* systemRecon */,
 				8ABB9E2927568E9000C0ADD7 /* unifiedlogs */,
-				A3A3A3CD274754B400F8F557 /* Readme.md */,
+				A3A3A3CD274754B400F8F557 /* README.md */,
 				A3CD4E53274434EE00869ECB /* Products */,
 			);
 			sourceTree = "<group>";
