@@ -117,10 +117,9 @@ class Storyline: AftermathModule {
     
     func sortStoryline() {
         
-        self.log("Creating the storyline...")
+        self.log("Creating the storyline...Please wait...")
         
         let sortedStoryline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "storyline.csv")
-        
         do {
             let csvFile = try EnumeratedCSV(url: self.storylineFile)
             let sortedArr = try Aftermath.sortCSV(unsortedArr: csvFile.rows)

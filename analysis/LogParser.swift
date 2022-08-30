@@ -32,7 +32,7 @@ class LogParser: AftermathModule {
                 
                 guard let date = splitLine[safe: 0] else { continue }
                 guard let time = splitLine[safe: 1] else { continue }
-                let unformattedDate = date + "T" + time // "ex: 2022-03-1516:22:55-07"
+                let unformattedDate = date + "T" + time // ex: 2022-03-15T16:22:55-07
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en_US")
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -108,7 +108,47 @@ class LogParser: AftermathModule {
                 self.addTextToFile(atUrl: storylineFile, text: text)
             }
         } catch {
-            print("Unable to parse contentes")
+            print("Unable to parse contents")
+        }
+    }
+    
+    func parseXProtectRemediatorLog() {
+        
+        let xprotectremLog = "\(collectionDir)/UnifiedLog/xprotect_remediator.txt"
+        
+        do {
+            let contents = try String(contentsOf: URL(fileURLWithPath: xprotectremLog))
+            let remediatorLogContents = contents.components(separatedBy: "\n")
+            
+            for ind in 1...remediatorLogContents.count - 1 {
+                let splitLine = remediatorLogContents[ind].components(separatedBy: " ")
+                
+                guard let date = splitLine[safe: 0] else { continue }
+                guard let time = splitLine[safe: 1] else { continue }
+                let unformattedDate = date + "T" + time // ex: 2022-08-30T06:51:47.381439-0700
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                
+                var info = ""
+                
+                for i in 0...splitLine.count - 1 {
+                    if i == 0 || i == 1 { continue }
+                    info = info.appending(" " + splitLine[i])
+                }
+                
+                sanatizeInfo(&info)
+                
+                guard let dateZome = dateFormatter.date(from: unformattedDate) else { continue }
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                let formattedDate = dateFormatter.string(from: dateZome)
+                let text = "\(formattedDate), XPROTECT_REMEDIATOR, \(info)"
+                self.addTextToFile(atUrl: logsFile, text: text)
+                self.addTextToFile(atUrl: self.storylineFile, text: text)
+            }
+        } catch {
+            print("Unable to parse contents")
         }
     }
     
@@ -118,5 +158,8 @@ class LogParser: AftermathModule {
         
         self.log("Parsing system log...")
         parseSysLog()
+        
+        self.log("Parsing XProtect Remediator log...")
+        parseXProtectRemediatorLog()
     }
 }
