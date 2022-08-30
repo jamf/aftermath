@@ -69,6 +69,8 @@ class Command {
      }
 
      static func start() {
+         printBanner()
+         
          if Self.options.contains(.analyze) {
              CaseFiles.CreateAnalysisCaseDir()
 
@@ -211,4 +213,15 @@ class Command {
          print("--cleanup -> remove Aftermath Folders in default locations")
          exit(1)
      }
+    
+    static func printBanner() {
+        print(#"""
+              ___    ______                            __  __
+             /   |  / __/ /____  _________ ___  ____ _/ /_/ /_
+            / /| | / /_/ __/ _ \/ ___/ __ `__ \/ __ `/ __/ __ \
+           / ___ |/ __/ /_/  __/ /  / / / / / / /_/ / /_/ / / /
+          /_/  |_/_/  \__/\___/_/  /_/ /_/ /_/\__,_/\__/_/ /_/
+                                                                    
+        """#)
+    }
  }
