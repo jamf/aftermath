@@ -6,16 +6,9 @@
 //
 
 import XCTest
+import SwiftCSV
 
 class AftermathTests: XCTestCase {
-
-    override func setUpWithError() throws {
-
-    }
-
-    override func tearDownWithError() throws {
-
-    }
 
     // MARK: getPlistAsDict
 
@@ -44,9 +37,49 @@ class AftermathTests: XCTestCase {
 
     // MARK: dateFromEpochTimestamp
 
-    // MARK: standardizeMetadataTimestamp
+    func testDateFromEpochTimestamp() {
+        // Given
+        let date = Date.distantFuture.timeIntervalSince1970
 
-    // MARK: readCSVRows
+        // When
+        let actualDate = Aftermath.dateFromEpochTimestamp(timeStamp: date)
+
+        // Then
+        XCTAssertEqual(actualDate, "4001-01-01T00:00:00")
+    }
+
+    // MARK: dateFromEpochTimestamp
+
+    func testStandardizeMetadataTimestamp() {
+        // Given
+        let date = Date.distantFuture
+
+        // When
+        let actualDate = Aftermath.standardizeMetadataTimestamp(timeStamp: "\(date)")
+
+        // Then
+        XCTAssertEqual(actualDate, "4001-01-01T00:00:00")
+    }
 
     // MARK: sortCSV
+
+    func testSortCSVWithDateFromEpochTimestamp() throws {
+        // Given
+        let oldestDate = Date.distantPast
+        let middleDate = Date()
+        let newestDate = Date.distantFuture
+
+        let oldestTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: oldestDate.timeIntervalSince1970)
+        let middlestTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: middleDate.timeIntervalSince1970)
+        let newestTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: newestDate.timeIntervalSince1970)
+
+        let unsortedArr = [["\(middlestTimestamp)"], ["\(newestTimestamp)"], ["\(oldestTimestamp)"]]
+        let expectedSortedArr = [["\(newestTimestamp)"], ["\(middlestTimestamp)"], ["\(oldestTimestamp)"]]
+
+        // When
+        let actualSortedArr = try Aftermath.sortCSV(unsortedArr: unsortedArr)
+
+        // Then
+        XCTAssertEqual(actualSortedArr, expectedSortedArr)
+    }
 }
