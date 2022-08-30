@@ -1,4 +1,8 @@
-# Aftermath
+      ___    ______                            __  __
+     /   |  / __/ /____  _________ ___  ____ _/ /_/ /_
+    / /| | / /_/ __/ _ \/ ___/ __ `__ \/ __ `/ __/ __ \
+   / ___ |/ __/ /_/  __/ /  / / / / / / /_/ / /_/ / / /
+  /_/  |_/_/  \__/\___/_/  /_/ /_/ /_/\__,_/\__/_/ /_/
 
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
@@ -62,13 +66,16 @@ sudo aftermath [option1] [option2]
 ## Help Menu
 
 ```
+--analyze -> analyze the results of the Aftermath results
+     usage: --analyze <path_to_aftermath_collection_file>
+--collect-dirs -> specify locations of (space-separated) directories to dump those raw files
+    usage: --collect-dirs <path_to_dir> <path_to_another_dir>
+--deep or -d -> perform a deep scan of the file system for modified and accessed timestamped metadata
+    WARNING: This will be a time-intensive, memory-consuming scan.
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
---analyze -> Analyze the results of the Aftermath results
-     usage: --analyze <path_to_aftermath_collection_file>
---cleanup -> Remove Aftermath Response Folders
---deep or -d -> Perform a deep scan of the file system for modified and accessed timestamped metadata
-    WARNING: This will be a time-intensive, memory-consuming scan.
+--pretty -> colorize Terminal output
+--cleanup -> remove Aftermath Response Folders
 ```
 
 ## Contributors

@@ -36,6 +36,8 @@ struct CaseFiles {
     
     static func MoveCaseDir(outputDir: String) {
         
+        print("Moving the collection directory from its temporary location. This may take some time. Please wait...")
+        
         var endURL: URL
         
         if outputDir == "default" {
@@ -61,6 +63,8 @@ struct CaseFiles {
         let endURL = URL(fileURLWithPath: "/tmp/\(analysisCaseDir.lastPathComponent)")
         let zippedURL = endURL.appendingPathExtension("zip")
                 
+        print("Moving the analysis directory from its temporary location. This may take some time. Please wait...")
+
         do {
             try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)

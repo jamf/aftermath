@@ -16,11 +16,6 @@ class FileSystemModule: AftermathModule, AMProto {
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     lazy var rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
     
-//    let deepScan: Bool
-//    
-//    init(deepScan: Bool) {
-//        self.deepScan = deepScan
-//    }
     
     func run() {
         // run browser module

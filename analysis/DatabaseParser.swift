@@ -23,7 +23,7 @@ class DatabaseParser: AftermathModule {
     
     func parseTCC() {
         self.addTextToFile(atUrl: tccWriteFile, text: "name, service, auth_value, auth_reason, last_modified")
-        
+
         let rawDir = "\(self.collectionDir)/Artifacts/raw/"
         var tccFiles = [URL]()
         for f in filemanager.filesInDir(path: rawDir) {
@@ -33,7 +33,6 @@ class DatabaseParser: AftermathModule {
         }
         for tcc_path in tccFiles {
             
-            self.log("Querying TCC database for path \(tcc_path.path)")
             var db : OpaquePointer?
             
             if sqlite3_open(tcc_path.path, &db) == SQLITE_OK {
@@ -166,9 +165,6 @@ class DatabaseParser: AftermathModule {
                         
                     }
                 }
-                
-            self.log("Finished capturing LSQuarantine data")
-                
             } else {
                 self.log("An error occurred when attempting to query the LSQuarantine database...")
             }
@@ -176,11 +172,11 @@ class DatabaseParser: AftermathModule {
     }
     
     func run() {
-        self.log("Parsing collected database files...")
-        self.log("Parsing LSQuarantine database")
+        self.log("Parsing collected database files")
+        self.log("Parsing LSQuarantine database...")
         parseLSQuarantine()
         
-        self.log("Parsing TCC database")
+        self.log("Parsing TCC database...")
         parseTCC()
     }
     

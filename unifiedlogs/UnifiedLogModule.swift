@@ -16,14 +16,15 @@ class UnifiedLogModule: AftermathModule, AMProto {
     let predicates: [String: String]
     
     override init() {
-        //predicates eventually to be loaded from external file
+
         self.predicates = [
             "login": "process == \"logind\"",
             "tcc": "process == \"tccd\"",
             "ssh": "process == \"sshd\"",
             "failed_sudo": "process == \"sudo\" and eventMessage CONTAINS \"TTY\" AND eventMessage CONTAINS \"3 incorrect password attempts\"",
             "manual_configuration_profile_install": "subsystem == \"com.apple.ManagedClient\" AND process == \"mdmclient\" AND category == \"MDMDaemon\" and eventMessage CONTAINS \"Installed configuration profile:\" AND eventMessage CONTAINS \"Source: Manual\"",
-            "screensharing": "(process == \"screensharingd\" || process == \"ScreensharingAgent\")"
+            "screensharing": "(process == \"screensharingd\" || process == \"ScreensharingAgent\")",
+            "xprotect_remediator": "subsystem == \"com.apple.XProtectFramework.PluginAPI\""
         ]
     }
     
@@ -38,7 +39,6 @@ class UnifiedLogModule: AftermathModule, AMProto {
             if output.components(separatedBy: "\n").count > 2 {
                 let logfile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "\(filtername).txt")
                 self.addTextToFile(atUrl: logfile, text: output)
-                //self.caseHandler.log(module: self.moduleName, "Done filtering for \(filtername) events")
             } else { continue }
         }
     }

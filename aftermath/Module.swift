@@ -25,6 +25,7 @@ class AftermathModule {
     let filemanager = FileManager.default
     var caseLogSelector: URL
     var caseDirSelector: URL
+    var isPretty: Bool = false
     
     init() {
         if Command.options.contains(.analyze) {
@@ -34,6 +35,10 @@ class AftermathModule {
             caseLogSelector = CaseFiles.logFile
             caseDirSelector = CaseFiles.caseDir
         }
+        if Command.options.contains(.pretty) {
+            isPretty = true
+        }
+            
         users = getUsersOnSystem()
     }
     
@@ -183,63 +188,55 @@ class AftermathModule {
         var lastModifiedTimestamp: String
         var lastAccessedTimestamp: String
         
+        if fromFile.path.contains(",") {
+            let sanitized = fromFile.path.replacingOccurrences(of: ",", with: " ")
+            metadata = "\(sanitized),"
+        } else {
+            metadata = "\(fromFile.path),"
+        }
+        
+        if let birth = helpers.getFileBirth(fromFile: fromFile) {
+            birthTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: birth)
+            metadata.append("\(birthTimestamp),")
+        } else {
+            metadata.append("unknwon,")
+        }
+        
+        if let lastModified = helpers.getFileLastModified(fromFile: fromFile) {
+            lastModifiedTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: lastModified)
+            metadata.append("\(lastModifiedTimestamp),")
+        } else {
+            metadata.append("unknown,")
+        }
+        
+        if let lastAccessed = helpers.getFileLastAccessed(fromFile: fromFile) {
+            lastAccessedTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: lastAccessed)
+            metadata.append("\(lastAccessedTimestamp),")
+        } else {
+            metadata.append("unknown,")
+        }
+           
+        if let permissions = helpers.getFilePermissions(fromFile: fromFile) {
+            metadata.append("\(String(permissions).dropFirst(3)),")
+        } else {
+            metadata.append("unknwon,")
+        }
+        
+        if let uid = helpers.getFileUid(fromFile: fromFile) {
+            metadata.append("\(uid),")
+        } else {
+            metadata.append("unknown,")
+        }
+        
+        if let gid = helpers.getFileGid(fromFile: fromFile) {
+            metadata.append("\(gid),")
+        } else {
+            metadata.append("unknown,")
+        }
         
         if let mditem = MDItemCreate(nil, fromFile.path as CFString),
             let mdnames = MDItemCopyAttributeNames(mditem),
             let mdattrs = MDItemCopyAttributes(mditem, mdnames) as? [String:Any] {
-            
-            if fromFile.path.contains(",") {
-                let sanitized = fromFile.path.replacingOccurrences(of: ",", with: " ")
-                metadata = "\(sanitized),"
-            } else {
-                metadata = "\(fromFile.path),"
-            }
-            
-            if let birth = mdattrs[kMDItemContentCreationDate as String] {
-                birthTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: birth))
-                metadata.append("\(birthTimestamp),")
-            } else if let birthFS = mdattrs[kMDItemFSCreationDate as String] {
-                birthTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: birthFS))
-                metadata.append("\(birthTimestamp),")
-            } else {
-                metadata.append("unknown,")
-            }
-            
-            if let lastModified = mdattrs[kMDItemContentModificationDate as String] {
-                lastModifiedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastModified))
-                metadata.append("\(lastModifiedTimestamp),")
-            } else if let lastModifiedFS = mdattrs[kMDItemFSContentChangeDate as String] {
-                lastModifiedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastModifiedFS))
-                metadata.append("\(lastModifiedTimestamp),")
-            } else {
-                metadata.append("unknown,")
-            }
-            
-            if let lastAccessed = mdattrs[kMDItemLastUsedDate as String] {
-                lastAccessedTimestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: String(describing: lastAccessed))
-                metadata.append("\(lastAccessedTimestamp),")
-            } else {
-                metadata.append("unknown,")
-            }
-            
-           
-            if let permissions = helpers.getFilePermissions(fromFile: fromFile) {
-                metadata.append("\(String(permissions).dropFirst(3)),")
-            } else {
-                metadata.append("unknwon,")
-            }
-            
-            if let uid = mdattrs[kMDItemFSOwnerUserID as String] {
-                metadata.append("\(uid),")
-            } else {
-                metadata.append("unknwon,")
-            }
-        
-            if let gid = mdattrs[kMDItemFSOwnerGroupID as String] {
-                metadata.append("\(gid),")
-            } else {
-                metadata.append("unknown,")
-            }
             
             // this is last in case array is longer than 1 or 2 items
             if let downloadedFrom = mdattrs[kMDItemWhereFroms as String] {
@@ -248,16 +245,13 @@ class AftermathModule {
                         metadata.append("\(downloaded),")
                     }
                 }
-            } else {
-                metadata.append("unknown,")
             }
+                
+        } else {
+            metadata.append("unknown,")
+        }
             
-            
-            self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)
-
-         } else {
-             print("Can't get attributes for \(fromFile.path)")
-         }
+        self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)
     }
     
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
@@ -265,9 +259,14 @@ class AftermathModule {
         let module = URL(fileURLWithPath: file).lastPathComponent
         let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
         
-        let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
-        print(colorized)
-
+        if isPretty {
+            let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
+            print(colorized)
+        } else {
+            let plainText = "\(Date().ISO8601Format()) - \(module) - \(note)"
+            print(plainText)
+        }
+        
         if displayOnly == false {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
@@ -304,6 +303,5 @@ class AftermathModule {
     enum SystemUsers: String, CaseIterable {
         case nobody = "nobody"
         case daemon = "daemon"
-        case empty = "empty"
     }
 }

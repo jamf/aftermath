@@ -61,9 +61,9 @@ class Timeline: AftermathModule {
     
     func sortTimeline() {
         
-        self.log("Sorting the timeline...")
+        self.log("Creating a file timeline...")
         
-        let sortedTimeline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "sorted_timeline.csv")
+        let sortedTimeline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "file_timeline.csv")
         
         do {
             let csvFile = try EnumeratedCSV(url: self.timelineFile)
@@ -75,9 +75,20 @@ class Timeline: AftermathModule {
                 self.addTextToFile(atUrl: sortedTimeline, text: "\(line)")
             }
             
-            self.log("Finished sorting the timeline")
+            self.log("Finished creating the timeline")
         } catch {
             print(error)
+        }
+    }
+    
+    func removeUnsorted() {
+        
+        do {
+            if filemanager.fileExists(atPath: self.timelineFile.path) {
+                try filemanager.removeItem(at: self.timelineFile)
+            }
+        } catch {
+            print("Unable to remove unsorted timeline file at \(self.timelineFile.path) due to error\n\(error)")
         }
     }
     
@@ -85,5 +96,6 @@ class Timeline: AftermathModule {
         
         organizeMetadata() //timestamp, type(download,birth,access,etc), path
         sortTimeline()
+        removeUnsorted()
     }
 }

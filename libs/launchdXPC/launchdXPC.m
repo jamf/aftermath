@@ -3,6 +3,7 @@
 //  Created by Patrick Wardle
 //  Ported from code by Jonathan Levin
 //
+// TrueTree License: https://github.com/themittenmac/TrueTree/blob/master/license.md
 
 #include <stdio.h>
 #import <dlfcn.h>
@@ -162,22 +163,17 @@ bail:
         processInfoBuffer = 0;
     }
     
+    // return the path of the process
     return processInfo[@"path"];
-//    return processInfo;
 }
 
 
-
-
-
-
-/////////////////
-///
-///
-///
-///
-
-//hit up launchd (via XPC) to get process info
+/*
+ hit up launchd (via XPC) to get process info
+ this method was updated from the original version of TrueTree to
+ include collecting the process arguments instead of just the
+ proc path
+ */
 NSMutableDictionary* getProcessArgs(unsigned long pid)
 {
     //proc info
@@ -292,6 +288,7 @@ bail:
         processInfoBuffer = 0;
     }
     
+    // get the arguments
     return processInfo[@"arguments "];
 }
 
