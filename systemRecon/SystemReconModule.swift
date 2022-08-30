@@ -30,8 +30,13 @@ class SystemReconModule: AftermathModule, AMProto {
             self.log("Error has occured, MRT returned nil")
             return
         }
+        
+        guard let xprotectRemediatorVersion = XProtectRemediator(key: "CFBundleShortVersionString") else {
+            self.log("Error has occured, XProtect Remediator returned nil")
+            return
+        }
 
-        self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nMRT Version: \(mrtVersion)")
+        self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nXProtect Remediator Version: \(xprotectRemediatorVersion)\nMRT Version: \(mrtVersion)")
         self.addTextToFile(atUrl: saveFile, text: "\n----------\n")
     }
 
@@ -54,10 +59,11 @@ class SystemReconModule: AftermathModule, AMProto {
     func installHistory(saveFile: URL) {
         let installPath = "/Library/Receipts/InstallHistory.plist"
         
+        self.addTextToFile(atUrl: saveFile, text: "ProcessName,Datetime,ContentType,DisplayName,DisplayVersion,PackageIdentifers")
+        
         let data = filemanager.contents(atPath: installPath)
         let installDict = try! PropertyListSerialization.propertyList(from: data!, options: [], format: nil) as! Array<[String: Any]>
 
-        var installHistoryArray = [String]()
         var date:String = ""
         var contentType:String = ""
         var displayName:String = ""
@@ -66,53 +72,51 @@ class SystemReconModule: AftermathModule, AMProto {
         var processName:String = ""
         
         for data in installDict {
-            let dateFormater = DateFormatter()
-            dateFormater.dateFormat = "yyyy-mm-dd hh:mm:ss"
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US")
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
             
             if data["processName"] != nil {
                 processName = data["processName"]! as! String
-                installHistoryArray.append("ProcessName: \(processName)")
             } else {
-                installHistoryArray.append("ProcessName: ")
+                processName = "unknown"
             }
             
             if data["date"] != nil {
-                date = dateFormater.string(from: data["date"]! as! Date)
-                installHistoryArray.append("Date: \(date)")
+                date = dateFormatter.string(from: data["date"]! as! Date)
             } else {
-                installHistoryArray.append("Date: ")
+                date = "unknown"
             }
             
             if data["contentType"] != nil {
                 contentType = data["contentType"]! as! String
-                installHistoryArray.append("ContentType: \(contentType)")
             } else {
-                installHistoryArray.append("ContentType: ")
+                contentType = "unknown"
             }
             
             if data["displayName"] != nil {
                 displayName = data["displayName"]! as! String
-                installHistoryArray.append("DisplayName: \(displayName)")
             } else {
-                installHistoryArray.append("DisplayName: ")
+                displayName = "unknown"
             }
             
             if data["displayVersion"] != nil {
                 displayVersion = data["displayVersion"]! as! String
-                installHistoryArray.append("DisplayVersion: \(displayVersion)")
             } else {
-                installHistoryArray.append("DisplayVersion: ")
+                displayVersion = "unknown"
             }
             
             if data["packageIdentifiers"] != nil {
                 packageIdentifiers = data["packageIdentifiers"]! as! Array<String>
-                installHistoryArray.append("PackageIdentifiers: \(packageIdentifiers.joined(separator: ", "))\n")
 
             } else {
-                installHistoryArray.append("PackageIdentifiers: \n")
+                packageIdentifiers = ["unknown"]
             }
+            self.addTextToFile(atUrl: saveFile, text: "\(processName),\(date),\(contentType),\(displayName),\(displayVersion),\(packageIdentifiers.joined(separator: ","))")
+
         }
-        self.addTextToFile(atUrl: saveFile, text: installHistoryArray.joined(separator: "\n"))
     }
 
     func runningApps(saveFile: URL) {
@@ -172,22 +176,32 @@ class SystemReconModule: AftermathModule, AMProto {
             return nil
         }
     }
+
+    func XProtectRemediator(key: String) -> String? {
+        let xprotectRemediatorPath = URL(fileURLWithPath: "/Library/Apple/System/Library/CoreServices/XProtect.app/Contents/version.plist")
+
+        let xprotectRemediatorDict = Aftermath.getPlistAsDict(atUrl: xprotectRemediatorPath)
+        
+        if let xprotectRemKeyValue = xprotectRemediatorDict[key] {
+            return String(describing:xprotectRemKeyValue)
+        } else {
+            self.log("Error has occured reading xprotect remediator plist")
+            return nil
+        }
+    }
     
     func securityAssessment(saveFile: URL) {
-        
-       
-                
         let dict = ["Gatekeeper Status": "spctl --status",
                     "SIP Status": "csrutil status",
-                    "Login History": "last",
                     "Screen Sharing": "sudo launchctl list com.apple.screensharing",
-                    "I/O Statistics": "iostat",
-                    "Network Interface Parameters": "ifconfig",
                     "Firewall Status (Enabled = 1, Disabled = 0)": "defaults read /Library/Preferences/com.apple.alf globalstate",
                     "Filevault Status": "sudo fdesetup status",
                     "Airdrop Status": "sudo ifconfig awdl0 | awk '/status/{print $2}'",
                     "Remote Login": "sudo systemsetup -getremotelogin",
-                    "Network File Shares": "nfsd status"
+                    "Network File Shares": "nfsd status",
+                    "I/O Statistics": "iostat",
+                    "Login History": "last",
+                    "Network Interface Parameters": "ifconfig"
         ]
         
         for (heading,command) in dict {
@@ -219,7 +233,7 @@ class SystemReconModule: AftermathModule, AMProto {
         let runningAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "running_apps.txt")
         let interfacesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "interfaces.txt")
         let environmentVariablesFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "environment_variables.txt")
-        let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.txt")
+        let installHistoryFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "install_history.csv")
         let installedUsersFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "users.txt")
         
         systemInformation(saveFile: systemInformationFile)

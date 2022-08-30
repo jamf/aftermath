@@ -180,11 +180,24 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
     }
     
+    func captureExtensions() {
+        let chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions")
+        
+        for user in getBasicUsersOnSystem() {
+            let path = "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Extensions"
+            
+            for file in filemanager.filesInDirRecursive(path: path) {
+                self.copyFileToCase(fileToCopy: file, toLocation: chromeExtensionDir)
+            }
+        }
+    }
+    
     override func run() {
         self.log("Collecting Chrome browser information...")
         gatherHistory()
         dumpDownloads()
         dumpPreferences()
         dumpCookies()
+        captureExtensions()
     }
 }

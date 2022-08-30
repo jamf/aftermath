@@ -4,6 +4,7 @@
 //  Created by Patrick Wardle
 //  Ported from code by Jonathan Levin
 //
+// TrueTree License: https://github.com/themittenmac/TrueTree/blob/master/license.md
 
 #ifndef launchdXPC_h
 #define launchdXPC_h

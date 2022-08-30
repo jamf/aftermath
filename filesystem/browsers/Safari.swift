@@ -100,7 +100,6 @@ class Safari: BrowserModule {
 
                                 let dateString = dateFormatter.string(from: dateTimestamp as Date)
                                 timestamp = dateString
-//                                timestamp = Aftermath.standardizeMetadataTimestamp(timeStamp: value as! String)
                             }
                             if key as! String == "DownloadEntryURL" {
                                 url = value as! String

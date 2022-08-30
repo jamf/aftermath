@@ -1,9 +1,9 @@
 //
- //  Command.swift
- //  aftermath
- //
+//  Command.swift
+//  aftermath
+//
 //  Copyright 2022 JAMF Software, LLC
- //
+//
 
  import Foundation
 
@@ -13,13 +13,17 @@
      static let deep = Options(rawValue: 1 << 0)
      static let output = Options(rawValue: 1 << 1)
      static let analyze = Options(rawValue: 1 << 2)
+     static let pretty = Options(rawValue: 1 << 3)
+     static let collectDirs = Options(rawValue: 1 << 4)
+     
  }
 
 @main
 class Command {
-     static var options: Options = []
-     static var analysisDir: String? = nil
-     static var outputDir: String = "/tmp"
+    static var options: Options = []
+    static var analysisDir: String? = nil
+    static var outputDir: String = "/tmp"
+    static var collectDirs: [String] = []
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -35,6 +39,7 @@ class Command {
              case "-h", "--help": Self.printHelp()
              case "--cleanup": Self.cleanup()
              case "-d", "--deep": Self.options.insert(.deep)
+             case "--pretty": Self.options.insert(.pretty)
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)
@@ -44,6 +49,15 @@ class Command {
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.analyze)
                      Self.analysisDir = args[index + 1]
+                 }
+             case "--collect-dirs":
+                 if let index = args.firstIndex(of: arg) {
+                     self.options.insert(.collectDirs)
+                     var i = 1
+                     while (index + i) < args.count  && !args[index + i].starts(with: "-") {
+                         self.collectDirs.append(contentsOf: [args[index + i]])
+                         i += 1
+                     }
                  }
              default:
                  if !arg.starts(with: "-") {
@@ -55,6 +69,8 @@ class Command {
      }
 
      static func start() {
+         printBanner()
+         
          if Self.options.contains(.analyze) {
              CaseFiles.CreateAnalysisCaseDir()
 
@@ -75,6 +91,7 @@ class Command {
              mainModule.log("Started analysis on Aftermath directory: \(unzippedDir)")
              let analysisModule = AnalysisModule(collectionDir: unzippedDir)
              analysisModule.run()
+
              mainModule.log("Finished analysis module")
 
              // Move analysis directory to tmp
@@ -85,8 +102,9 @@ class Command {
          } else {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
-             mainModule.log("Aftermath Started")
+             mainModule.log("Aftermath Collection Started")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
+             
 
              // System Recon
              mainModule.log("Started system recon")
@@ -115,7 +133,7 @@ class Command {
              persistenceModule.run()
              mainModule.log("Finished logging persistence items")
 
-
+             
              // FileSystem
              mainModule.log("Started gathering file system information...")
              let fileSysModule = FileSystemModule()
@@ -139,15 +157,12 @@ class Command {
              mainModule.log("Finished running Aftermath collection")
 
 
-             // Copy from cache to /tmp
-//             let dir =  else {
-//                 mainModule.log("Output directory not provided")
-//                 return
-//             }
              guard isDirectoryThatExists(path: Self.outputDir) else {
                  mainModule.log("Output directory is not a valid directory that exists")
                  return
              }
+             
+             // Copy from cache to /tmp
              CaseFiles.MoveCaseDir(outputDir: Self.outputDir)
 
              // End Aftermath
@@ -187,11 +202,26 @@ class Command {
     }
 
      static func printHelp() {
-         print("-o -> specify an output location for Aftermath results")
+         print("-o -> specify an output location for Aftermath results (defaults to /tmp)")
          print("     usage: -o Users/user/Desktop")
          print("--analyze -> Analyze the results of the Aftermath results")
          print("     usage: --analyze <path_to_file>")
-         print("--cleanup -> Remove Aftermath Response Folders")
+         print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
+         print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
+         print("--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)")
+         print("--pretty -> colorize Terminal output")
+         print("--cleanup -> remove Aftermath Folders in default locations")
          exit(1)
      }
+    
+    static func printBanner() {
+        print(#"""
+              ___    ______                            __  __
+             /   |  / __/ /____  _________ ___  ____ _/ /_/ /_
+            / /| | / /_/ __/ _ \/ ___/ __ `__ \/ __ `/ __/ __ \
+           / ___ |/ __/ /_/  __/ /  / / / / / / /_/ / /_/ / / /
+          /_/  |_/_/  \__/\___/_/  /_/ /_/ /_/\__,_/\__/_/ /_/
+                                                                    
+        """#)
+    }
  }

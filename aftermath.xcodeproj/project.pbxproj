@@ -53,6 +53,7 @@
 		A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = A1E433DA28B919A400E2B510 /* SwiftCSV */; };
 		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
+		A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FAEEFD28B94B2C00AC655F /* LogParser.swift */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
@@ -101,7 +102,6 @@
 		A08342D7284E48FC005E437A /* LogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFiles.swift; sourceTree = "<group>"; };
 		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
 		A09B239B2848F6050062D592 /* Periodic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Periodic.swift; sourceTree = "<group>"; };
-		A0A1AE4B288ADD85004B2BE5 /* aftermathRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermathRelease.entitlements; sourceTree = "<group>"; };
 		A0C930D328A4318F0011FB87 /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
 		A0D6D54627FE147D002BB3C8 /* Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overrides.swift; sourceTree = "<group>"; };
@@ -120,12 +120,13 @@
 		A190FFD528B80C3900B9EF9A /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		A190FFDB28B8151300B9EF9A /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E433E428B9270800E2B510 /* dummyPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dummyPlist.plist; sourceTree = "<group>"; };
+		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
 		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
 		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		A3A3A3CD274754B400F8F557 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		A3A3A3CD274754B400F8F557 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3CD4E55274434EE00869ECB /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +251,7 @@
 				A006B5A02882FBA70091FAA1 /* DatabaseParser.swift */,
 				A0C930D328A4318F0011FB87 /* Timeline.swift */,
 				A02509F028AD93DA0030D6A7 /* Storyline.swift */,
+				A0FAEEFD28B94B2C00AC655F /* LogParser.swift */,
 			);
 			path = analysis;
 			sourceTree = "<group>";
@@ -352,7 +354,7 @@
 				A029AB132876A01300649701 /* processes */,
 				70A44401275707800035F40E /* systemRecon */,
 				8ABB9E2927568E9000C0ADD7 /* unifiedlogs */,
-				A3A3A3CD274754B400F8F557 /* Readme.md */,
+				A3A3A3CD274754B400F8F557 /* README.md */,
 				A3CD4E53274434EE00869ECB /* Products */,
 				A190FFD128B8094600B9EF9A /* Frameworks */,
 			);
@@ -370,8 +372,6 @@
 		A3CD4E54274434EE00869ECB /* aftermath */ = {
 			isa = PBXGroup;
 			children = (
-				A0E46B8A288F55A600975EC8 /* aftermath.entitlements */,
-				A0A1AE4B288ADD85004B2BE5 /* aftermathRelease.entitlements */,
 				A3CD4E55274434EE00869ECB /* Command.swift */,
 				8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */,
 				A3046F8D27627DAC0069AA21 /* Module.swift */,
@@ -495,6 +495,7 @@
 				A3CD4E56274434EE00869ECB /* Command.swift in Sources */,
 				A0C2E89728AAAE33008FA597 /* ProcLib.h in Sources */,
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
+				A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */,
 				A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */,
 				A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
@@ -607,6 +608,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -669,6 +671,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -696,8 +699,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = aftermath/aftermath.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 483DWKW443;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -722,8 +725,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = aftermath/aftermathRelease.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 483DWKW443;
 				ENABLE_HARDENED_RUNTIME = YES;

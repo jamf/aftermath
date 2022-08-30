@@ -8,6 +8,7 @@
 //  2020 TheMittenMac
 // TrueTree: https://github.com/themittenmac/TrueTree
 // Inspired by https://www.journaldev.com/21383/swift-tree-binary-tree-data-structure
+// TrueTree License: https://github.com/themittenmac/TrueTree/blob/master/license.md
 
 
 import Foundation
@@ -201,7 +202,6 @@ class Tree: ProcessModule {
                 }
             }
             
-            
             // get the arguments of the process
             let processArguments = getProcessArgs(UInt(pid))
             var allArgs: String = ""
@@ -213,7 +213,6 @@ class Tree: ProcessModule {
                     allArgs = allArgs + " " + singleArg
                 }
             }
-            
             
             self.addTextToFile(atUrl: processFile, text: "\(node.timestamp) \(node.pid) \(node.ppid) \(node.responsiblePid) \(subNode) \(node.procPath) \(allArgs)")
 

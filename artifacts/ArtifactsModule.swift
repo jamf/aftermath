@@ -7,15 +7,6 @@
 
 import Foundation
 
-
-// tcc
-// lsquarantine
-// /etc/sudoers
-// /etc/host
-// /etc/ssh/.*
-// ~/.ssh
-
-
 class ArtifactsModule: AftermathModule, AMProto {
     
     let name = "Artifacts Module"
