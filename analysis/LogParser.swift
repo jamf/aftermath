@@ -10,8 +10,6 @@ import Foundation
 class LogParser: AftermathModule {
     
     lazy var logsFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "logs.csv")
-//    lazy var systemLogParsedFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "system_log.csv")
-//    lazy var logTimeline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "log_timeline.csv")
     let collectionDir: String
     let storylineFile: URL
     
@@ -34,13 +32,11 @@ class LogParser: AftermathModule {
                 
                 guard let date = splitLine[safe: 0] else { continue }
                 guard let time = splitLine[safe: 1] else { continue }
-                let unformattedDate = date + "T" + time // "2022-03-1516:22:55-07"
+                let unformattedDate = date + "T" + time // "ex: 2022-03-1516:22:55-07"
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en_US")
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                
-                
                 
                 var info = ""
                 
@@ -57,16 +53,6 @@ class LogParser: AftermathModule {
                 let text = "\(formattedDate), INSTALL, \(info)"
                 self.addTextToFile(atUrl: logsFile, text: text)
                 self.addTextToFile(atUrl: self.storylineFile, text: text)
-
-                
-                
-       
-                
-//                if let dateString = dateFormatter.date(from: unformattedDate) {
-
-//                } else {
-//                    continue
-//                }
             }
         } catch {
             print("Unable to parse contents")
@@ -97,7 +83,7 @@ class LogParser: AftermathModule {
                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 
                 let currentYear = Calendar(identifier: .gregorian).dateComponents([.year], from: .now).year
-                guard let month = splitLine[safe: 0] else { continue } // Aug
+                guard let month = splitLine[safe: 0] else { continue } // Feb
                 guard let date = splitLine[safe: 1] else { continue } // 26
                 guard let time = splitLine[safe: 2] else { continue } // 00:17:38
 
@@ -111,17 +97,15 @@ class LogParser: AftermathModule {
                 
                 sanatizeInfo(&info)
 
-                
                 let unformattedTimestamp = "\(month) \(date) \(currentYear!) \(time)"
                 
-                guard let formatted = dateFormatter.date(from: unformattedTimestamp) else { continue } // 2022-08-26 00:01:40 UTC
+                guard let formatted = dateFormatter.date(from: unformattedTimestamp) else { continue } //Ex: 2022-08-26 00:01:40 UTC
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                 let dateString = dateFormatter.string(from: formatted)
             
                 let text = "\(dateString), SYSLOG, \(info)"
                 self.addTextToFile(atUrl: logsFile, text: text)
                 self.addTextToFile(atUrl: storylineFile, text: text)
-
             }
         } catch {
             print("Unable to parse contentes")
