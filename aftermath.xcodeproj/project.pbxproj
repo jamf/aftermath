@@ -94,7 +94,6 @@
 		A08342D7284E48FC005E437A /* LogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFiles.swift; sourceTree = "<group>"; };
 		A0879956275AD2DC00E885BC /* SystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemConfig.swift; sourceTree = "<group>"; };
 		A09B239B2848F6050062D592 /* Periodic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Periodic.swift; sourceTree = "<group>"; };
-		A0A1AE4B288ADD85004B2BE5 /* aftermathRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermathRelease.entitlements; sourceTree = "<group>"; };
 		A0C930D328A4318F0011FB87 /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		A0D6D54227F76C58002BB3C8 /* Cron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cron.swift; sourceTree = "<group>"; };
 		A0D6D54627FE147D002BB3C8 /* Overrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overrides.swift; sourceTree = "<group>"; };
@@ -107,7 +106,6 @@
 		A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
 		A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnections.swift; sourceTree = "<group>"; };
 		A0E22EF1285CD60A003A411A /* CommonDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectories.swift; sourceTree = "<group>"; };
-		A0E46B8A288F55A600975EC8 /* aftermath.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermath.entitlements; sourceTree = "<group>"; };
 		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
@@ -306,8 +304,6 @@
 		A3CD4E54274434EE00869ECB /* aftermath */ = {
 			isa = PBXGroup;
 			children = (
-				A0E46B8A288F55A600975EC8 /* aftermath.entitlements */,
-				A0A1AE4B288ADD85004B2BE5 /* aftermathRelease.entitlements */,
 				A3CD4E55274434EE00869ECB /* Command.swift */,
 				8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */,
 				A3046F8D27627DAC0069AA21 /* Module.swift */,
@@ -465,6 +461,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -527,6 +524,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -554,8 +552,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = aftermath/aftermath.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -580,8 +578,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = aftermath/aftermathRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
