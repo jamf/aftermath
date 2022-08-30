@@ -72,7 +72,6 @@ sudo aftermath [option1] [option2]
      usage: -o Users/user/Desktop
 --pretty -> colorize Terminal output
 --cleanup -> remove Aftermath Response Folders
-
 ```
 
 ## Contributors
