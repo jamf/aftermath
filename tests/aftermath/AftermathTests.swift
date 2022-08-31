@@ -2,7 +2,7 @@
 //  AftermathTests.swift
 //  aftermath
 //
-//  Created by Maggie Zirnhelt on 8/25/22.
+//  Copyright 2022 JAMF Software, LLC
 //
 
 import XCTest
