@@ -45,15 +45,13 @@
 		A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */; };
 		A0E1E3F8275ED35D008D0DC6 /* NetworkConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */; };
 		A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22EF1285CD60A003A411A /* CommonDirectories.swift */; };
-		A190FFD028B8084F00B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
-		A190FFD328B8094600B9EF9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A190FFD228B8094600B9EF9A /* XCTest.framework */; };
-		A190FFD628B80C3900B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
+		A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FAEEFD28B94B2C00AC655F /* LogParser.swift */; };
+		A190FFD328B8094600B9EF9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A190FFD228B8094600B9EF9A /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A190FFE228B8151F00B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
 		A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
 		A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = A1E433DA28B919A400E2B510 /* SwiftCSV */; };
 		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
-		A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FAEEFD28B94B2C00AC655F /* LogParser.swift */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
@@ -114,13 +112,12 @@
 		A0E1E3F5275ED2E4008D0DC6 /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
 		A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnections.swift; sourceTree = "<group>"; };
 		A0E22EF1285CD60A003A411A /* CommonDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectories.swift; sourceTree = "<group>"; };
-		A0E46B8A288F55A600975EC8 /* aftermath.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermath.entitlements; sourceTree = "<group>"; };
+		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
 		A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AftermathTests.swift; sourceTree = "<group>"; };
 		A190FFD228B8094600B9EF9A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A190FFD528B80C3900B9EF9A /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		A190FFDB28B8151300B9EF9A /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E433E428B9270800E2B510 /* dummyPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dummyPlist.plist; sourceTree = "<group>"; };
-		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
@@ -514,7 +511,6 @@
 				A029AB2B2877F52D00649701 /* launchdXPC.m in Sources */,
 				A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */,
 				A006B5A12882FBA70091FAA1 /* DatabaseParser.swift in Sources */,
-				A190FFD028B8084F00B9EF9A /* AftermathTests.swift in Sources */,
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
 				A09B239C2848F6050062D592 /* Periodic.swift in Sources */,
@@ -530,7 +526,6 @@
 				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
 				A076742C27555FC100ED7066 /* PersistenceModule.swift in Sources */,
 				A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */,
-				A190FFD628B80C3900B9EF9A /* MockFileManager.swift in Sources */,
 				A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */,
 				A08342D6284A8247005E437A /* AnalysisModule.swift in Sources */,
 				A029AB192876A29600649701 /* Pids.swift in Sources */,
@@ -546,9 +541,10 @@
 		A190FFE028B8151300B9EF9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 483DWKW443;
+				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
@@ -562,9 +558,10 @@
 		A190FFE128B8151300B9EF9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 483DWKW443;
+				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
@@ -628,6 +625,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks/;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -685,6 +683,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks/;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -702,7 +701,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 483DWKW443;
+				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -728,7 +727,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 483DWKW443;
+				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

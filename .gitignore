@@ -23,7 +23,6 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 *.profraw
-*.xcscheme
 
 ## Obj-C/Swift specific
 *.hmap
