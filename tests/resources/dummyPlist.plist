@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>New item</key>
+	<dict>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>AllowAllAppsAccess</key>
+				<true/>
+				<key>KeyIsExtractable</key>
+				<false/>
+				<key>PayloadCertificateFileName</key>
+				<string>rootCA.der</string>
+				<key>PayloadContent</key>
+				<data>MIIB7TCCAZOgAwIBAgIUKIhytiqJFwJQQVC9FavXbJ1OM6UwCgYIKoZIzj0EAwIwbDEfMB0GA1UEAwwWbWFnZ2llemlybmhlbHQucHJvdGVjdDENMAsGA1UECgwESmFtZjE6MDgGA1UECwwxSmFtZiBQcm90ZWN0IGUxN2EzYjIyLWM2NDktNDM2NS04ZDk3LWUzNWRjZDJkMmEwNDAeFw0yMjA4MjMxMzM4MzlaFw00MjA4MTgxMzM4MzlaMGwxHzAdBgNVBAMMFm1hZ2dpZXppcm5oZWx0LnByb3RlY3QxDTALBgNVBAoMBEphbWYxOjA4BgNVBAsMMUphbWYgUHJvdGVjdCBlMTdhM2IyMi1jNjQ5LTQzNjUtOGQ5Ny1lMzVkY2QyZDJhMDQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAT0oFJzImjdNKXr24U4RvzLQCJV6sYERH/LZgaI3DoMksQUul1sB2yQ//NhHSbJY8C/c0vRi6th7YtXhcMWeLQloxMwETAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49BAMCA0gAMEUCIFqTxU3K1/r+ioyFcMoaam1BCyrHD5OtTJPtXW6qP1XqAiEAnLJgyMUgGVsvIZbWYCqZ3jxOfS46RQCIraWiqGkYbFQ=</data>
+				<key>PayloadDescription</key>
+				<string>CA Certificate for Jamf Protect</string>
+				<key>PayloadDisplayName</key>
+				<string>Jamf Protect Root CA</string>
+				<key>PayloadIdentifier</key>
+				<string>47f03068-e486-4051-b447-8130a93bb886</string>
+				<key>PayloadOrganization</key>
+				<string>Jamf Protect</string>
+				<key>PayloadType</key>
+				<string>com.apple.security.root</string>
+				<key>PayloadUUID</key>
+				<string>47f03068-e486-4051-b447-8130a93bb886</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AllowAllAppsAccess</key>
+				<true/>
+				<key>KeyIsExtractable</key>
+				<false/>
+				<key>Password</key>
+				<string>gameplan</string>
+				<key>PayloadCertificateFileName</key>
+				<string>csr.p12</string>
+				<key>PayloadContent</key>
+				<data>MIIEzAIBAzCCBJYGCSqGSIb3DQEHAaCCBIcEggSDMIIEfzCCAv8GCSqGSIb3DQEHBqCCAvAwggLsAgEAMIIC5QYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQIRqLGmdF+sdQCAk4ggIICuDL7qiken8QkzjWbOWrpHyXgZyfRjI3fyfKf1iXa7QxK3YumrKQ/y7kudJvGZ3DRmXOnAWLSPKt5hBUnpoHRbX8S62TpCHVdaN/2PFu8Sx9X0kyP2wCh22oSRiSV+o3Tzi3dsUsjRKRfbECffoJeoK6oCjeMo5nMIY11a908Md3L82Z+0YeHSOiqJ5VGVR1YX8LrWmxGXvpGEYV/iIL2uwcWTOrJ20Bf66UD6/rTGerWcW91FNu7BkkFFLwkkNzXMjXkFuVjc17LfmiDLoc0qQ7k9v5FJoZiJNOTvCxTIsSH7CaREVkXli0daUN9itP/LhHLyoNiRkNU489oVKxcXrQ48mRkdvtODdndnXe4oHvOsTfduJGScobQ20WJkzKfV45loFhW3WYU95jqPP4D7MlmWrzBZl0wuM9BhZGkRUbUgtRoUvd3/qFVvbDyn2mZuFqGk0oJDZjA2ZnwaHBqr2yB4gIFgUr884fpJlsP2FAX83ic4h5cQzdzNQOstH2dVIDd93nRXSWHWpKhFg1V7Q9D0z5Q3vsEKu7qLPU/TY5lhiif/KdoLCQIjlHR5IZBUnW5lBkIDNTtIRMshd/T//Qz4HEB3FmlqMJ/WEZH2U6bBZIfNPB0QX42kpEoc7KTFT7+hX+l76CcERyTwvBjcc5hd+X30bWLGK/CCQO1G1PIOM6XyCsus1YdWLyCkaYzbjfp95J5r0z5kbPsWBYgp4C7vDf7qTl6Rskdnj567p6WOZE2WvwctISsweJt7pubcaf1eHUqpkgK+rxnhU6xy2aDTsjGQPwKVR+cTnnV+V/4chcQetJnpC205iRET9dW9WoFtmBKC+qRoyt6klX5mzLPakTsx9ugBq4TYLMP9ghg+087cAal8Su+a961NF5IOJ70+TV9DPMGePJXLjzhZTm2XRd9Yyos4DCCAXgGCSqGSIb3DQEHAaCCAWkEggFlMIIBYTCCAV0GCyqGSIb3DQEMCgECoIG0MIGxMBwGCiqGSIb3DQEMAQMwDgQIvNZxsLFVGHoCAk4gBIGQOwuHhdHMNp9TKKg8Qb+tVINwsnSeUBemFMWY3tAueprdmgbwyE1LtI4YrlJUxnswcvqBBWpBiKaoDAgRGTDSInopQGLGn0Pmpym2BuBexHYRAhUJFLf4t1SSJ+M/ChB55TANGyRMiRqr03BSc3GTJ/gn/dfON+zcjZ9r1tnqaeuAUXwwVoduZR/LqLZSu/6mMYGWMCMGCSqGSIb3DQEJFTEWBBRlescFqRGITvdPeclVkk/iBcSP6DBvBgkqhkiG9w0BCRQxYh5gAG0AYQBnAGcAaQBlAHoAaQByAG4AaABlAGwAdAAuAHAAcgBvAHQAZQBjAHQAIABKAGEAbQBmACAAUAByAG8AdABlAGMAdAAgAEMAUwBSACAASQBkAGUAbgB0AGkAdAB5MC0wITAJBgUrDgMCGgUABBRphGcSzDZ6mQJpDXCrjgKtmYS7XgQIu9Cn+A0eZlw=</data>
+				<key>PayloadDescription</key>
+				<string>CSR for Jamf Protect</string>
+				<key>PayloadDisplayName</key>
+				<string>Jamf Protect CSR</string>
+				<key>PayloadIdentifier</key>
+				<string>d53cf4ba-1827-44cf-a97e-16d614315823</string>
+				<key>PayloadOrganization</key>
+				<string>Jamf Protect</string>
+				<key>PayloadType</key>
+				<string>com.apple.security.pkcs12</string>
+				<key>PayloadUUID</key>
+				<string>d53cf4ba-1827-44cf-a97e-16d614315823</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AllowAllAppsAccess</key>
+				<true/>
+				<key>KeyIsExtractable</key>
+				<false/>
+				<key>Password</key>
+				<string>gameplan</string>
+				<key>PayloadCertificateFileName</key>
+				<string>iotCustomAuthPrivateKey.p12</string>
+				<key>PayloadContent</key>
+				<data>MIIFvAIBAzCCBYYGCSqGSIb3DQEHAaCCBXcEggVzMIIFbzCCBWsGCSqGSIb3DQEHAaCCBVwEggVYMIIFVDCCBVAGCyqGSIb3DQEMCgECoIIE7jCCBOowHAYKKoZIhvcNAQwBAzAOBAhfgJamIXELJQICTiAEggTIrXcVHWNerSiXuqQCYkvpSzoRRphu9613IcuGBeXAbceGYs++VJyZMD2OSdcStcn4HOH/7EqyRpSHKH3GdrgNAIlL3T1+Oj5GIIF/D2GfxjGvrAFKMPQpmPiK/vFBpHssDVKDUlK6NxJP9SpuPhEKVWL8ciKQcTVYX3j1RMHRbxDcn3DyMX7y5xJ68rOcZY0FAlZrSLfpP5x3GJ2ZquKg6BEq0KMP0MPEZJPsX4s17Vt6v/F1JtbPzBCj/SW/00i4boCEVs7MmftWn5I7Evh43i8Gc2p/058BzMJe/tdpzf98IGSi1zkSNbcDgwgC0t/1nty1enEniHnB7Y4TP2kvN/hxLs1qXunQ7+uBsvdkdXqjyB0s53opPMCIfO7K9hSl2PQn2cgYpRZvQrkRQX/wVaDMztSB/VPBOdtRfTTsZRWvP5yYT4Npgi054+Ha7l0yXKemdGU5+O8ZyoOLSWnzcVrp/syOIfimi7vClyfuqfmCqySec9dN7+Cl1NufnMu3KF3hqkYftaR/isHSGnT5lqxWwZVlQXMLD6bkDNWCYpY4Cbx+timVy/tDoZWxTp5vkNu/EBMae3x1dQrPdSxlzY/nKhV0QRLslB8kbKTIk+iBz4PsOM3ETmgnoSRMjdvNT9sFoOK88kG0Gs+Ql0l9tRBlHM7dkR3viztqdVjGFyJ2TKEzl8688avBD4RklSKmH1alWAZ5fG7AUqsUct5U+xs9WsSPxCz/0mko2RsZJNpH98jSRH3fjNFSMbNws5YOKgn7L4wQ74WpERWegf/CTxwpgTtcFPm/kTnwpldeodF0sJ6f3ouzEaVt6XMYlnS+wj5rfa3Wvf41q9nwEbI4tn23WQw6/90SXv10I4khb6SK1DFkc3VbXy80sAnH5t6mbed7baTIdvjdpmPk3aaMEz3PtqmVO98T+fGV+w02ptp0AYE3fN6v81hq0CQs1E//uh9YIp0xc0/yzDCJlKgTvhIkFt2argeT5ylwkYAA3ui1S+Dx3umK+SQp1kgMT2A7QskDJ2ZLc88Aia4zUmjVl3EL3YFN9DTKTIQJMaMglJZcSSHjuZAJG0enzwHnXSV8yve08sol9az7OhtCAS4FpXl597qPU0uj5oroMF2OvZEqZtbwCNMwhFYgkUsPJPN3DYVEBR9JepFDJcx7EuHsESusOJbGnbUdzVpsEmNHiQpnAM+IrynCrcnixwcT53+3BVChRazgCkHx+yqewltCm91NS3WWrwZNlG+lzoI/D4YG1TqZQfZKBbUy4j18uLxNDifFUtrLEsh8Rssyi951BaAoEEdvSpu+Y1oKD3tQbr5H6eCKisSsxUxoOE2A/tb8JKcZmIFzC+tJkE1ONpjD0gPuFu3LomNiYgo3D3vvQG9UfKZBOpUeDRnsdWwcg+Tpgkfr5KXx5FA338dTdq70tJ+VOGmfgayvlSi6WUY5m6/rYLHdcmtCrGm6kvStHyl42dXZQM1yjwTq8fOleahsS+kZEJ8UHViYq82/Bkryc9pOCkaFAp0GkJvbYSjqmj9ejfzPNZqBFJlbN5qpbGZ+rlCwzOfxR3orBWpUkQaHPZHuWt/IpiY/L73bptyCQ4fo7tJxTmAjE2NiVztZj7jaD+QSxSmKm4+dMU8wTQYJKoZIhvcNAQkUMUAePgBKAGEAbQBmACAAUAByAG8AdABlAGMAdAAgAFcAUwBTACAAQQB1AHQAaABvAHIAaQB6AGUAcgAgAEsAZQB5MC0wITAJBgUrDgMCGgUABBTwYpxmnXtMMMgKrssqkvAKTZeMdgQIVhpG+GHO38M=</data>
+				<key>PayloadDescription</key>
+				<string>Certificate for Jamf Protect to be able to communicate over websockets</string>
+				<key>PayloadDisplayName</key>
+				<string>Websocket Authentication Certificate</string>
+				<key>PayloadIdentifier</key>
+				<string>61d949ea-dfd3-4a51-b30e-3f41975ad6bd</string>
+				<key>PayloadOrganization</key>
+				<string>Jamf Protect</string>
+				<key>PayloadType</key>
+				<string>com.apple.security.pkcs12</string>
+				<key>PayloadUUID</key>
+				<string>61d949ea-dfd3-4a51-b30e-3f41975ad6bd</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>PayloadContent</key>
+				<dict>
+					<key>com.jamf.protect</key>
+					<dict>
+						<key>Forced</key>
+						<array>
+							<dict>
+								<key>mcx_preference_settings</key>
+								<dict>
+									<key>bootstrapToken</key>
+									<string>eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE2NjEyNzIzNjguNTQ4NDM0LCJsb2dMZXZlbCI6InZlcmJvc2UiLCJjc3JpZCI6IjJhYjJiZTZhNjEwYTkzNzUwMmJkNjc5NDRkNTMzYjA0MjY2YWIxYWI1YmE4NWZjYjMyMTY4NjJlZGQwMzJiZmEiLCJjYWlkIjoiODU1N2IxOGI3M2ZmNzQ1MTUxYjdhNjRlNDRhODEyZTYyYzFhNDhlOGFkZjRkM2RmNWMwYjExNzA0NmYwNWMyZCIsImNvbmZpZ2lkIjo3LCJ0b3BpY2lkIjoianB0LWlvdC1BRUctNDIwMiIsImNvbW1zUHJvdG9jb2wiOiJ3c3MvbXF0dCIsInVybCI6ImFoNmpybW8yMTd6ODctYXRzLmlvdC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbSIsImlvdF9jdXN0b21fYXV0aF9uYW1lIjoicHJvdGVjdC1hZWctNDIwMiJ9.I4RykdDvX0m0d0FWykLQ6hzu6RKqViD4X-rdDeS8KhLwl16_LhpDSoeModG6qPlb45s1UVBRsVhAaPgQKvjaCg</string>
+								</dict>
+							</dict>
+						</array>
+					</dict>
+				</dict>
+				<key>PayloadDescription</key>
+				<string>Jamf Protect Plan configuration</string>
+				<key>PayloadDisplayName</key>
+				<string>Jamf Protect Config</string>
+				<key>PayloadIdentifier</key>
+				<string>e2c9421d-98ed-41fa-beda-b8c960c71b36</string>
+				<key>PayloadOrganization</key>
+				<string>Jamf</string>
+				<key>PayloadType</key>
+				<string>com.apple.ManagedClient.preferences</string>
+				<key>PayloadUUID</key>
+				<string>e2c9421d-98ed-41fa-beda-b8c960c71b36</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>PayloadDescription</key>
+		<string>Jamf Protect Certificates and PPPC Configuration Plans</string>
+		<key>PayloadDisplayName</key>
+		<string>4202 maggie wss Plan - Jamf Protect Configuration</string>
+		<key>PayloadIdentifier</key>
+		<string>com.jamf.protect.0c8a2f58-66f2-4103-96c4-3a62744c6bf2</string>
+		<key>PayloadOrganization</key>
+		<string>Jamf Protect</string>
+		<key>PayloadRemovalDisallowed</key>
+		<true/>
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadUUID</key>
+		<string>0c8a2f58-66f2-4103-96c4-3a62744c6bf2</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+	</dict>
+</dict>
+</plist>
