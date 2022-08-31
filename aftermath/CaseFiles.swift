@@ -34,43 +34,27 @@ struct CaseFiles {
         }
     }
     
-    static func MoveCaseDir(outputDir: String) {
+    
+    static func MoveTemporaryCaseDir(outputDir: String, isAnalysis: Bool) {
+        print("Moving the aftermath direcotry from its tempoarary location. This may take some time. Please wait...")
+    
+        var localCaseDir: URL
         
-        print("Moving the collection directory from its temporary location. This may take some time. Please wait...")
-        
-        var endURL: URL
-        
-        if outputDir == "default" {
-            
-            endURL = URL(fileURLWithPath: "/tmp/\(caseDir.lastPathComponent)")
+        if isAnalysis {
+            localCaseDir = analysisCaseDir
         } else {
-            endURL = URL(fileURLWithPath: "\(outputDir)/\(caseDir.lastPathComponent)")
-            
+            localCaseDir = caseDir
         }
-        
-        let zippedURL = endURL.appendingPathExtension("zip")
-
         do {
-            try fm.zipItem(at: caseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
+            let endURL = URL(fileURLWithPath: "\(outputDir)/\(localCaseDir.lastPathComponent)")
+            let zippedURL = endURL.appendingPathExtension("zip")
+            
+            try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
             print("Aftermath archive moved to \(zippedURL.path)")
+    
         } catch {
             print("Unable to create archive. Error: \(error)")
-        }
-    }
-    
-    static func MoveAnalysisCaseDir() {
-        let endURL = URL(fileURLWithPath: "/tmp/\(analysisCaseDir.lastPathComponent)")
-        let zippedURL = endURL.appendingPathExtension("zip")
-                
-        print("Moving the analysis directory from its temporary location. This may take some time. Please wait...")
-
-        do {
-            try fm.zipItem(at: analysisCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
-            try fm.moveItem(at: endURL, to: zippedURL)
-            print("Aftermath analysis archive moved to \(zippedURL.path)")
-        } catch {
-            print(error)
         }
     }
 }

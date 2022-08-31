@@ -93,9 +93,14 @@ class Command {
              analysisModule.run()
 
              mainModule.log("Finished analysis module")
+             
+             guard isDirectoryThatExists(path: Self.outputDir) else {
+                 mainModule.log("Output directory is not a valid directory that exists")
+                 return
+             }
 
-             // Move analysis directory to tmp
-             CaseFiles.MoveAnalysisCaseDir()
+             // Move analysis directory to output direcotry
+             CaseFiles.MoveTemporaryCaseDir(outputDir: self.outputDir, isAnalysis: true)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -162,8 +167,8 @@ class Command {
                  return
              }
              
-             // Copy from cache to /tmp
-             CaseFiles.MoveCaseDir(outputDir: Self.outputDir)
+             // Copy from cache to output
+             CaseFiles.MoveTemporaryCaseDir(outputDir: self.outputDir, isAnalysis: false)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -171,6 +176,7 @@ class Command {
      }
 
      static func cleanup() {
+         // remove any aftermath directories from tmp and /var/folders/zz
          let potentialPaths = ["/tmp", "/var/folders/zz"]
          for p in potentialPaths {
              let enumerator = FileManager.default.enumerator(atPath: p)
