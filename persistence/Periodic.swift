@@ -21,7 +21,7 @@ class Periodic: PersistenceModule {
             self.copyFileToCase(fileToCopy: url, toLocation: directory)
             
             do {
-                self.addTextToFile(atUrl: capturedScriptsFile, text: "/n ----- \(url) -----/n")
+                self.addTextToFile(atUrl: capturedScriptsFile, text: "/n ----- \(url.path) -----/n")
                 let contents = try String(contentsOf: url)
                 self.addTextToFile(atUrl: capturedScriptsFile, text: contents)
             } catch {
