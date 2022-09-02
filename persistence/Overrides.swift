@@ -20,7 +20,7 @@ class Overrides: PersistenceModule {
             let plistDict = Aftermath.getPlistAsDict(atUrl: url)
             
             self.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
-            self.addTextToFile(atUrl: capturedFile, text: "\n----- \(url) -----\n")
+            self.addTextToFile(atUrl: capturedFile, text: "\n----- \(url.path) -----\n")
             self.addTextToFile(atUrl: capturedFile, text: plistDict.description)
         }
     }

@@ -21,7 +21,7 @@ class Cron: PersistenceModule {
             // copy the files to the persistence directory
             do {
                 self.copyFileToCase(fileToCopy: url, toLocation: rawLoc)
-                self.addTextToFile(atUrl: captured, text: "/n ----- \(url) -----/n")
+                self.addTextToFile(atUrl: captured, text: "/n ----- \(url.path) -----/n")
                 let contents = try String(contentsOf: url)
                 self.addTextToFile(atUrl: captured, text: contents)
             } catch {

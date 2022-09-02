@@ -24,7 +24,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
             "failed_sudo": "process == \"sudo\" and eventMessage CONTAINS \"TTY\" AND eventMessage CONTAINS \"3 incorrect password attempts\"",
             "manual_configuration_profile_install": "subsystem == \"com.apple.ManagedClient\" AND process == \"mdmclient\" AND category == \"MDMDaemon\" and eventMessage CONTAINS \"Installed configuration profile:\" AND eventMessage CONTAINS \"Source: Manual\"",
             "screensharing": "(process == \"screensharingd\" || process == \"ScreensharingAgent\")",
-            "xprotect_remediator": "subsystem == \"com.apple.XProtectFramework.PluginAPI\""
+            "xprotect_remediator": "subsystem == \"com.apple.XProtectFramework.PluginAPI\"  && category == \"XPEvent.structured\""
         ]
     }
     

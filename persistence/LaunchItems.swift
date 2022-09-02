@@ -23,7 +23,7 @@ class LaunchItems: PersistenceModule {
             self.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
             
             // write the plists to one file
-            self.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url) -----\n")
+            self.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url.path) -----\n")
             self.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.description)
         }
     }
