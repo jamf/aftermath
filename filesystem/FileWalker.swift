@@ -9,13 +9,6 @@ import Foundation
 
 class FileWalker: FileSystemModule {
     
-    let writeFile: URL
-
-    
-    init(writeFile: URL) {
-        self.writeFile = writeFile
-    }
-    
     func runScanner(directories: [String]) {
         
       
