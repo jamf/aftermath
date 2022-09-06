@@ -88,4 +88,4 @@ sudo aftermath [option1] [option2]
 - Ferdous Saljooki
 
 ## Thank You
-This project leverages the open source [TrueTree](https://github.com/themittenmac/TrueTree) project, written by Jaron Bradley. 
+This project leverages the open source [TrueTree](https://github.com/themittenmac/TrueTree) project, written and [licensed](https://github.com/themittenmac/TrueTree/blob/master/license.md) by Jaron Bradley. 
