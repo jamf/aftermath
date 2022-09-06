@@ -19,10 +19,7 @@ class AnalysisModule: AftermathModule, AMProto {
     
     
     init(collectionDir: String) {
-        
         self.collectionDir = collectionDir
-        
-
     }
     
     func run() {
@@ -37,6 +34,9 @@ class AnalysisModule: AftermathModule, AMProto {
         
         let logParser = LogParser(collectionDir: collectionDir, storylineFile: storylineFile)
         logParser.run()
+        
+        let processParser = ProcessParser(collectionDir: collectionDir, storylineFile: storylineFile)
+        processParser.run()
         
         let timeline = Timeline(collectionDir: collectionDir, timelineFile: timelineFile, storylineFile: storylineFile)
         timeline.run()

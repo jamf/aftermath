@@ -31,6 +31,7 @@ class DatabaseParser: AftermathModule {
                 tccFiles.append(f)
             }
         }
+        
         for tcc_path in tccFiles {
             
             var db : OpaquePointer?
@@ -88,7 +89,6 @@ class DatabaseParser: AftermathModule {
                         }
                         
                         self.addTextToFile(atUrl: tccWriteFile, text: "\(client),\(service),\(authValue),\(authReason),\(last_modified)")
-                        
                         self.addTextToFile(atUrl: storylineFile , text: "\(last_modified),tcc,\(authValue),\(service),\(client)")
                     }
                 }
@@ -162,7 +162,6 @@ class DatabaseParser: AftermathModule {
                         if LSQuarantineDataURLString != "" || LSQuarantineOriginURLString != "" {
                             self.addTextToFile(atUrl: storylineFile, text: "\(LSQuarantineTimeStamp),lsquarantine,\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
                         }
-                        
                     }
                 }
             } else {
@@ -179,8 +178,6 @@ class DatabaseParser: AftermathModule {
         self.log("Parsing TCC database...")
         parseTCC()
     }
-    
-
     
     enum TCCAuthValue: String, CaseIterable {
         case denied = "0"
@@ -255,7 +252,6 @@ class DatabaseParser: AftermathModule {
         case siri = "kTCCServiceSiri"
         case speechRecognition = "kTCCServiceSpeechRecognition"
     }
-    
 }
 
 extension Collection where Indices.Iterator.Element == Index {

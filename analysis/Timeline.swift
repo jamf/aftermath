@@ -28,7 +28,6 @@ class Timeline: AftermathModule {
         
         let headerOptions = ["birth", "accessed", "modified"]
         
-        
         for r in metadataFileContents.rows {
             
             var file: String = ""
@@ -58,9 +57,7 @@ class Timeline: AftermathModule {
         }
     }
     
-    
     func sortTimeline() {
-        
         self.log("Creating a file timeline...")
         
         let sortedTimeline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "file_timeline.csv")
@@ -82,7 +79,6 @@ class Timeline: AftermathModule {
     }
     
     func removeUnsorted() {
-        
         do {
             if filemanager.fileExists(atPath: self.timelineFile.path) {
                 try filemanager.removeItem(at: self.timelineFile)
@@ -93,7 +89,6 @@ class Timeline: AftermathModule {
     }
     
     func run() {
-        
         organizeMetadata() //timestamp, type(download,birth,access,etc), path
         sortTimeline()
         removeUnsorted()

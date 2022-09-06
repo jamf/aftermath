@@ -53,7 +53,6 @@ class Storyline: AftermathModule {
     }
     
     func addFirefoxData() {
-        
         let chromePaths = ["history":"\(collectionDir)/Browser/Firefox/history_output.csv","downloads":"\(collectionDir)/Browser/Firefox/downloads_output.csv"]
         
         for (title,p) in chromePaths {
