@@ -34,9 +34,8 @@ struct CaseFiles {
         }
     }
     
-    
     static func MoveTemporaryCaseDir(outputDir: String, isAnalysis: Bool) {
-        print("Moving the aftermath directory from its tempoarary location. This may take some time. Please wait...")
+        print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
     
         var localCaseDir: URL
         
