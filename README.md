@@ -66,7 +66,7 @@ sudo aftermath [option1] [option2]
 ```
 
 ## Uninstall
-To uninstall the aftermath binary, run the `Aftermath Uninstaller.pkg` from the Releases [Releases](https://github.com/jamf/aftermath/releases). This will uninstall the binary and also run `aftermath --cleanup` to remove aftermath directories. If any aftermath directories elsewhere, using the `--output` command, it is the responsibility of the user/admin to remove said directories.
+To uninstall the aftermath binary, run the `Aftermath Uninstaller.pkg` from the Releases [Releases](https://github.com/jamf/aftermath/releases). This will uninstall the binary and also run `aftermath --cleanup` to remove aftermath directories. If any aftermath directories reside elsewhere, from using the `--output` command, it is the responsibility of the user/admin to remove said directories.
 
 ## Help Menu
 
