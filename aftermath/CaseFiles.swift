@@ -9,9 +9,9 @@ import Foundation
 import ZIPFoundation
 
 struct CaseFiles {
-    static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
+    static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
     static let logFile = caseDir.appendingPathComponent("aftermath.log")
-    static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format())")
+    static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
     static let fm = FileManager.default
@@ -34,9 +34,8 @@ struct CaseFiles {
         }
     }
     
-    
     static func MoveTemporaryCaseDir(outputDir: String, isAnalysis: Bool) {
-        print("Moving the aftermath direcotry from its tempoarary location. This may take some time. Please wait...")
+        print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
     
         var localCaseDir: URL
         

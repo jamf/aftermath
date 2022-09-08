@@ -46,6 +46,7 @@
 		A0E1E3F8275ED35D008D0DC6 /* NetworkConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */; };
 		A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22EF1285CD60A003A411A /* CommonDirectories.swift */; };
 		A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FAEEFD28B94B2C00AC655F /* LogParser.swift */; };
+		A0FD80F628C7F82400E91584 /* ProcessParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD80F528C7F82400E91584 /* ProcessParser.swift */; };
 		A190FFD328B8094600B9EF9A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A190FFD228B8094600B9EF9A /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A190FFE228B8151F00B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
 		A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
@@ -113,6 +114,7 @@
 		A0E1E3F7275ED35D008D0DC6 /* NetworkConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnections.swift; sourceTree = "<group>"; };
 		A0E22EF1285CD60A003A411A /* CommonDirectories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectories.swift; sourceTree = "<group>"; };
 		A0FAEEFD28B94B2C00AC655F /* LogParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParser.swift; sourceTree = "<group>"; };
+		A0FD80F528C7F82400E91584 /* ProcessParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessParser.swift; sourceTree = "<group>"; };
 		A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AftermathTests.swift; sourceTree = "<group>"; };
 		A190FFD228B8094600B9EF9A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A190FFD528B80C3900B9EF9A /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				A0C930D328A4318F0011FB87 /* Timeline.swift */,
 				A02509F028AD93DA0030D6A7 /* Storyline.swift */,
 				A0FAEEFD28B94B2C00AC655F /* LogParser.swift */,
+				A0FD80F528C7F82400E91584 /* ProcessParser.swift */,
 			);
 			path = analysis;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
+				A0FD80F628C7F82400E91584 /* ProcessParser.swift in Sources */,
 				A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */,
 				A007834E28947D71008489EA /* Emond.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,

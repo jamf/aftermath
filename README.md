@@ -65,6 +65,9 @@ There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aft
 sudo aftermath [option1] [option2]
 ```
 
+## Uninstall
+To uninstall the aftermath binary, run the `Aftermath Uninstaller.pkg` from the Releases [Releases](https://github.com/jamf/aftermath/releases). This will uninstall the binary and also run `aftermath --cleanup` to remove aftermath directories. If any aftermath directories reside elsewhere, from using the `--output` command, it is the responsibility of the user/admin to remove said directories.
+
 ## Help Menu
 
 ```
@@ -77,7 +80,7 @@ sudo aftermath [option1] [option2]
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
 --pretty -> colorize Terminal output
---cleanup -> remove Aftermath Response Folders
+--cleanup -> remove Aftermath folders from default locations ("/tmp", "/var/folders/zz/) 
 ```
 
 ## Contributors
