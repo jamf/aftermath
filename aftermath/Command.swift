@@ -24,7 +24,6 @@ class Command {
     static var analysisDir: String? = nil
     static var outputDir: String = "/tmp"
     static var collectDirs: [String] = []
-    static var availableArgs: [String] = ["-h", "--help", "--cleanup", "-d", "--deep", "--pretty", "-o", "--output", "--analyze", "--collect-dirs"]
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -62,10 +61,6 @@ class Command {
                  }
              default:
                  if !arg.starts(with: "-") {
-                     if !availableArgs.contains(arg) {
-                         print("Unidentified argument: \(arg)")
-                         exit(9)
-                     }
                  } else {
                      print("Unidentified argument: \(arg)")
                      exit(9)
