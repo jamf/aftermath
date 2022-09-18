@@ -48,7 +48,7 @@ class LogParser: AftermathModule {
                 sanatizeInfo(&info)
                 
                 guard let dateZone = dateFormatter.date(from: unformattedDate) else { continue }
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                 let formattedDate = dateFormatter.string(from: dateZone)
                 let text = "\(formattedDate), INSTALL, \(info)"
                 self.addTextToFile(atUrl: logsFile, text: text)
@@ -100,7 +100,7 @@ class LogParser: AftermathModule {
                 let unformattedTimestamp = "\(month) \(date) \(currentYear!) \(time)"
                 
                 guard let formatted = dateFormatter.date(from: unformattedTimestamp) else { continue } //Ex: 2022-08-26 00:01:40 UTC
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                 let dateString = dateFormatter.string(from: formatted)
             
                 let text = "\(dateString), SYSLOG, \(info)"
@@ -141,7 +141,7 @@ class LogParser: AftermathModule {
                 sanatizeInfo(&info)
                 
                 guard let dateZome = dateFormatter.date(from: unformattedDate) else { continue }
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                 let formattedDate = dateFormatter.string(from: dateZome)
                 let text = "\(formattedDate), XPROTECT_REMEDIATOR, \(info)"
                 self.addTextToFile(atUrl: logsFile, text: text)
