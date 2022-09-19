@@ -66,7 +66,7 @@ class Aftermath {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         
         if let date = dateFormatter.date(from: timeStamp) {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             let dateString = dateFormatter.string(from: date as Date)
             return dateString
         }
