@@ -45,7 +45,7 @@ class ProcessParser: AftermathModule {
                 sanatizeInfo(&info)
                 
                 guard let dateZone = dateFormatter.date(from: unformattedDate) else { continue }
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                 let formattedDate = dateFormatter.string(from: dateZone)
                 let text = "\(formattedDate), PROCESS, \(info)"
                 self.addTextToFile(atUrl: self.storylineFile, text: text)

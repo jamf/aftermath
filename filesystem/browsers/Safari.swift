@@ -95,7 +95,7 @@ class Safari: BrowserModule {
                                 let dateTimestamp = value as! Date
                                 let dateFormatter = DateFormatter()
                                 dateFormatter.locale = Locale(identifier: "en_US")
-                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
                                 let dateString = dateFormatter.string(from: dateTimestamp as Date)
