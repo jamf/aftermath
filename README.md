@@ -1,5 +1,5 @@
 
-![](/Users/stuartashenbrenner/Desktop/AftermathLogo.png)
+![](https://github.com/jamf/aftermath/blob/master/AftermathLogo.png)
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
 
