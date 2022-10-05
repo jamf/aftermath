@@ -19,7 +19,7 @@ git clone https://github.com/jamf/aftermath.git
 ```bash
 cd <path_to_aftermath_directory>
 ```
-Build using XCode
+Build using Xcode
 ```bash
 xcodebuild
 ``` 
