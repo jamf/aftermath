@@ -1,11 +1,5 @@
-```  
-      ___    ______                            __  __
-     /   |  / __/ /____  _________ ___  ____ _/ /_/ /_
-    / /| | / /_/ __/ _ \/ ___/ __ `__ \/ __ `/ __/ __ \
-   / ___ |/ __/ /_/  __/ /  / / / / / / /_/ / /_/ / / /
-  /_/  |_/_/  \__/\___/_/  /_/ /_/ /_/\__,_/\__/_/ /_/
-```
 
+![](/Users/stuartashenbrenner/Desktop/AftermathLogo.png)
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
 
