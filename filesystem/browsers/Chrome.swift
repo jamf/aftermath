@@ -21,11 +21,11 @@ class Chrome: BrowserModule {
     func gatherHistory() {
 
         let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
-        self.addTextToFile(atUrl: historyOutput, text: "datetime,profile,url")
+        self.addTextToFile(atUrl: historyOutput, text: "datetime,user,profile,url")
         
         for user in getBasicUsersOnSystem() {
             for profile in getChromeProfilesForUser(user: user) {
-                
+
                 // Get the history file for the profile
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
@@ -57,7 +57,7 @@ class Chrome: BrowserModule {
                                 url = String(cString: col2!)
                             }
                             
-                            self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(profile),\(url)")
+                            self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(user.username),\(profile),\(url)")
                         }
                     } else { self.log("Unable to query the database. Please ensure that Chrome is not running.") }
                 } else { self.log("Unable to open the database") }
@@ -69,45 +69,47 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
         
         let downlaodsRaw = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "downloads_output.csv")
-        self.addTextToFile(atUrl: downlaodsRaw, text: "datetime,url,target_path,danger_type,opened")
+        self.addTextToFile(atUrl: downlaodsRaw, text: "datetime,user,profile,url,target_path,danger_type,opened")
         
         for user in getBasicUsersOnSystem() {
-            var file: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
-                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
-            } else { continue }
-            
-            var db: OpaquePointer?
-            if sqlite3_open(file.path, &db) == SQLITE_OK {
-                var queryStatement: OpaquePointer? = nil
-                let queryString = "SELECT datetime(d.start_time/1000000-11644473600, 'unixepoch'), dc.url, d.target_path, d.danger_type, d.opened FROM downloads d INNER JOIN downloads_url_chains dc ON dc.id = d.id;"
-            
-                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                    var dateTime: String = ""
-                    var url: String = ""
-                    var targetPath: String = ""
-                    var dangerType: String = ""
-                    var opened: String = ""
-                    
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        if let col1  = sqlite3_column_text(queryStatement, 0) {
-                            let unformattedDatetime = String(cString: col1)
-                            dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
-                        }
-                        
-                        let col2 = sqlite3_column_text(queryStatement, 1)
-                        if let col2 = col2 { url = String(cString: col2) }
+            for profile in getChromeProfilesForUser(user: user) {
+                var file: URL
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
+                } else { continue }
 
-                        let col3 = sqlite3_column_text(queryStatement, 2)
-                        if let col3 = col3 { targetPath = String(cString: col3) }
+                var db: OpaquePointer?
+                if sqlite3_open(file.path, &db) == SQLITE_OK {
+                    var queryStatement: OpaquePointer? = nil
+                    let queryString = "SELECT datetime(d.start_time/1000000-11644473600, 'unixepoch'), dc.url, d.target_path, d.danger_type, d.opened FROM downloads d INNER JOIN downloads_url_chains dc ON dc.id = d.id;"
+                
+                    if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                        var dateTime: String = ""
+                        var url: String = ""
+                        var targetPath: String = ""
+                        var dangerType: String = ""
+                        var opened: String = ""
                         
-                        let col4 = sqlite3_column_text(queryStatement, 3)
-                        if let col4 = col4 { dangerType = String(cString: col4) }
-                        
-                        let col5 = sqlite3_column_text(queryStatement, 4)
-                        if let col5 = col5 { opened = String(cString: col5) }
-                        
-                        self.addTextToFile(atUrl: downlaodsRaw, text: " \(dateTime), \(url), \(targetPath),\(dangerType), \(opened)")
+                        while sqlite3_step(queryStatement) == SQLITE_ROW {
+                            if let col1  = sqlite3_column_text(queryStatement, 0) {
+                                let unformattedDatetime = String(cString: col1)
+                                dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
+                            }
+                            
+                            let col2 = sqlite3_column_text(queryStatement, 1)
+                            if let col2 = col2 { url = String(cString: col2) }
+
+                            let col3 = sqlite3_column_text(queryStatement, 2)
+                            if let col3 = col3 { targetPath = String(cString: col3) }
+                            
+                            let col4 = sqlite3_column_text(queryStatement, 3)
+                            if let col4 = col4 { dangerType = String(cString: col4) }
+                            
+                            let col5 = sqlite3_column_text(queryStatement, 4)
+                            if let col5 = col5 { opened = String(cString: col5) }
+                            
+                            self.addTextToFile(atUrl: downlaodsRaw, text: " \(dateTime),\(user.username),\(profile),\(url),\(targetPath),\(dangerType),\(opened)")
+                        }
                     }
                 }
             }
@@ -214,6 +216,7 @@ class Chrome: BrowserModule {
     override func run() {
         self.log("Collecting Chrome browser information...")
         gatherHistory()
+        dumpDownloads()
         // let users = getBasicUsersOnSystem()
         // for user in users {
         //     let profiles = getChromeProfilesForUser(user: user)
