@@ -30,7 +30,7 @@ class Chrome: BrowserModule {
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
                     file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)\(profile).db")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)_\(profile).db")
                 } else { continue }
 
                 // Open the history file
@@ -120,19 +120,21 @@ class Chrome: BrowserModule {
     
     func dumpPreferences() {
         for user in getBasicUsersOnSystem() {
-            var file: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Preferences") {
-                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Preferences")
-                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferenes_\(user.username)")
-            } else { continue }
+            for profile in getChromeProfilesForUser(user: user) {
+                var file: URL
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferenes_\(user.username)_\(profile)")
+                } else { continue }
+                        
+                do {
+                    let data = try Data(contentsOf: file, options: .mappedIfSafe)
+                    if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
+                        self.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
+                    }
                     
-            do {
-                let data = try Data(contentsOf: file, options: .mappedIfSafe)
-                if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                    self.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
-                }
-                
-            } catch { self.log("Unable to capture Chrome Preferenes") }
+                } catch { self.log("Unable to capture Chrome Preferenes") }
+            }
         }
     }
     
@@ -217,6 +219,7 @@ class Chrome: BrowserModule {
         self.log("Collecting Chrome browser information...")
         gatherHistory()
         dumpDownloads()
+        dumpPreferences()
         // let users = getBasicUsersOnSystem()
         // for user in users {
         //     let profiles = getChromeProfilesForUser(user: user)
