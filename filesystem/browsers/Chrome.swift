@@ -18,45 +18,84 @@ class Chrome: BrowserModule {
         self.writeFile = writeFile
     }
     
-    func gatherHistory() {
+    // func gatherHistory() {
 
+    //     let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
+    //     self.addTextToFile(atUrl: historyOutput, text: "datetime,url")
+        
+    //     for user in getBasicUsersOnSystem() {
+            
+            
+            
+    //         var file: URL
+    //         if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
+    //             file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
+    //             self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)")
+    //         } else { continue }
+            
+    //         var db: OpaquePointer?
+    //         if sqlite3_open(file.path, &db) == SQLITE_OK {
+    //             var queryStatement: OpaquePointer? = nil
+    //             let queryString = "SELECT datetime(((v.visit_time/1000000)-11644473600), 'unixepoch'), u.url FROM visits v INNER JOIN urls u ON u.id = v.url;"
+            
+    //             if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+    //                 var dateTime: String = ""
+    //                 var url: String = ""
+                    
+    //                 while sqlite3_step(queryStatement) == SQLITE_ROW {
+    //                     if let col1  = sqlite3_column_text(queryStatement, 0) {
+    //                         let unformattedDatetime = String(cString: col1)
+    //                         dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
+    //                     }
+                        
+    //                     let col2 = sqlite3_column_text(queryStatement, 1)
+    //                     if col2 != nil {
+    //                         url = String(cString: col2!)
+    //                     }
+                        
+    //                     self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(url)")
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    func gatherHistory(user: User, profile: String) {
         let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
         self.addTextToFile(atUrl: historyOutput, text: "datetime,url")
         
-        for user in getBasicUsersOnSystem() {
-            
-            
-            
-            var file: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History") {
-                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/History")
-                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)")
-            } else { continue }
-            
-            var db: OpaquePointer?
-            if sqlite3_open(file.path, &db) == SQLITE_OK {
-                var queryStatement: OpaquePointer? = nil
-                let queryString = "SELECT datetime(((v.visit_time/1000000)-11644473600), 'unixepoch'), u.url FROM visits v INNER JOIN urls u ON u.id = v.url;"
-            
-                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                    var dateTime: String = ""
-                    var url: String = ""
-                    
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        if let col1  = sqlite3_column_text(queryStatement, 0) {
-                            let unformattedDatetime = String(cString: col1)
-                            dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
-                        }
-                        
-                        let col2 = sqlite3_column_text(queryStatement, 1)
-                        if col2 != nil {
-                            url = String(cString: col2!)
-                        }
-                        
-                        self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(url)")
+        var file: URL
+        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
+            file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
+            self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads_\(user.username)_\(profile)")
+        } else { return }
+        
+        var db: OpaquePointer?
+        if sqlite3_open(file.path, &db) == SQLITE_OK {
+            var queryStatement: OpaquePointer? = nil
+            let queryString = "SELECT datetime(((v.visit_time/1000000)-11644473600), 'unixepoch'), u.url FROM visits v INNER JOIN urls u ON u.id = v.url;"
+        
+            if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                var dateTime: String = ""
+                var url: String = ""
+                
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    if let col1  = sqlite3_column_text(queryStatement, 0) {
+                        let unformattedDatetime = String(cString: col1)
+                        dateTime = Aftermath.standardizeMetadataTimestamp(timeStamp: unformattedDatetime)
                     }
+                    
+                    let col2 = sqlite3_column_text(queryStatement, 1)
+                    if col2 != nil {
+                        url = String(cString: col2!)
+                    }
+                    
+                    self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(url)")
                 }
             }
+        }
+        else {
+            self.log("Unable to open Chrome history database.")
         }
     }
     
@@ -191,13 +230,35 @@ class Chrome: BrowserModule {
             }
         }
     }
+
+    func getChromeProfilesForUser(user: User) -> [String] {
+        var profiles: [String] = []
+        // Get the directory name if it contains the string "Profile"
+        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome") {
+            for file in filemanager.filesInDir(path: "\(user.homedir)/Library/Application Support/Google/Chrome") {
+                if file.lastPathComponent.starts(with: "Profile") || file.lastPathComponent == "Default" {
+                    profiles.append(file.lastPathComponent)
+                }
+            }
+        }
+        
+        return profiles
+    }
     
     override func run() {
         self.log("Collecting Chrome browser information...")
-        gatherHistory()
-        dumpDownloads()
-        dumpPreferences()
-        dumpCookies()
-        captureExtensions()
+        let users = getBasicUsersOnSystem()
+        for user in users {
+            let profiles = getChromeProfilesForUser(user: user)
+            for profile in profiles {
+                gatherHistory(user: user, profile: profile)
+                //todo
+            }
+        }
+        // gatherHistory()
+        // dumpDownloads()
+        // dumpPreferences()
+        // dumpCookies()
+        // captureExtensions()
     }
 }
