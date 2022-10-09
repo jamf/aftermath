@@ -142,46 +142,48 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
 
         for user in getBasicUsersOnSystem() {
-            var file: URL
-            if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Cookies") {
-                file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Cookies")
-                self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "cookies_\(user.username)")
-            } else { continue }
+            for profile in getChromeProfilesForUser(user: user) {
+                var file: URL
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "cookies_\(user.username)_\(profile).db")
+                } else { continue }
                         
-            var db: OpaquePointer?
-            if sqlite3_open(file.path, &db) == SQLITE_OK {
-                var queryStatement: OpaquePointer? = nil
-                let queryString = "select datetime(creation_utc/100000 -11644473600, 'unixepoch'), name,  host_key, path, datetime(expires_utc/100000-11644473600, 'unixepoch') from cookies;"
-            
-                if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
-                    var dateTime: String = ""
-                    var name: String = ""
-                    var hostKey: String = ""
-                    var path: String = ""
-                    var expireTime: String = ""
-                    
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        if let col1  = sqlite3_column_text(queryStatement, 0) {
-                            dateTime = String(cString: col1)
+                var db: OpaquePointer?
+                if sqlite3_open(file.path, &db) == SQLITE_OK {
+                    var queryStatement: OpaquePointer? = nil
+                    let queryString = "select datetime(creation_utc/100000 -11644473600, 'unixepoch'), name,  host_key, path, datetime(expires_utc/100000-11644473600, 'unixepoch') from cookies;"
+                
+                    if sqlite3_prepare_v2(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                        var dateTime: String = ""
+                        var name: String = ""
+                        var hostKey: String = ""
+                        var path: String = ""
+                        var expireTime: String = ""
+                        
+                        while sqlite3_step(queryStatement) == SQLITE_ROW {
+                            if let col1  = sqlite3_column_text(queryStatement, 0) {
+                                dateTime = String(cString: col1)
+                            }
+                            
+                            if let col2 = sqlite3_column_text(queryStatement, 1) {
+                                name = String(cString: col2)
+                            }
+                            
+                            if let col3 = sqlite3_column_text(queryStatement, 2) {
+                                hostKey = String(cString: col3)
+                            }
+                            
+                            if let col4 = sqlite3_column_text(queryStatement, 3) {
+                                path = String(cString: col4)
+                            }
+                            
+                            if let col5 = sqlite3_column_text(queryStatement, 4) {
+                                expireTime = String(cString: col5)
+                            }
+                            
+                            self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nUser: \(user.username)\nProfile: \(profile)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                         }
-                        
-                        if let col2 = sqlite3_column_text(queryStatement, 1) {
-                            name = String(cString: col2)
-                        }
-                        
-                        if let col3 = sqlite3_column_text(queryStatement, 2) {
-                            hostKey = String(cString: col3)
-                        }
-                        
-                        if let col4 = sqlite3_column_text(queryStatement, 3) {
-                            path = String(cString: col4)
-                        }
-                        
-                        if let col5 = sqlite3_column_text(queryStatement, 4) {
-                            expireTime = String(cString: col5)
-                        }
-                        
-                        self.addTextToFile(atUrl: self.writeFile, text: "DateTime: \(dateTime)\nName: \(name)\nHostKey: \(hostKey)\nPath:\(path)\nExpireTime: \(expireTime)\n\n")
                     }
                 }
             }
@@ -189,15 +191,17 @@ class Chrome: BrowserModule {
         self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
     }
     
-    func captureExtensions() {
-        let chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions")
-        
+    func captureExtensions() {        
         for user in getBasicUsersOnSystem() {
-            let path = "\(user.homedir)/Library/Application Support/Google/Chrome/Default/Extensions"
+            for profile in getChromeProfilesForUser(user: user) {
+                var chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions_\(user.username)_\(profile)")
+                let path = "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Extensions"
             
-            for file in filemanager.filesInDirRecursive(path: path) {
-                self.copyFileToCase(fileToCopy: file, toLocation: chromeExtensionDir)
+                for file in filemanager.filesInDirRecursive(path: path) {
+                    self.copyFileToCase(fileToCopy: file, toLocation: chromeExtensionDir)
+                }
             }
+            
         }
     }
 
@@ -220,18 +224,7 @@ class Chrome: BrowserModule {
         gatherHistory()
         dumpDownloads()
         dumpPreferences()
-        // let users = getBasicUsersOnSystem()
-        // for user in users {
-        //     let profiles = getChromeProfilesForUser(user: user)
-        //     for profile in profiles {
-        //         gatherHistory(user: user, profile: profile)
-        //         //todo
-        //     }
-        // }
-        // gatherHistory()
-        // dumpDownloads()
-        // dumpPreferences()
-        // dumpCookies()
-        // captureExtensions()
+        dumpCookies()
+        captureExtensions()
     }
 }
