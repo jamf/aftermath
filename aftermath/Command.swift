@@ -24,6 +24,7 @@ class Command {
     static var analysisDir: String? = nil
     static var outputDir: String = "/tmp"
     static var collectDirs: [String] = []
+    static let version: String = "1.1.0"
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -59,6 +60,9 @@ class Command {
                          i += 1
                      }
                  }
+             case "-v", "--version":
+                 print(version)
+                 exit(1)
              default:
                  if !arg.starts(with: "-") {
                  } else {
@@ -76,6 +80,7 @@ class Command {
              CaseFiles.CreateAnalysisCaseDir()
 
              let mainModule = AftermathModule()
+             mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Analysis Started")
 
              guard let dir = Self.analysisDir else {
@@ -108,6 +113,7 @@ class Command {
          } else {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
+             mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
              
