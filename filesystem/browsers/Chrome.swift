@@ -115,7 +115,7 @@ class Chrome: BrowserModule {
             }
         }
         
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downlaods -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downloads -----\n")
     }
     
     func dumpPreferences() {
@@ -194,7 +194,7 @@ class Chrome: BrowserModule {
     func captureExtensions() {        
         for user in getBasicUsersOnSystem() {
             for profile in getChromeProfilesForUser(user: user) {
-                var chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions_\(user.username)_\(profile)")
+                let chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions_\(user.username)_\(profile)")
                 let path = "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Extensions"
             
                 for file in filemanager.filesInDirRecursive(path: path) {
