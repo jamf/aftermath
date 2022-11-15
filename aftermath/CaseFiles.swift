@@ -9,29 +9,24 @@ import Foundation
 import ZIPFoundation
 
 struct CaseFiles {
-    var caseeee: String
     static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(serialNumber ?? Host.current().localizedName?.replacingOccurrences(of: " ", with: "_") ?? "")")
     static let logFile = caseDir.appendingPathComponent("aftermath.log")
     static var analysisCaseDir = FileManager.default.temporaryDirectory
-
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
     static let fm = FileManager.default
     static var serialNumber: String? {
-        let platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice") )
-      
-      guard platformExpert > 0 else {
-        return nil
-      }
-      
-      guard let serialNumber = (IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
-        return nil
-      }
-      
-        
-      IOObjectRelease(platformExpert)
+        let platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
 
-      return serialNumber
+        guard platformExpert > 0 else {
+            return nil
+        }
+        guard let serialNumber = (IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+            return nil
+        }
+
+        IOObjectRelease(platformExpert)
+        return serialNumber
     }
     
     static func CreateCaseDir() {
