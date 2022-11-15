@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftCSV
 
 class Timeline: AftermathModule {
     
@@ -22,37 +21,39 @@ class Timeline: AftermathModule {
     
     func organizeMetadata() {
         self.log("Parsing metadata...")
-
+        
         let metadataPath = "\(self.collectionDir)/metadata.csv"
-        let metadataFileContents = Aftermath.readCSVRows(path: metadataPath)
+        let metadataFileContents = readMetadataCSVRows(path: metadataPath)
         
-        let headerOptions = ["birth", "accessed", "modified"]
-        
-        for r in metadataFileContents.rows {
+        for r in metadataFileContents {
             
             var file: String = ""
-            var timestamp: String = ""
             var status: String = ""
+            var timestamp: String = ""
             
-            for (header, contents) in r {
-                if contents == "unknown" { continue }
-                
-                if header == "file" {
-                    file = contents
-                    continue
-                }
-                
-                if headerOptions.contains(header) {
-                    status = header
-                    timestamp = contents
-                }
-                
-                if file != "" && timestamp != "" && status != "" {
-                    self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)")
-                    self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),\(status),\(file)")
-                    break
-                } else { continue }
-           
+            if r.file != "" {
+                file = r.file
+            } else { continue }
+            
+            if r.birth != "" {
+                status = "birth"
+                timestamp = r.birth
+                self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),\(status),\(file)")
+            }
+            
+            if r.modified != "" {
+                status = "modified"
+                timestamp = r.modified
+                self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),\(status),\(file)")
+            }
+            
+            if r.accessed != "" {
+                status = "accessed"
+                timestamp = r.accessed
+                self.addTextToFile(atUrl: self.timelineFile, text: "\(timestamp),\(status),\(file)")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),\(status),\(file)")
             }
         }
     }
@@ -62,12 +63,19 @@ class Timeline: AftermathModule {
         
         let sortedTimeline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "file_timeline.csv")
         
+        let metadataFileContents = readTimelineCSVRows(path: self.timelineFile.path)
+        
+        var unsortedArr: [[String]] = []
+        
+        for i in metadataFileContents {
+            let localArr = [i.timestamp, i.status, i.file]
+            unsortedArr.append(localArr)
+        }
+        
         do {
-            let csvFile = try EnumeratedCSV(url: self.timelineFile)
-            let sortedArr = try Aftermath.sortCSV(unsortedArr: csvFile.rows)
+            let sortedArr = try Aftermath.sortCSV(unsortedArr: unsortedArr)
             
             for row in sortedArr {
-        
                 let line = row.joined(separator: ",")
                 self.addTextToFile(atUrl: sortedTimeline, text: "\(line)")
             }
@@ -77,7 +85,7 @@ class Timeline: AftermathModule {
             print(error)
         }
     }
-    
+  
     func removeUnsorted() {
         do {
             if filemanager.fileExists(atPath: self.timelineFile.path) {
@@ -88,9 +96,87 @@ class Timeline: AftermathModule {
         }
     }
     
+    func readMetadataCSVRows(path: String) -> [Metadata] {
+        var metadata = [Metadata]()
+        var data = ""
+        
+        do {
+            data = try String(contentsOfFile: path)
+        } catch {
+            self.log("Unabler to read metadata csv")
+            print(error)
+            exit(1)
+        }
+        
+        var rows = data.components(separatedBy: "\n")
+        rows.removeFirst()
+        
+        for row in rows {
+            let columns = row.components(separatedBy: ",")
+            if columns.count == 8 {
+                let filePath = columns[0]
+                let birth = columns[1]
+                let modified = columns[2]
+                let accessed = columns[3]
+                let permissions = columns[4]
+                let uid = columns[5]
+                let gid = columns[6]
+                let downloadedFrom = columns[7]
+                
+                let singleEntry = Metadata(file: filePath, birth: birth, modified: modified, accessed: accessed, permissions: permissions, uid: uid, gid: gid, downloadedFrom: downloadedFrom)
+                metadata.append(singleEntry)
+            }
+        }
+        return metadata
+    }
+    
+    func readTimelineCSVRows(path: String) -> [TimelineStruct] {
+        
+        var timelineStruct = [TimelineStruct]()
+        var data = ""
+        
+        do {
+            data = try String(contentsOfFile: path)
+        } catch {
+            print(error)
+        }
+        
+        let rows = data.components(separatedBy: "\n")
+        
+        for row in rows {
+            let columns = row.components(separatedBy: ",")
+            if columns.count == 3 {
+                let timestamp = columns[0]
+                let status = columns[1]
+                let file = columns[2]
+                
+                let singleEntry = TimelineStruct(timestamp: timestamp, status: status, file: file)
+                timelineStruct.append(singleEntry)
+            }
+        }
+        return timelineStruct
+    }
+    
     func run() {
         organizeMetadata() //timestamp, type(download,birth,access,etc), path
         sortTimeline()
         removeUnsorted()
     }
+}
+
+struct Metadata {
+    var file: String
+    var birth: String
+    var modified: String
+    var accessed: String
+    var permissions: String
+    var uid: String
+    var gid: String
+    var downloadedFrom: String
+}
+
+struct TimelineStruct {
+    var timestamp: String
+    var status: String
+    var file: String
 }

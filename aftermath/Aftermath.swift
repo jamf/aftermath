@@ -6,7 +6,6 @@
 
 
 import Foundation
-import SwiftCSV
 
 class Aftermath {
 
@@ -82,20 +81,6 @@ class Aftermath {
         }
         
     }
-    
-    
-    static func readCSVRows(path: String) -> NamedCSV {
-
-        do {
-            let csvFile = try NamedCSV(url: URL(fileURLWithPath: path), delimiter: .comma, encoding: .utf8)
-            return csvFile
-           
-        } catch {
-            print(error)
-            exit(1)
-        }
-    }
-    
     
     static func sortCSV(unsortedArr: [[String]]) throws -> [[String]] {
         var arr = unsortedArr

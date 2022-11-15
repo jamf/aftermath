@@ -89,7 +89,7 @@ class DatabaseParser: AftermathModule {
                         }
                         
                         self.addTextToFile(atUrl: tccWriteFile, text: "\(client),\(service),\(authValue),\(authReason),\(last_modified)")
-                        self.addTextToFile(atUrl: storylineFile , text: "\(last_modified),tcc,\(authValue),\(service),\(client)")
+                        self.addTextToFile(atUrl: storylineFile , text: "\(last_modified),tcc_\(authValue),\(service),\(client)")
                     }
                 }
             } else {
@@ -160,7 +160,7 @@ class DatabaseParser: AftermathModule {
                         self.addTextToFile(atUrl: self.quarantineWriteFile, text: "\(LSQuarantineTimeStamp),\(LSQuarantineAgentName),\(LSQuarantineAgentBundleIdentifier),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString),\(LSQuarantineSenderName),\(LSQuarantineSenderAddress)")
                         
                         if LSQuarantineDataURLString != "" || LSQuarantineOriginURLString != "" {
-                            self.addTextToFile(atUrl: storylineFile, text: "\(LSQuarantineTimeStamp),lsquarantine,\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
+                            self.addTextToFile(atUrl: storylineFile, text: "\(LSQuarantineTimeStamp),lsquarantine_\(LSQuarantineAgentName),\(LSQuarantineDataURLString),\(LSQuarantineOriginURLString)")
                         }
                     }
                 }

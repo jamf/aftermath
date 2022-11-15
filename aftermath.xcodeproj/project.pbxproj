@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E6780F22922E7E800BAF04B /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6780F12922E7E800BAF04B /* Edge.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
 		70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */; };
@@ -33,7 +34,6 @@
 		A0C2E89728AAAE33008FA597 /* ProcLib.h in Sources */ = {isa = PBXBuildFile; fileRef = A029AB2E2877F56E00649701 /* ProcLib.h */; };
 		A0C930CF289852E80011FB87 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = A0C930CE289852E80011FB87 /* ZIPFoundation */; };
 		A0C930D428A4318F0011FB87 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C930D328A4318F0011FB87 /* Timeline.swift */; };
-		A0C930D728A543F80011FB87 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = A0C930D628A543F80011FB87 /* SwiftCSV */; };
 		A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54227F76C58002BB3C8 /* Cron.swift */; };
 		A0D6D54727FE147D002BB3C8 /* Overrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54627FE147D002BB3C8 /* Overrides.swift */; };
 		A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D6D54827FE52C1002BB3C8 /* SystemExtensions.swift */; };
@@ -51,7 +51,6 @@
 		A190FFE228B8151F00B9EF9A /* MockFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFD528B80C3900B9EF9A /* MockFileManager.swift */; };
 		A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
 		A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
-		A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = A1E433DA28B919A400E2B510 /* SwiftCSV */; };
 		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
@@ -74,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E6780F12922E7E800BAF04B /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
@@ -135,7 +135,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1E433DB28B919A400E2B510 /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +144,6 @@
 			files = (
 				A190FFD328B8094600B9EF9A /* XCTest.framework in Frameworks */,
 				A0C930CF289852E80011FB87 /* ZIPFoundation in Frameworks */,
-				A0C930D728A543F80011FB87 /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +261,7 @@
 				A0E1E3EA275EC800008D0DC6 /* Firefox.swift */,
 				A0E1E3EC275EC809008D0DC6 /* Chrome.swift */,
 				A0E1E3EE275EC810008D0DC6 /* Safari.swift */,
+				5E6780F12922E7E800BAF04B /* Edge.swift */,
 			);
 			path = browsers;
 			sourceTree = "<group>";
@@ -397,7 +396,6 @@
 			);
 			name = tests;
 			packageProductDependencies = (
-				A1E433DA28B919A400E2B510 /* SwiftCSV */,
 			);
 			productName = aftermathTests;
 			productReference = A190FFDB28B8151300B9EF9A /* tests.xctest */;
@@ -418,7 +416,6 @@
 			name = aftermath;
 			packageProductDependencies = (
 				A0C930CE289852E80011FB87 /* ZIPFoundation */,
-				A0C930D628A543F80011FB87 /* SwiftCSV */,
 			);
 			productName = aftermath;
 			productReference = A3CD4E52274434EE00869ECB /* aftermath */;
@@ -454,7 +451,6 @@
 			mainGroup = A3CD4E49274434EE00869ECB;
 			packageReferences = (
 				A0C930CD289852E80011FB87 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */,
 			);
 			productRefGroup = A3CD4E53274434EE00869ECB /* Products */;
 			projectDirPath = "";
@@ -500,6 +496,7 @@
 				A0E22EF2285CD60A003A411A /* CommonDirectories.swift in Sources */,
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
 				A029AB152876A02800649701 /* ProcessModule.swift in Sources */,
+				5E6780F22922E7E800BAF04B /* Edge.swift in Sources */,
 				A029AB1C28774CA400649701 /* Tree.swift in Sources */,
 				A007835028947E80008489EA /* LoginItems.swift in Sources */,
 				A0C930D428A4318F0011FB87 /* Timeline.swift in Sources */,
@@ -794,14 +791,6 @@
 				minimumVersion = 0.9.9;
 			};
 		};
-		A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/swiftcsv/SwiftCSV";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -809,16 +798,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A0C930CD289852E80011FB87 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
-		};
-		A0C930D628A543F80011FB87 /* SwiftCSV */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
-			productName = SwiftCSV;
-		};
-		A1E433DA28B919A400E2B510 /* SwiftCSV */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0C930D528A543F80011FB87 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
-			productName = SwiftCSV;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

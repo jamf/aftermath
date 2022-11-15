@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import SwiftCSV
 
 class Storyline: AftermathModule {
-    
     
     let collectionDir: String
     let storylineFile: URL
@@ -28,57 +26,46 @@ class Storyline: AftermathModule {
             
             if !filemanager.fileExists(atPath: p) { continue }
             
-            let csvContents = Aftermath.readCSVRows(path: p)
+            var data = ""
             
-            for r in csvContents.rows {
-                
-                var timestamp: String = ""
-                var url: String = ""
-                
-                for (header, contents) in r {
-                    if header == "timestamp" {
-                        timestamp = contents
-                        continue
-                    }
-                    if header == "url" {
-                        url = contents
-                    }
-                    
-                    if timestamp != "" && url != "" {
-                        self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),safari_\(title),\(url)")
-                    }
-                }
+            do {
+                data = try String(contentsOfFile: p)
+            } catch {
+                print(error)
+            }
+            
+            var rows = data.components(separatedBy: "\n")
+            rows.removeFirst()
+            
+            for row in rows {
+                if row == "" { continue }
+                let columns = row.components(separatedBy: ",")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),safari_\(title),\(columns[1]))")
             }
         }
     }
     
     func addFirefoxData() {
-        let chromePaths = ["history":"\(collectionDir)/Browser/Firefox/history_output.csv","downloads":"\(collectionDir)/Browser/Firefox/downloads_output.csv"]
+        let firefoxPaths = ["history":"\(collectionDir)/Browser/Firefox/history_output.csv","downloads":"\(collectionDir)/Browser/Firefox/downloads_output.csv"]
         
-        for (title,p) in chromePaths {
+        for (title,p) in firefoxPaths {
             
             if !filemanager.fileExists(atPath: p) { continue }
             
-            let csvContents = Aftermath.readCSVRows(path: p)
+            var data = ""
             
-            for r in csvContents.rows {
-                
-                var timestamp: String = ""
-                var url: String = ""
-                
-                for (header, contents) in r {
-                    if header == "datetime" {
-                        timestamp = contents
-                        continue
-                    }
-                    if header == "url" {
-                        url = contents
-                    }
-                    
-                    if timestamp != "" && url != "" {
-                        self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),firefox_\(title),\(url)")
-                    }
-                }
+            do {
+                data = try String(contentsOfFile: p)
+            } catch {
+                print(error)
+            }
+            
+            var rows = data.components(separatedBy: "\n")
+            rows.removeFirst()
+            for row in rows {
+                if row == "" { continue }
+                let columns = row.components(separatedBy: ",")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),firefox_\(title),\(columns[1]))")
             }
         }
     }
@@ -90,26 +77,45 @@ class Storyline: AftermathModule {
             
             if !filemanager.fileExists(atPath: p) { continue }
             
-            let csvContents = Aftermath.readCSVRows(path: p)
+            var data = ""
             
-            for r in csvContents.rows {
-                
-                var timestamp: String = ""
-                var url: String = ""
-                
-                for (header, contents) in r {
-                    if header == "datetime" {
-                        timestamp = contents
-                        continue
-                    }
-                    if header == "url" {
-                        url = contents
-                    }
-                    
-                    if timestamp != "" && url != "" {
-                        self.addTextToFile(atUrl: self.storylineFile, text: "\(timestamp),chrome_\(title),\(url)")
-                    }
-                }
+            do {
+                data = try String(contentsOfFile: p)
+            } catch {
+                print(error)
+            }
+            
+            var rows = data.components(separatedBy: "\n")
+            rows.removeFirst()
+            for row in rows {
+                if row == "" { continue }
+                let columns = row.components(separatedBy: ",")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),chrome_\(title),\(columns[3]))")
+            }
+        }
+    }
+    
+    func addEdgeData() {
+        let edgePaths = ["history":"\(collectionDir)/Browser/Edge/history_output.csv","downloads":"\(collectionDir)/Browser/Edge/downloads_output.csv"]
+        
+        for (title,p) in edgePaths {
+            
+            if !filemanager.fileExists(atPath: p) { continue }
+                        
+            var data = ""
+            
+            do {
+                data = try String(contentsOfFile: p)
+            } catch {
+                print(error)
+            }
+            
+            var rows = data.components(separatedBy: "\n")
+            rows.removeFirst()
+            for row in rows {
+                if row == "" { continue }
+                let columns = row.components(separatedBy: ",")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),edge_\(title),\(columns[3]))")
             }
         }
     }
@@ -119,18 +125,59 @@ class Storyline: AftermathModule {
         self.log("Creating the storyline...Please wait...")
         
         let sortedStoryline = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "storyline.csv")
+        let csvFileContents = readStorylineCSV(path: self.storylineFile.path)
+        var unsortedArr: [[String]] = []
+        
+        for i in csvFileContents {
+            let localArr = [i.timestamp, i.type, i.other, i.path]
+            unsortedArr.append(localArr)
+        }
+        
         do {
-            let csvFile = try EnumeratedCSV(url: self.storylineFile)
-            let sortedArr = try Aftermath.sortCSV(unsortedArr: csvFile.rows)
+            let sortedArr = try Aftermath.sortCSV(unsortedArr: unsortedArr)
             
             for row in sortedArr {
                 let line = row.joined(separator: ",")
                 self.addTextToFile(atUrl: sortedStoryline, text: "\(line)")
             }
+            
             self.log("Finished creating the storyline")
+        } catch {
+            self.log("Error creating the storyline")
+            print(error)
+        }
+    }
+    
+    func readStorylineCSV(path: String) -> [StorylineStruct] {
+       
+        var storylineStruct = [StorylineStruct]()
+        var data = ""
+        
+        do {
+            data = try String(contentsOfFile: path)
         } catch {
             print(error)
         }
+        
+        var rows = data.components(separatedBy: "\n")
+        rows.removeFirst() // headers - ["timestamp", "type", "other", "path"]
+        
+        for row in rows {
+            if row == "" { continue }
+            let columns = row.components(separatedBy: ",")
+
+            let timestamp = columns[0]
+            let type = columns[1]
+            let other = columns[2]
+            var path = ""
+            if columns.count == 4 {
+                path = columns[3]
+            }
+                
+            let singleEntry = StorylineStruct(timestamp: timestamp, type: type, other: other, path: path)
+            storylineStruct.append(singleEntry)
+        }
+        return storylineStruct
     }
     
     func removeUnsorted() {
@@ -148,7 +195,15 @@ class Storyline: AftermathModule {
         addSafariData()
         addFirefoxData()
         addChromeData()
+        addEdgeData()
         sortStoryline()
         removeUnsorted()
     }
+}
+
+struct StorylineStruct {
+    var timestamp: String
+    var type: String
+    var other: String
+    var path: String
 }
