@@ -77,11 +77,15 @@ class Command {
          printBanner()
          
          if Self.options.contains(.analyze) {
-             CaseFiles.CreateAnalysisCaseDir()
+             if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
+                 CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
+             }
+
 
              let mainModule = AftermathModule()
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Analysis Started")
+             mainModule.log("Analysis started at \(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
 
              guard let dir = Self.analysisDir else {
                  mainModule.log("Analysis directory not provided")
@@ -115,6 +119,7 @@ class Command {
              let mainModule = AftermathModule()
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
+             mainModule.log("Collection started at \(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
              
 
