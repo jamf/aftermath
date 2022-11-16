@@ -82,6 +82,7 @@ class Aftermath {
         
     }
     
+    @available(macOS 12.0, *)
     static func sortCSV(unsortedArr: [[String]]) throws -> [[String]] {
         var arr = unsortedArr
         try arr.sort { lhs, rhs in

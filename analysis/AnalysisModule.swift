@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(macOS 12, *)
 class AnalysisModule: AftermathModule, AMProto {
     
     let name = "Analysis Module"
@@ -26,7 +27,6 @@ class AnalysisModule: AftermathModule, AMProto {
         self.log("Running analysis on collected aftermath files")
         
         let _ = self.copyFileToCase(fileToCopy: URL(fileURLWithPath: "\(collectionDir)/Recon/system_information.txt"), toLocation: CaseFiles.analysisCaseDir, isAnalysis: true)
-        // ex: timestamp, tcc_update, com.jamf.aftermath, <updates>
        addTextToFile(atUrl: storylineFile, text: "timestamp,type,other,path")
 
         let dbParser = DatabaseParser(collectionDir: collectionDir, storylineFile: storylineFile)

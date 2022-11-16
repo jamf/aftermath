@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(macOS 12, *)
 class LogParser: AftermathModule {
     
     lazy var logsFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "logs.csv")

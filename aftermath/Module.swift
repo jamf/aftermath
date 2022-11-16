@@ -107,7 +107,7 @@ class AftermathModule {
         let newFile = dirUrl.appendingPathComponent(filename)
         let path = newFile.relativePath
         if !(FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)) {
-            print("\(Date().ISO8601Format()) - Error creating \(path)")
+            print("\(getCurrentTimeStandardized()) - Error creating \(path)")
         }
         
         return newFile
@@ -131,7 +131,7 @@ class AftermathModule {
     
     func addTextToFileFromUrl(fromFile: URL, toFile: URL) {
         if (!FileManager.default.fileExists(atPath: fromFile.relativePath)) {
-            self.log("\(Date().ISO8601Format())-  Unable to copy text from file \(fromFile.relativePath) as the file does not exist")
+            self.log("\(getCurrentTimeStandardized()) -  Unable to copy text from file \(fromFile.relativePath) as the file does not exist")
             let _ = self.createNewCaseFile(dirUrl: toFile.deletingLastPathComponent(), filename: toFile.lastPathComponent)
             return
         }
@@ -140,13 +140,13 @@ class AftermathModule {
             let contents = try String(contentsOf: fromFile, encoding: .ascii)
             self.addTextToFile(atUrl: toFile, text: "\(fromFile):\n\n\(contents)\n----------\n")
         } catch {
-            self.log("\(Date().ISO8601Format())-  Unable to writing contents of \(fromFile) to \(toFile) due to error:\n\(error) ")
+            self.log("\(getCurrentTimeStandardized())-  Unable to writing contents of \(fromFile) to \(toFile) due to error:\n\(error) ")
         }
     }
     
     func copyFileToCase(fileToCopy: URL, toLocation: URL?, newFileName: String? = nil, isAnalysis: Bool? = false) {
         if (!FileManager.default.fileExists(atPath: fileToCopy.relativePath)) {
-            self.log("\(Date().ISO8601Format()) -  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
+            self.log("\(getCurrentTimeStandardized()) -  Unable to copy file \(fileToCopy.relativePath) as the file does not exist")
             return
         }
         
@@ -170,7 +170,7 @@ class AftermathModule {
         do {
             try FileManager.default.copyItem(at:fileToCopy, to:dest)
         } catch {
-            self.log("\(Date().ISO8601Format()) - Error copying \(fileToCopy.relativePath) to \(dest)")
+            self.log("\(getCurrentTimeStandardized()) - Error copying \(fileToCopy.relativePath) to \(dest)")
         }
         
     }
@@ -181,7 +181,7 @@ class AftermathModule {
         if fromFile.pathComponents.contains("audit") {
             return
         }
-        
+                
         let helpers = CHelpers()
         var metadata: String
         var birthTimestamp: String
@@ -198,9 +198,12 @@ class AftermathModule {
         if let birth = helpers.getFileBirth(fromFile: fromFile) {
             birthTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: birth)
             metadata.append("\(birthTimestamp),")
+        
         } else {
             metadata.append("unknwon,")
         }
+        
+        
         
         if let lastModified = helpers.getFileLastModified(fromFile: fromFile) {
             lastModifiedTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: lastModified)
@@ -257,19 +260,31 @@ class AftermathModule {
     func log(_ note: String, displayOnly: Bool = false, file: String = #file) {
         
         let module = URL(fileURLWithPath: file).lastPathComponent
-        let entry = "\(Date().ISO8601Format()) - \(module) - \(note)"
+        let entry = "\(getCurrentTimeStandardized()) - \(module) - \(note)"
         
         if isPretty {
-            let colorized = "\(Color.magenta.rawValue)\(Date().ISO8601Format())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
+            let colorized = "\(Color.magenta.rawValue)\(getCurrentTimeStandardized())\(Color.colorstop.rawValue) - \(Color.yellow.rawValue)\(module)\(Color.colorstop.rawValue) - \(Color.cyan.rawValue)\(note)\(Color.colorstop.rawValue)"
             print(colorized)
         } else {
-            let plainText = "\(Date().ISO8601Format()) - \(module) - \(note)"
+            let plainText = "\(getCurrentTimeStandardized()) - \(module) - \(note)"
             print(plainText)
         }
         
         if displayOnly == false {
             addTextToFile(atUrl: caseLogSelector, text: entry)
         }
+    }
+    
+    func getCurrentTimeStandardized() -> String {
+        let testFormatter = DateFormatter()
+        testFormatter.dateStyle = .full
+        testFormatter.timeStyle = .full
+        testFormatter.locale = Locale(identifier: "en_US_POSIX")
+        testFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss'Z'"
+        
+        let currentDateTime = Date()
+        
+        return testFormatter.string(from: currentDateTime)
     }
     
     func unzipArchive(location: String) -> String {

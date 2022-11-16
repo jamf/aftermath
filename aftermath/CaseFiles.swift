@@ -16,7 +16,12 @@ struct CaseFiles {
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
     static let fm = FileManager.default
     static var serialNumber: String? {
-        let platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
+        var platformExpert: io_service_t = 0
+        if #available(macOS 12.0, *) {
+            platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
+        } else {
+            return nil
+        }
 
         guard platformExpert > 0 else {
             return nil
@@ -26,6 +31,7 @@ struct CaseFiles {
         }
 
         IOObjectRelease(platformExpert)
+       
         return serialNumber
     }
     

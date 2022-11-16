@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(macOS 12.0, *)
 class Timeline: AftermathModule {
     
     let collectionDir: String
@@ -96,7 +97,7 @@ class Timeline: AftermathModule {
         }
     }
     
-    func readMetadataCSVRows(path: String) -> [Metadata] {
+    private func readMetadataCSVRows(path: String) -> [Metadata] {
         var metadata = [Metadata]()
         var data = ""
         
@@ -130,7 +131,7 @@ class Timeline: AftermathModule {
         return metadata
     }
     
-    func readTimelineCSVRows(path: String) -> [TimelineStruct] {
+    private func readTimelineCSVRows(path: String) -> [TimelineStruct] {
         
         var timelineStruct = [TimelineStruct]()
         var data = ""

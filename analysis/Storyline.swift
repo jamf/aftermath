@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(macOS 12.0, *)
 class Storyline: AftermathModule {
     
     let collectionDir: String
@@ -148,7 +149,7 @@ class Storyline: AftermathModule {
         }
     }
     
-    func readStorylineCSV(path: String) -> [StorylineStruct] {
+    private func readStorylineCSV(path: String) -> [StorylineStruct] {
        
         var storylineStruct = [StorylineStruct]()
         var data = ""
