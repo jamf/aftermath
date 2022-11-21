@@ -1,6 +1,10 @@
 
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
+
+<p align="center">
 ![](https://img.shields.io/badge/release-1.1.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+</p>
+
 ## About
 Aftermath is a  Swift-based, open-source incident response framework.
 
