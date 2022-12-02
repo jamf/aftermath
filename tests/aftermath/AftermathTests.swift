@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import SwiftCSV
 
 class AftermathTests: XCTestCase {
 

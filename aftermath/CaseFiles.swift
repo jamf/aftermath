@@ -9,12 +9,31 @@ import Foundation
 import ZIPFoundation
 
 struct CaseFiles {
-    static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
+    static let caseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_\(serialNumber ?? Host.current().localizedName?.replacingOccurrences(of: " ", with: "_") ?? "")")
     static let logFile = caseDir.appendingPathComponent("aftermath.log")
-    static let analysisCaseDir = FileManager.default.temporaryDirectory.appendingPathComponent("Aftermath_Analysis_\(Host.current().localizedName ?? "")_\(Date().ISO8601Format().replacingOccurrences(of: ":", with: "_"))")
+    static var analysisCaseDir = FileManager.default.temporaryDirectory
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
     static let fm = FileManager.default
+    static var serialNumber: String? {
+        var platformExpert: io_service_t = 0
+        if #available(macOS 12.0, *) {
+            platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
+        } else {
+            return nil
+        }
+
+        guard platformExpert > 0 else {
+            return nil
+        }
+        guard let serialNumber = (IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+            return nil
+        }
+
+        IOObjectRelease(platformExpert)
+       
+        return serialNumber
+    }
     
     static func CreateCaseDir() {
         do {
@@ -25,7 +44,8 @@ struct CaseFiles {
         }
     }
     
-    static func CreateAnalysisCaseDir() {
+    static func CreateAnalysisCaseDir(filename: String) {
+        self.analysisCaseDir = self.analysisCaseDir.appendingPathComponent("Aftermath_Analysis_\(filename)")
         do {
             try fm.createDirectory(at: analysisCaseDir, withIntermediateDirectories: true, attributes: nil)
             print("Temporary Aftermath Analysis directory created at \(analysisCaseDir.relativePath)")

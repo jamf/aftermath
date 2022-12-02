@@ -24,7 +24,7 @@ class Command {
     static var analysisDir: String? = nil
     static var outputDir: String = "/tmp"
     static var collectDirs: [String] = []
-    static let version: String = "1.1.0"
+    static let version: String = "1.2.0"
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -32,6 +32,12 @@ class Command {
     }
 
     static func setup(with fullArgs: [String]) {
+        
+        if NSUserName() != "root" {
+            print("Aftermath must be run as root")
+            print("Exiting...")
+            exit(1)
+        }
 
         let args = [String](fullArgs.dropFirst())
       
@@ -73,15 +79,19 @@ class Command {
          }
      }
 
-     static func start() {
+    static func start() {
          printBanner()
          
          if Self.options.contains(.analyze) {
-             CaseFiles.CreateAnalysisCaseDir()
+             if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
+                 CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
+             }
+
 
              let mainModule = AftermathModule()
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Analysis Started")
+             mainModule.log("Analysis started at \(mainModule.getCurrentTimeStandardized().replacingOccurrences(of: ":", with: "_"))")
 
              guard let dir = Self.analysisDir else {
                  mainModule.log("Analysis directory not provided")
@@ -95,9 +105,13 @@ class Command {
              let unzippedDir = mainModule.unzipArchive(location: dir)
              
              mainModule.log("Started analysis on Aftermath directory: \(unzippedDir)")
-             let analysisModule = AnalysisModule(collectionDir: unzippedDir)
-             analysisModule.run()
-
+             if #available(macOS 12, *) {
+                 let analysisModule = AnalysisModule(collectionDir: unzippedDir)
+                 analysisModule.run()
+             } else {
+                 // Fallback on earlier versions
+             }
+            
              mainModule.log("Finished analysis module")
              
              guard isDirectoryThatExists(path: Self.outputDir) else {
@@ -115,6 +129,7 @@ class Command {
              let mainModule = AftermathModule()
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
+             mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
              
 
@@ -194,7 +209,7 @@ class Command {
                          try FileManager.default.removeItem(at: dirToRemove)
                          print("Removed \(dirToRemove.relativePath)")
                      } catch {
-                         print("\(Date().ISO8601Format()) - Error removing \(dirToRemove.relativePath)")
+                         print("Error removing \(dirToRemove.relativePath)")
                          print(error)
                      }
                  }
