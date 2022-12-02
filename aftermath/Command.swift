@@ -24,7 +24,7 @@ class Command {
     static var analysisDir: String? = nil
     static var outputDir: String = "/tmp"
     static var collectDirs: [String] = []
-    static let version: String = "1.1.0"
+    static let version: String = "1.2.0"
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -32,6 +32,12 @@ class Command {
     }
 
     static func setup(with fullArgs: [String]) {
+        
+        if NSUserName() != "root" {
+            print("Aftermath must be run as root")
+            print("Exiting...")
+            exit(1)
+        }
 
         let args = [String](fullArgs.dropFirst())
       
