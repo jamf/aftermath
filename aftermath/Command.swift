@@ -22,7 +22,7 @@
 class Command {
     static var options: Options = []
     static var analysisDir: String? = nil
-    static var outputDir: String = "/tmp"
+    static var outputLocation: String = "/tmp"
     static var collectDirs: [String] = []
     static let version: String = "1.2.0"
     
@@ -50,7 +50,7 @@ class Command {
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)
-                     Self.outputDir = args[index + 1]
+                     Self.outputLocation = args[index + 1]
                  }
              case "--analyze":
                  if let index = args.firstIndex(of: arg) {
@@ -115,7 +115,7 @@ class Command {
              mainModule.log("Finished analysis module")
 
              // Move analysis directory to output direcotry
-             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputDir, isAnalysis: true)
+             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: true)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -179,7 +179,7 @@ class Command {
              mainModule.log("Finished running Aftermath collection")
              
              // Copy from cache to output
-             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputDir, isAnalysis: false)
+             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: false)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
