@@ -209,7 +209,8 @@ class Command {
 
      static func printHelp() {
          print("-o -> specify an output location for Aftermath results (defaults to /tmp)")
-         print("     usage: -o Users/user/Desktop")
+         print("     usage: -o Users/user/Desktop ")
+         print("            -o Users/user/Desktop/outputFile.zip ")
          print("--analyze -> Analyze the results of the Aftermath results")
          print("     usage: --analyze <path_to_file>")
          print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")

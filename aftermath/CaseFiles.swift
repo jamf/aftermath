@@ -57,8 +57,9 @@ struct CaseFiles {
     static func MoveTemporaryCaseDir(outputLocation: String, isAnalysis: Bool) {
         print("Checking for existence of output location")
 
-        let isDir = FileManager.default.isDirectoryThatExists(path: outputLocation)
-        guard isDir || FileManager.default.fileExists(atPath: outputLocation) else {
+        let fm = FileManager.default
+        let isDir = fm.isDirectoryThatExists(path: outputLocation)
+        guard isDir || fm.fileExists(atPath: outputLocation) else {
             print("Output path is not a valid file or directory that exists")
             return
         }
@@ -68,8 +69,15 @@ struct CaseFiles {
         // Determine if we should look in /tmp or in the Aftermath case directory within /tmp
         let localCaseDir = isAnalysis ? analysisCaseDir : caseDir
 
+        let endPath: String
+        if isDir {
+            endPath = "\(outputLocation)/\(localCaseDir.lastPathComponent)"
+        } else {
+            // Ensure that we end up with the correct (.zip) path extension
+            endPath = fm.deletingPathExtension(path: outputLocation)
+        }
+
         // The zipped case directory should end up in the specified output location
-        let endPath = isDir ? "\(outputLocation)/\(localCaseDir.lastPathComponent)" : outputLocation
         let endURL = URL(fileURLWithPath: endPath)
         let zippedURL = endURL.appendingPathExtension("zip")
 

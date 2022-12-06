@@ -19,6 +19,14 @@ public extension FileManager {
        self.fileExists(atPath: path)
    }
 
+    func deletingPathExtension(path: String) -> String {
+        if #available(macOS 13.0, *) {
+            return URL(filePath: path).deletingPathExtension().absoluteString
+        } else {
+            return URL(fileURLWithPath: path).deletingPathExtension().absoluteString
+        }
+    }
+
     @discardableResult
     class func delete(path: String) -> Error? {
         if (FileManager.default.fileExists(atPath: path)) {
