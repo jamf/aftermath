@@ -9,6 +9,16 @@ import Foundation
 
 public extension FileManager {
 
+    func isDirectoryThatExists(path: String) -> Bool {
+        var isDir : ObjCBool = false
+        let pathExists = self.fileExists(atPath: path, isDirectory:&isDir)
+        return pathExists && isDir.boolValue
+    }
+
+    func isFileThatExists(path: String) -> Bool {
+       self.fileExists(atPath: path)
+   }
+
     @discardableResult
     class func delete(path: String) -> Error? {
         if (FileManager.default.fileExists(atPath: path)) {

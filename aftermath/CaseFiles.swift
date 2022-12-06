@@ -54,20 +54,26 @@ struct CaseFiles {
         }
     }
     
-    static func MoveTemporaryCaseDir(outputDir: String, isAnalysis: Bool) {
-        print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
-    
-        var localCaseDir: URL
-        
-        if isAnalysis {
-            localCaseDir = analysisCaseDir
-        } else {
-            localCaseDir = caseDir
+    static func MoveTemporaryCaseDir(outputLocation: String, isAnalysis: Bool) {
+        print("Checking for existence of output location")
+
+        let isDir = FileManager.default.isDirectoryThatExists(path: outputLocation)
+        guard isDir || FileManager.default.fileExists(atPath: outputLocation) else {
+            print("Output path is not a valid file or directory that exists")
+            return
         }
+
+        print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
+
+        // Determine if we should look in /tmp or in the Aftermath case directory within /tmp
+        let localCaseDir = isAnalysis ? analysisCaseDir : caseDir
+
+        // The zipped case directory should end up in the specified output location
+        let endPath = isDir ? "\(outputLocation)/\(localCaseDir.lastPathComponent)" : outputLocation
+        let endURL = URL(fileURLWithPath: endPath)
+        let zippedURL = endURL.appendingPathExtension("zip")
+
         do {
-            let endURL = URL(fileURLWithPath: "\(outputDir)/\(localCaseDir.lastPathComponent)")
-            let zippedURL = endURL.appendingPathExtension("zip")
-            
             try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
             print("Aftermath archive moved to \(zippedURL.path)")
