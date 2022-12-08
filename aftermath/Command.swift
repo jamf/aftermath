@@ -22,7 +22,7 @@
 class Command {
     static var options: Options = []
     static var analysisDir: String? = nil
-    static var outputDir: String = "/tmp"
+    static var outputLocation: String = "/tmp"
     static var collectDirs: [String] = []
     static let version: String = "1.2.0"
     
@@ -50,7 +50,7 @@ class Command {
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)
-                     Self.outputDir = args[index + 1]
+                     Self.outputLocation = args[index + 1]
                  }
              case "--analyze":
                  if let index = args.firstIndex(of: arg) {
@@ -97,7 +97,7 @@ class Command {
                  mainModule.log("Analysis directory not provided")
                  return
              }
-             guard isFileThatExists(path: dir) else {
+             guard FileManager.default.isFileThatExists(path: dir) else {
                  mainModule.log("Analysis directory is not a valid directory that exists")
                  return
              }
@@ -113,14 +113,9 @@ class Command {
              }
             
              mainModule.log("Finished analysis module")
-             
-             guard isDirectoryThatExists(path: Self.outputDir) else {
-                 mainModule.log("Output directory is not a valid directory that exists")
-                 return
-             }
 
              // Move analysis directory to output direcotry
-             CaseFiles.MoveTemporaryCaseDir(outputDir: self.outputDir, isAnalysis: true)
+             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: true)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -182,15 +177,9 @@ class Command {
              mainModule.log("Finished logging unified logs")
              
              mainModule.log("Finished running Aftermath collection")
-
-
-             guard isDirectoryThatExists(path: Self.outputDir) else {
-                 mainModule.log("Output directory is not a valid directory that exists")
-                 return
-             }
              
              // Copy from cache to output
-             CaseFiles.MoveTemporaryCaseDir(outputDir: self.outputDir, isAnalysis: false)
+             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: false)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
@@ -218,20 +207,10 @@ class Command {
          exit(1)
      }
 
-     static func isDirectoryThatExists(path: String) -> Bool {
-         var isDir : ObjCBool = false
-         let pathExists = FileManager.default.fileExists(atPath: path, isDirectory:&isDir)
-         return pathExists && isDir.boolValue
-     }
-    
-    static func isFileThatExists(path: String) -> Bool {
-        let fileExists = FileManager.default.fileExists(atPath: path)
-        return fileExists
-    }
-
      static func printHelp() {
          print("-o -> specify an output location for Aftermath results (defaults to /tmp)")
-         print("     usage: -o Users/user/Desktop")
+         print("     usage: -o Users/user/Desktop ")
+         print("            -o Users/user/Desktop/outputFile.zip ")
          print("--analyze -> Analyze the results of the Aftermath results")
          print("     usage: --analyze <path_to_file>")
          print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
