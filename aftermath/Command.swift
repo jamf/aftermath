@@ -129,6 +129,7 @@ class Command {
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
+             exit(1)
          } else {
              CaseFiles.CreateCaseDir()
              let mainModule = AftermathModule()
@@ -192,6 +193,7 @@ class Command {
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
+             exit(1)
          }
      }
 

@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-1.3.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-1.2.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
@@ -57,7 +57,7 @@ sudo ./aftermath --analyze <path_to_collection_zip>
 ```
 
 ### External Unified Log Predicates
-As of v1.3.0, users have the ability to pass Aftermath a text file of unified log predicates using the `--logs` or `-l` arguments. The file being passed to Aftermath is required to be a text file and each predicate needs to be newline-separated. In addition, each line item will be a dictionary object. The key in the dictionary will whatever the user desires to call this predicate. For example, if you want to see all login events, we will create a predicate and title it `login_events`.
+As of v1.2.0, users have the ability to pass Aftermath a text file of unified log predicates using the `--logs` or `-l` arguments. The file being passed to Aftermath is required to be a text file and each predicate needs to be newline-separated. In addition, each line item will be a dictionary object. The key in the dictionary will whatever the user desires to call this predicate. For example, if you want to see all login events, we will create a predicate and title it `login_events`.
 ```
 login_events: processImagePath contains "loginwindow" and eventMessage contains "com.apple.sessionDidLogin
 tcc: process == "tccd"

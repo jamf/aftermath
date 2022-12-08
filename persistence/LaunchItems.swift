@@ -31,7 +31,7 @@ class LaunchItems: PersistenceModule {
                 let arr = binaryLocation as! [String]
                 binarySHA256 = collectBinaryHashInformation(binaryLocation: arr[0])
             } else {
-                self.log("Could not get plist information for \(url.relativeString)")
+                self.log("Could not get plist information for \(url.relativePath)")
             }
             
             // copy the plists to the persistence directory
