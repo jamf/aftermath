@@ -243,6 +243,8 @@ class Command {
          print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
          print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
          print("--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)")
+         print("--logs -> specify an external text file with unified log predicates to parse")
+         print("    usage: --logs /Users/<USER>/Desktop/myPredicates.txt")
          print("--pretty -> colorize Terminal output")
          print("--cleanup -> remove Aftermath Folders in default locations")
          exit(1)
