@@ -115,12 +115,13 @@ class Command {
              if #available(macOS 12, *) {
                  let analysisModule = AnalysisModule(collectionDir: unzippedDir)
                  analysisModule.run()
+                 
+                 mainModule.log("Finished analysis module")
              } else {
-                 // Fallback on earlier versions
+                 mainModule.log("Aftermath requires macOS 12 or later in order to analyze collection data.")
+                 print("Aftermath requires macOS 12 or later in order to analyze collection data.")
              }
             
-             mainModule.log("Finished analysis module")
-             
              guard isDirectoryThatExists(path: Self.outputDir) else {
                  mainModule.log("Output directory is not a valid directory that exists")
                  return
