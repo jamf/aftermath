@@ -22,16 +22,16 @@ struct CaseFiles {
         } else {
             return nil
         }
-
+        
         guard platformExpert > 0 else {
             return nil
         }
         guard let serialNumber = (IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
             return nil
         }
-
+        
         IOObjectRelease(platformExpert)
-       
+        
         return serialNumber
     }
     
@@ -56,19 +56,19 @@ struct CaseFiles {
     
     static func MoveTemporaryCaseDir(outputLocation: String, isAnalysis: Bool) {
         print("Checking for existence of output location")
-
+        
         let fm = FileManager.default
         let isDir = fm.isDirectoryThatExists(path: outputLocation)
         guard isDir || fm.fileExists(atPath: outputLocation) else {
             print("Output path is not a valid file or directory that exists")
             return
         }
-
+        
         print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
-
+        
         // Determine if we should look in /tmp or in the Aftermath case directory within /tmp
         let localCaseDir = isAnalysis ? analysisCaseDir : caseDir
-
+        
         let endPath: String
         if isDir {
             endPath = "\(outputLocation)/\(localCaseDir.lastPathComponent)"
@@ -76,7 +76,7 @@ struct CaseFiles {
             // Ensure that we end up with the correct (.zip) path extension
             endPath = fm.deletingPathExtension(path: outputLocation)
         }
-
+        
         // The zipped case directory should end up in the specified output location
         do {
             let endURL = URL(fileURLWithPath: endPath)
@@ -89,14 +89,15 @@ struct CaseFiles {
                     print("Unable to save archive. Error: \(error)")
                 }
             }
-
-        do {
-            try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
-            try fm.moveItem(at: endURL, to: zippedURL)
-            print("Aftermath archive moved to \(zippedURL.path)")
-    
-        } catch {
-            print("Unable to create archive. Error: \(error)")
+            
+            do {
+                try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
+                try fm.moveItem(at: endURL, to: zippedURL)
+                print("Aftermath archive moved to \(zippedURL.path)")
+                
+            } catch {
+                print("Unable to create archive. Error: \(error)")
+            }
         }
     }
 }
