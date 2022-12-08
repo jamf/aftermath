@@ -15,6 +15,7 @@
      static let analyze = Options(rawValue: 1 << 2)
      static let pretty = Options(rawValue: 1 << 3)
      static let collectDirs = Options(rawValue: 1 << 4)
+     static let unifiedLogs = Options(rawValue: 1 << 5)
      
  }
 
@@ -24,6 +25,7 @@ class Command {
     static var analysisDir: String? = nil
     static var outputDir: String = "/tmp"
     static var collectDirs: [String] = []
+    static var unifiedLogsFile: String? = nil
     static let version: String = "1.2.0"
     
     static func main() {
@@ -65,6 +67,11 @@ class Command {
                          self.collectDirs.append(contentsOf: [args[index + i]])
                          i += 1
                      }
+                 }
+             case "-l", "--logs":
+                 if let index = args.firstIndex(of: arg) {
+                     Self.options.insert(.unifiedLogs)
+                     Self.unifiedLogsFile = args[index + 1]
                  }
              case "-v", "--version":
                  print(version)
@@ -130,7 +137,7 @@ class Command {
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
              mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
+             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
              
 
              // System Recon
@@ -174,10 +181,9 @@ class Command {
              artifactModule.run()
              mainModule.log("Finished gathering artifacts")
 
-
              // Logs
              mainModule.log("Started logging unified logs")
-             let unifiedLogModule = UnifiedLogModule()
+             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
              unifiedLogModule.run()
              mainModule.log("Finished logging unified logs")
              
