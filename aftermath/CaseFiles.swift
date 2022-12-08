@@ -64,9 +64,18 @@ struct CaseFiles {
         } else {
             localCaseDir = caseDir
         }
+        
         do {
             let endURL = URL(fileURLWithPath: "\(outputDir)/\(localCaseDir.lastPathComponent)")
             let zippedURL = endURL.appendingPathExtension("zip")
+            
+            if FileManager.default.fileExists(atPath: zippedURL.relativePath) {
+                do {
+                    try FileManager.default.removeItem(at: zippedURL)
+                } catch {
+                    print("Unable to save archive. Error: \(error)")
+                }
+            }
             
             try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
             try fm.moveItem(at: endURL, to: zippedURL)
