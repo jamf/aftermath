@@ -30,7 +30,7 @@ class Edge: BrowserModule {
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Microsoft Edge/\(profile)/History") {
                     file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Microsoft Edge/\(profile)/History")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.edgeDir, newFileName: "history_and_downloads\(user.username)_\(profile).db")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.edgeDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
                 } else { continue }
 
                 // Open the history file
