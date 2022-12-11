@@ -124,7 +124,7 @@ class Edge: BrowserModule {
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Microsoft Edge/\(profile)/Preferences") {
                     file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Microsoft Edge/\(profile)/Preferences")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.edgeDir, newFileName: "preferenes_\(user.username)_\(profile)")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.edgeDir, newFileName: "preferences_\(user.username)_\(profile)")
                 } else { continue }
                         
                 do {
