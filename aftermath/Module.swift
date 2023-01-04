@@ -187,6 +187,7 @@ class AftermathModule {
         var birthTimestamp: String
         var lastModifiedTimestamp: String
         var lastAccessedTimestamp: String
+        var xattr: String = ""
         
         if fromFile.path.contains(",") {
             let sanitized = fromFile.path.replacingOccurrences(of: ",", with: " ")
@@ -202,8 +203,6 @@ class AftermathModule {
         } else {
             metadata.append("unknwon,")
         }
-        
-        
         
         if let lastModified = helpers.getFileLastModified(fromFile: fromFile) {
             lastModifiedTimestamp = Aftermath.dateFromEpochTimestamp(timeStamp: lastModified)
@@ -235,6 +234,18 @@ class AftermathModule {
             metadata.append("\(gid),")
         } else {
             metadata.append("unknown,")
+        }
+        
+        do {
+            let xattrs = try fromFile.listExtendedAttributes()
+            if xattrs.isEmpty {
+                xattr.append("none,")
+            } else { xattrs.forEach { xattr.append("\($0) ") } }
+            
+            metadata.append("\(xattr),")
+        } catch {
+            xattr.append("unknown,")
+            self.log("Unable to capture extended attributes for \(fromFile.path) due to error: \(error)")
         }
         
         if let mditem = MDItemCreate(nil, fromFile.path as CFString),
