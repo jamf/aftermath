@@ -256,7 +256,7 @@ class AftermathModule {
             if let downloadedFrom = mdattrs[kMDItemWhereFroms as String] {
                 if let downloadedArr = downloadedFrom as Any as? [String] {
                     for downloaded in downloadedArr {
-                        metadata.append("\(downloaded),")
+                        metadata.append("\(downloaded) ")
                     }
                 }
             }

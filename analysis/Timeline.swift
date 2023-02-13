@@ -114,7 +114,7 @@ class Timeline: AftermathModule {
         
         for row in rows {
             let columns = row.components(separatedBy: ",")
-            if columns.count == 8 {
+            if columns.count >= 8 {
                 let filePath = columns[0]
                 let birth = columns[1]
                 let modified = columns[2]

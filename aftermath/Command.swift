@@ -26,7 +26,7 @@ class Command {
     static var outputLocation: String = "/tmp"
     static var collectDirs: [String] = []
     static var unifiedLogsFile: String? = nil
-    static let version: String = "1.2.0"
+    static let version: String = "1.2.1"
     
     static func main() {
         setup(with: CommandLine.arguments)
