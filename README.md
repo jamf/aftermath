@@ -26,7 +26,7 @@ cd <path_to_aftermath_directory>
 ```
 Build using Xcode
 ```bash
-xcodebuild
+xcodebuild -scheme "aftermath"
 ``` 
 `cd` into the Release folder
 ```bash
