@@ -114,7 +114,7 @@ class Timeline: AftermathModule {
         
         for row in rows {
             let columns = row.components(separatedBy: ",")
-            if columns.count == 8 {
+            if columns.count >= 8 {
                 let filePath = columns[0]
                 let birth = columns[1]
                 let modified = columns[2]
@@ -122,9 +122,10 @@ class Timeline: AftermathModule {
                 let permissions = columns[4]
                 let uid = columns[5]
                 let gid = columns[6]
-                let downloadedFrom = columns[7]
+                let xattr = columns[7]
+                let downloadedFrom = columns[8]
                 
-                let singleEntry = Metadata(file: filePath, birth: birth, modified: modified, accessed: accessed, permissions: permissions, uid: uid, gid: gid, downloadedFrom: downloadedFrom)
+                let singleEntry = Metadata(file: filePath, birth: birth, modified: modified, accessed: accessed, permissions: permissions, uid: uid, gid: gid, xattr: xattr, downloadedFrom: downloadedFrom)
                 metadata.append(singleEntry)
             }
         }
@@ -173,6 +174,7 @@ struct Metadata {
     var permissions: String
     var uid: String
     var gid: String
+    var xattr: String
     var downloadedFrom: String
 }
 
