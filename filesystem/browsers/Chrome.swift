@@ -30,7 +30,7 @@ class Chrome: BrowserModule {
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
                     file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads\(user.username)_\(profile).db")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
                 } else { continue }
 
                 // Open the history file
@@ -124,7 +124,7 @@ class Chrome: BrowserModule {
                 var file: URL
                 if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences") {
                     file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferenes_\(user.username)_\(profile)")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferences_\(user.username)_\(profile)")
                 } else { continue }
                         
                 do {
