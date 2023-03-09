@@ -34,5 +34,8 @@ class ArtifactsModule: AftermathModule, AMProto {
         
         let logFiles = LogFiles(logFilesDir: logFilesDir)
         logFiles.run()
+        
+        let configProfiles = ConfigurationProfiles()
+        configProfiles.run()
     }
 }

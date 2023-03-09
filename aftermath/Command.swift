@@ -15,6 +15,7 @@
      static let analyze = Options(rawValue: 1 << 2)
      static let pretty = Options(rawValue: 1 << 3)
      static let collectDirs = Options(rawValue: 1 << 4)
+     static let unifiedLogs = Options(rawValue: 1 << 5)
      
  }
 
@@ -24,7 +25,8 @@ class Command {
     static var analysisDir: String? = nil
     static var outputLocation: String = "/tmp"
     static var collectDirs: [String] = []
-    static let version: String = "1.2.0"
+    static var unifiedLogsFile: String? = nil
+    static let version: String = "1.2.1"
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -65,6 +67,11 @@ class Command {
                          self.collectDirs.append(contentsOf: [args[index + i]])
                          i += 1
                      }
+                 }
+             case "-l", "--logs":
+                 if let index = args.firstIndex(of: arg) {
+                     Self.options.insert(.unifiedLogs)
+                     Self.unifiedLogsFile = args[index + 1]
                  }
              case "-v", "--version":
                  print(version)
@@ -108,8 +115,11 @@ class Command {
              if #available(macOS 12, *) {
                  let analysisModule = AnalysisModule(collectionDir: unzippedDir)
                  analysisModule.run()
+                 
+                 mainModule.log("Finished analysis module")
              } else {
-                 // Fallback on earlier versions
+                 mainModule.log("Aftermath requires macOS 12 or later in order to analyze collection data.")
+                 print("Aftermath requires macOS 12 or later in order to analyze collection data.")
              }
             
              mainModule.log("Finished analysis module")
@@ -125,7 +135,7 @@ class Command {
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
              mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid, downloadedFrom")
+             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
              
 
              // System Recon
@@ -169,10 +179,9 @@ class Command {
              artifactModule.run()
              mainModule.log("Finished gathering artifacts")
 
-
              // Logs
              mainModule.log("Started logging unified logs")
-             let unifiedLogModule = UnifiedLogModule()
+             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
              unifiedLogModule.run()
              mainModule.log("Finished logging unified logs")
              
@@ -216,6 +225,8 @@ class Command {
          print("--collect-dirs -> specify locations of (space-separated) directories to dump those raw files")
          print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
          print("--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)")
+         print("--logs -> specify an external text file with unified log predicates to parse")
+         print("    usage: --logs /Users/<USER>/Desktop/myPredicates.txt")
          print("--pretty -> colorize Terminal output")
          print("--cleanup -> remove Aftermath Folders in default locations")
          exit(1)

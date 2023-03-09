@@ -13,11 +13,13 @@ class UnifiedLogModule: AftermathModule, AMProto {
     var description = "A module that maintains and runs a list of unified log queries and saves the results"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
-    let predicates: [String: String]
+    let defaultPredicates: [String: String]
+    let logFile: String?
     
-    override init() {
-
-        self.predicates = [
+    init(logFile: String?) {
+        
+        self.logFile = logFile
+        self.defaultPredicates = [
             "login": "process == \"logind\"",
             "tcc": "process == \"tccd\"",
             "ssh": "process == \"sshd\"",
@@ -29,7 +31,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
     }
     
 
-    func filterPredicates(filter: [String: String]) {
+    func filterPredicates(predicates: [String: String]) {
         for (filtername, filter) in predicates {
             self.log("Filtering for \(filtername) events...")
             
@@ -43,9 +45,43 @@ class UnifiedLogModule: AftermathModule, AMProto {
         }
     }
     
+    func parsePredicateFile(path: String) -> [String: String] {
+        self.log("Processing supplied unified log filters...")
+        var data = ""
+        var inputPredicates: [String : String] = [:]
+        
+        do {
+            data = try String(contentsOfFile: path)
+        } catch {
+            print(error)
+        }
+        
+        let rows = data.components(separatedBy: "\n")
+        
+        for row in rows {
+            let splitRow = row.split(separator: ":")
+            inputPredicates[String(splitRow[0])] = String(splitRow[1])
+        }
+        
+        return inputPredicates
+    }
+    
     func run() {
         self.log("Filtering Unified Log. Hang Tight!")
-        filterPredicates(filter: predicates)
+        
+        // run the external input file of predicates
+        if let externalLogFile = self.logFile {
+            if !filemanager.fileExists(atPath: externalLogFile) {
+                self.log("No external predicate file found at \(externalLogFile)")
+            } else {
+                let externalParsedPredicates = parsePredicateFile(path: externalLogFile)
+                print(externalParsedPredicates)
+                filterPredicates(predicates: externalParsedPredicates)
+            }
+        }
+        
+        // run default predicates
+        filterPredicates(predicates: self.defaultPredicates)
         self.log("Unified Log filtering complete.")
     }
 }

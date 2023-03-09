@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-1.1.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-1.2.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
@@ -26,7 +26,7 @@ cd <path_to_aftermath_directory>
 ```
 Build using Xcode
 ```bash
-xcodebuild
+xcodebuild -scheme "aftermath"
 ``` 
 `cd` into the Release folder
 ```bash
@@ -56,6 +56,13 @@ sudo ./aftermath -o /Users/user/Desktop --deep
 sudo ./aftermath --analyze <path_to_collection_zip>
 ```
 
+### External Unified Log Predicates
+As of v1.2.0, users have the ability to pass Aftermath a text file of unified log predicates using the `--logs` or `-l` arguments. The file being passed to Aftermath is required to be a text file and each predicate needs to be newline-separated. In addition, each line item will be a dictionary object. The key in the dictionary will whatever the user desires to call this predicate. For example, if you want to see all login events, we will create a predicate and title it `login_events`.
+```
+login_events: processImagePath contains "loginwindow" and eventMessage contains "com.apple.sessionDidLogin
+tcc: process == "tccd"
+```
+
 ## Releases
 There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
 ```bash
@@ -74,6 +81,8 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
     usage: --collect-dirs <path_to_dir> <path_to_another_dir>
 --deep or -d -> perform a deep scan of the file system for modified and accessed timestamped metadata
     WARNING: This will be a time-intensive, memory-consuming scan.
+--logs -> specify an external text file with unified log predicates (as dictionary objects) to parse
+    usage: --logs /Users/<USER>/Desktop/myPredicates.txt
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
 --pretty -> colorize Terminal output
