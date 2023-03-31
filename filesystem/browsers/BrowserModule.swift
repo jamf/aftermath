@@ -20,6 +20,7 @@ class BrowserModule: AftermathModule, AMProto {
         let firefoxDir = self.createNewDir(dir: moduleDirRoot, dirname: "Firefox")
         let chromeDir = self.createNewDir(dir: moduleDirRoot, dirname: "Chrome")
         let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "Safari")
+        let arcDir = self.createNewDir(dir: moduleDirRoot, dirname: "Arc")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
         self.log("Collecting browser information. Make sure browsers are closed to prevent file data from being locked.")
@@ -39,5 +40,9 @@ class BrowserModule: AftermathModule, AMProto {
         // Check if Safari is installed
         let safari = Safari(safariDir: safariDir, writeFile: writeFile)
         safari.run()
+        
+        // Check if Arc is installed
+        let arc = Arc(arcDir: arcDir, writeFile: writeFile)
+        arc.run()
     }
 }
