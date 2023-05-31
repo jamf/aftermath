@@ -46,7 +46,7 @@ class Command {
          args.forEach { arg in
              switch arg {
              case "-h", "--help": Self.printHelp()
-             case "--cleanup": Self.cleanup()
+             case "--cleanup": Self.cleanup(defaultRun: false)
              case "-d", "--deep": Self.options.insert(.deep)
              case "--pretty": Self.options.insert(.pretty)
              case "-o", "--output":
@@ -87,12 +87,13 @@ class Command {
      }
 
     static func start() {
-         printBanner()
-         
-         if Self.options.contains(.analyze) {
+        
+        printBanner()
+        cleanup(defaultRun: true)
+        if Self.options.contains(.analyze) {
              if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
                  CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
-             }
+         }
 
 
              let mainModule = AftermathModule()
@@ -195,9 +196,14 @@ class Command {
          }
      }
 
-     static func cleanup() {
-         // remove any aftermath directories from tmp and /var/folders/zz
-         let potentialPaths = ["/tmp", "/var/folders/zz"]
+    static func cleanup(defaultRun: Bool) {
+         // remove any aftermath directories from /var/folders/zz and clean up /tmp if running this as a standalone command
+        var potentialPaths = ["/var/folders/zz"]
+        if !defaultRun { potentialPaths.append("/tmp") }
+        else {
+            print("Cleaning up temporary directories prior to starting...")
+        }
+
          for p in potentialPaths {
              let enumerator = FileManager.default.enumerator(atPath: p)
              while let element = enumerator?.nextObject() as? String {
@@ -205,7 +211,7 @@ class Command {
                      let dirToRemove = URL(fileURLWithPath: "\(p)/\(element)")
                      do {
                          try FileManager.default.removeItem(at: dirToRemove)
-                         print("Removed \(dirToRemove.relativePath)")
+                         if !defaultRun {print("Removed \(dirToRemove.relativePath)") }
                      } catch {
                          print("Error removing \(dirToRemove.relativePath)")
                          print(error)
@@ -213,7 +219,7 @@ class Command {
                  }
              }
          }
-         exit(1)
+        if !defaultRun { exit(1) }
      }
 
      static func printHelp() {
