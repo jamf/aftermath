@@ -24,8 +24,7 @@ class BrowserModule: AftermathModule, AMProto {
         let arcDir = self.createNewDir(dir: moduleDirRoot, dirname: "Arc")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
-        self.log("Collecting browser information. Make sure browsers are closed to prevent file data from being lost.")
-        self.log("Checking for open browsers. Closing any open browsers.")
+        self.log("Collecting browser information. Checking for open browsers. Closing any open browsers...")
         
         closeBrowsers()
         
