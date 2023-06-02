@@ -121,6 +121,31 @@ class Storyline: AftermathModule {
         }
     }
     
+    func addArcData() {
+        let arcPaths = ["history":"\(collectionDir)/Browser/Arc/history_output.csv","downloads":"\(collectionDir)/Browser/Arc/downloads_output.csv"]
+        
+        for (title,p) in arcPaths {
+            
+            if !filemanager.fileExists(atPath: p) { continue }
+            
+            var data = ""
+            
+            do {
+                data = try String(contentsOfFile: p)
+            } catch {
+                print(error)
+            }
+            
+            var rows = data.components(separatedBy: "\n")
+            rows.removeFirst()
+            for row in rows {
+                if row == "" { continue }
+                let columns = row.components(separatedBy: ",")
+                self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),arc_\(title),\(columns[3]))")
+            }
+        }
+    }
+    
     func sortStoryline() {
         
         self.log("Creating the storyline...Please wait...")
@@ -197,6 +222,7 @@ class Storyline: AftermathModule {
         addFirefoxData()
         addChromeData()
         addEdgeData()
+        addArcData()
         sortStoryline()
         removeUnsorted()
     }
