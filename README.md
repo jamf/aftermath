@@ -85,6 +85,7 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
     usage: --logs /Users/<USER>/Desktop/myPredicates.txt
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
+--disable-browser-killswitch -> by default, browsers are force-closed during collection. This will disable the force-closing of browsers.
 --pretty -> colorize Terminal output
 --cleanup -> remove Aftermath folders from default locations ("/tmp", "/var/folders/zz/) 
 ```
