@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation",
       "state" : {
-        "revision" : "1b662e2e7a091710ad8a963263939984e2ebf527",
-        "version" : "0.9.14"
+        "revision" : "43ec568034b3731101dbf7670765d671c30f54f3",
+        "version" : "0.9.16"
       }
     }
   ],
