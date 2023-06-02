@@ -16,6 +16,7 @@
      static let pretty = Options(rawValue: 1 << 3)
      static let collectDirs = Options(rawValue: 1 << 4)
      static let unifiedLogs = Options(rawValue: 1 << 5)
+     static let disableBrowserKillswitch = Options(rawValue: 1 << 6)
      
  }
 
@@ -49,6 +50,7 @@ class Command {
              case "--cleanup": Self.cleanup(defaultRun: false)
              case "-d", "--deep": Self.options.insert(.deep)
              case "--pretty": Self.options.insert(.pretty)
+             case "--disable-browser-killswitch": Self.options.insert(.disableBrowserKillswitch)
              case "-o", "--output":
                  if let index = args.firstIndex(of: arg) {
                      Self.options.insert(.output)
