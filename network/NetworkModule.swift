@@ -15,12 +15,22 @@ class NetworkModule: AftermathModule, AMProto {
     
     func run() {
         
-        let rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "raw")
+//        let rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "raw")
         
-        let network = NetworkConnections(rawDir: rawDir)
+        let network = NetworkConnections() //rawDir: rawDir
         network.run()
         
         
+    }
+    
+    func pcapRun() {
+        let pcapWriteFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "trace.pcap")
+        
+//        let rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "pcap")
+        let network = NetworkConnections() //rawDir: rawDir
+        
+        self.log("Running pcap...")
+        network.pcapCapture(writeFile: pcapWriteFile)
     }
 }
 

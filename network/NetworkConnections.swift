@@ -10,23 +10,36 @@ import Foundation
 
 class NetworkConnections: NetworkModule {
     
-    let rawDir: URL
+//    let rawDir: URL
    
-    init(rawDir: URL) {
-        self.rawDir = rawDir
-    }
+//    override init() { //rawDir: URL
+//        self.rawDir = rawDir
+//        self.rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "raw")
+//    }
     
     func captureAirportPrefs(writeFile: URL) {
         let url = URL(fileURLWithPath: "/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist")
         let plistDict = Aftermath.getPlistAsDict(atUrl: url)
         
-        self.copyFileToCase(fileToCopy: url, toLocation: rawDir)
+        self.copyFileToCase(fileToCopy: url, toLocation: self.moduleDirRoot)
         self.addTextToFile(atUrl: writeFile, text: "\(url.path)\n\(plistDict)\n")
     }
     
     func captureNetworkConnections(writeFile: URL) {
         let command = "lsof -i"
         let output = Aftermath.shell("\(command)")
+        
+        self.addTextToFile(atUrl: writeFile, text: output)
+    }
+    
+    func pcapCapture(writeFile: URL) {
+        var output = ""
+        DispatchQueue.global(qos: .userInitiated).async {
+            let command = "sudo tcpdump -i en0 -w \(writeFile.relativePath)"
+            output = Aftermath.shell("\(command)")
+            
+            return
+        }
         
         self.addTextToFile(atUrl: writeFile, text: output)
     }
