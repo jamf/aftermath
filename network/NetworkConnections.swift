@@ -10,13 +10,6 @@ import Foundation
 
 class NetworkConnections: NetworkModule {
     
-//    let rawDir: URL
-   
-//    override init() { //rawDir: URL
-//        self.rawDir = rawDir
-//        self.rawDir = self.createNewDir(dir: self.moduleDirRoot, dirname: "raw")
-//    }
-    
     func captureAirportPrefs(writeFile: URL) {
         let url = URL(fileURLWithPath: "/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist")
         let plistDict = Aftermath.getPlistAsDict(atUrl: url)
