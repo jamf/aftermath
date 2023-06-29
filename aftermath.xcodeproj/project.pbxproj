@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E29FD732A2FB098008D528F /* ESModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E29FD722A2FB098008D528F /* ESModule.swift */; };
+		5E29FD752A2FB0EF008D528F /* ESLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E29FD742A2FB0EF008D528F /* ESLogs.swift */; };
 		5E494473293AC914007FFBDD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E494472293AC914007FFBDD /* URL.swift */; };
 		5E494475293D50FE007FFBDD /* ConfigurationProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */; };
 		5E4BC90029D75A8E0004DAA6 /* Arc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */; };
@@ -78,6 +80,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E29FD722A2FB098008D528F /* ESModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESModule.swift; sourceTree = "<group>"; };
+		5E29FD742A2FB0EF008D528F /* ESLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESLogs.swift; sourceTree = "<group>"; };
 		5E494472293AC914007FFBDD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationProfiles.swift; sourceTree = "<group>"; };
 		5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arc.swift; sourceTree = "<group>"; };
@@ -160,6 +164,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E29FD712A2FB07E008D528F /* endpointSecurity */ = {
+			isa = PBXGroup;
+			children = (
+				5E29FD722A2FB098008D528F /* ESModule.swift */,
+				5E29FD742A2FB0EF008D528F /* ESLogs.swift */,
+			);
+			path = endpointSecurity;
+			sourceTree = "<group>";
+		};
 		70A44401275707800035F40E /* systemRecon */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +373,7 @@
 				A3CD4E54274434EE00869ECB /* aftermath */,
 				A08342D4284A8211005E437A /* analysis */,
 				A076742D2755797800ED7066 /* artifacts */,
+				5E29FD712A2FB07E008D528F /* endpointSecurity */,
 				A374535B2757C1110074B65C /* extensions */,
 				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
 				A02509F228ADB1930030D6A7 /* helpers */,
@@ -540,8 +554,10 @@
 				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
 				A0FD80F628C7F82400E91584 /* ProcessParser.swift in Sources */,
 				A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */,
+				5E29FD732A2FB098008D528F /* ESModule.swift in Sources */,
 				5E494473293AC914007FFBDD /* URL.swift in Sources */,
 				A007834E28947D71008489EA /* Emond.swift in Sources */,
+				5E29FD752A2FB0EF008D528F /* ESLogs.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A0759135275985170006766F /* TCC.swift in Sources */,
 				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
@@ -734,7 +750,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
@@ -763,7 +779,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
