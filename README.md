@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-1.2.1-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-1.4.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
@@ -81,11 +81,14 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
     usage: --collect-dirs <path_to_dir> <path_to_another_dir>
 --deep or -d -> perform a deep scan of the file system for modified and accessed timestamped metadata
     WARNING: This will be a time-intensive, memory-consuming scan.
+ --es-logs -> specify which Endpoint Security events (space-separated) to collect (defaults are: create exec mmap). To disable, see --disable-es-logs
+    usage: --es-logs setuid unmount write
 --logs -> specify an external text file with unified log predicates (as dictionary objects) to parse
     usage: --logs /Users/<USER>/Desktop/myPredicates.txt
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
 --disable-browser-killswitch -> by default, browsers are force-closed during collection. This will disable the force-closing of browsers.
+--disable-es-logs -> by default, es logs of create, exec, and mmap are collected. This will disable this default behavior
 --pretty -> colorize Terminal output
 --cleanup -> remove Aftermath folders from default locations ("/tmp", "/var/folders/zz/) 
 ```
