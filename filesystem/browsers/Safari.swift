@@ -56,10 +56,13 @@ class Safari: BrowserModule {
     }
     
     func dumpImportantPlists() {
+        let notificationsCsv = self.createNewCaseFile(dirUrl: self.safariDir, filename: "safari_notifications.csv")
+        self.addTextToFile(atUrl: notificationsCsv, text: "date_added, url, permission")
+        
         self.addTextToFile(atUrl: self.writeFile, text: "\n-----Safari Bookmarks, Downlaods, UserNotificationPermissions, LastSession-----\n\n")
         for user in getBasicUsersOnSystem() {
 
-            let files: [URL] = [URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Bookmarks.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/UserNotificationPermissions.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/LastSession.plist")]
+            let files: [URL] = [URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Bookmarks.plist"), URL(fileURLWithPath: "\(user.homedir)/Library/Safari/LastSession.plist")]
             
             for file in files {
                 if filemanager.fileExists(atPath: file.path) {
@@ -67,6 +70,41 @@ class Safari: BrowserModule {
                     self.addTextToFile(atUrl: self.writeFile, text: "\nFile Name:\n----- \(file) -----\n\n\(plistDict.description)\n----- End of \(file) -----\n")
                     
                     self.copyFileToCase(fileToCopy: file, toLocation: self.safariDir)
+                }
+            }
+            
+            let notificationsPlistPath = URL(fileURLWithPath: "\(user.homedir)/Library/Safari/UserNotificationPermissions.plist")
+            if filemanager.fileExists(atPath: notificationsPlistPath.path) {
+                let plistDict = Aftermath.getPlistAsDict(atUrl: notificationsPlistPath)
+                self.copyFileToCase(fileToCopy: notificationsPlistPath, toLocation: self.safariDir)
+                
+                for (key, value) in plistDict {
+                    var url = key
+                    var permissions = "unknown"
+                    var timestamp = "unknown"
+                    for i in (value as! NSDictionary) {
+            
+                        if String(describing: i.key) == "Date Added" {
+                            let unformatted = String(describing: i.value) // 2022-10-25 19:18:22 +0000
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.locale = Locale(identifier: "en_US")
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+                            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                            
+                            guard let formatted = dateFormatter.date(from: unformatted) else { continue }
+                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                            let dateString = dateFormatter.string(from: formatted)
+                           
+                            timestamp = dateString
+                        }
+                        
+                        if String(describing: i.key) == "Permission" {
+                            permissions = String(describing: i.value)
+                        }
+                       
+                    }
+                    self.addTextToFile(atUrl: notificationsCsv, text: "\(timestamp), \(url), \(permissions)")
                 }
             }
         }
