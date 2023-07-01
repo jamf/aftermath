@@ -44,6 +44,31 @@ class Storyline: AftermathModule {
                 self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),safari_\(title),\(columns[1]))")
             }
         }
+        addSafariNotificationsData()
+    }
+    
+    private func addSafariNotificationsData() {
+        
+        let notificationsPath = "\(collectionDir)/Browser/Safari/safari_notifications.csv"
+        
+        if !filemanager.fileExists(atPath: notificationsPath) { return }
+        
+        var data = ""
+        
+        do {
+            data = try String(contentsOfFile: notificationsPath)
+        } catch {
+            print(error)
+        }
+        
+        var rows = data.components(separatedBy: "\n")
+        rows.removeFirst()
+        
+        for row in rows {
+            if row == "" { continue }
+            let columns = row.components(separatedBy: ",")
+            self.addTextToFile(atUrl: self.storylineFile, text: "\(columns[0]),safari_notification,\(columns[1]),\(columns[2])")
+        }
     }
     
     func addFirefoxData() {
