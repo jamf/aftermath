@@ -79,7 +79,7 @@ class Safari: BrowserModule {
                 self.copyFileToCase(fileToCopy: notificationsPlistPath, toLocation: self.safariDir)
                 
                 for (key, value) in plistDict {
-                    var url = key
+                    let url = key
                     var permissions = "unknown"
                     var timestamp = "unknown"
                     for i in (value as! NSDictionary) {
