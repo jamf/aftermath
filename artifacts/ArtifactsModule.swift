@@ -19,7 +19,7 @@ class ArtifactsModule: AftermathModule, AMProto {
         let systemConfigDir = self.createNewDir(dir: rawDir, dirname: "ssh")
         let profilesDir = self.createNewDir(dir: rawDir, dirname: "profiles")
         let logFilesDir = self.createNewDir(dir: rawDir, dirname: "logs")
-        let xprotectDir = self.createNewDir(dir: rawDir, dirname: "xprotect")
+        let xbsDir = self.createNewDir(dir: rawDir, dirname: "xbs")
         
         let tcc = TCC(tccDir: rawDir)
         tcc.run()
@@ -40,9 +40,9 @@ class ArtifactsModule: AftermathModule, AMProto {
         configProfiles.run()
         
         if #available(macOS 13, *) {
-            self.log("Collecting the XPdb...")
-            let xprotect = XProtect(xprotectDir: xprotectDir)
-            xprotect.run()
+            self.log("Collecting the XPdb")
+            let xbs = XProtectBehavioralService(xbsDir: xbsDir)
+            xbs.run()
         } else {
             self.log("Unable to capture XPdb due to unavailability on this OS")
         }

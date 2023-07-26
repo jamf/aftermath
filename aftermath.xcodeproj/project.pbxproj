@@ -15,7 +15,7 @@
 		5E6780F22922E7E800BAF04B /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6780F12922E7E800BAF04B /* Edge.swift */; };
 		5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AD2941608D009D2AB5 /* Data.swift */; };
 		5E93B0B0294160B6009D2AB5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AF294160B6009D2AB5 /* String.swift */; };
-		5EA438FF2A7010FF00F3E2B9 /* XProtect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtect.swift */; };
+		5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
 		70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */; };
@@ -89,7 +89,7 @@
 		5E6780F12922E7E800BAF04B /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		5E93B0AD2941608D009D2AB5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		5E93B0AF294160B6009D2AB5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		5EA438FE2A7010FF00F3E2B9 /* XProtect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtect.swift; sourceTree = "<group>"; };
+		5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtectBehavioralService.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 				70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */,
 				A08342D7284E48FC005E437A /* LogFiles.swift */,
 				5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */,
-				5EA438FE2A7010FF00F3E2B9 /* XProtect.swift */,
+				5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */,
 			);
 			path = artifacts;
 			sourceTree = "<group>";
@@ -554,7 +554,7 @@
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */,
-				5EA438FF2A7010FF00F3E2B9 /* XProtect.swift in Sources */,
+				5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */,
 				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
 				A0FD80F628C7F82400E91584 /* ProcessParser.swift in Sources */,
 				A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */,
