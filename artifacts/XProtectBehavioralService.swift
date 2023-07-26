@@ -8,19 +8,19 @@
 import Foundation
 
 @available(macOS 13, *)
-class XProtect: ArtifactsModule {
+class XProtectBehavioralService: ArtifactsModule {
     
-    let xprotectDir: URL
+    let xbsDir: URL
     
-    init(xprotectDir: URL) {
-        self.xprotectDir = xprotectDir
+    init(xbsDir: URL) {
+        self.xbsDir = xbsDir
     }
     
     func collectXprotectDb() {
         let xprotectPath = URL(fileURLWithPath: "/var/protected/xprotect/XPdb")
         
         if (filemanager.fileExists(atPath: xprotectPath.path)) {
-            self.copyFileToCase(fileToCopy: xprotectPath, toLocation: self.xprotectDir)
+            self.copyFileToCase(fileToCopy: xprotectPath, toLocation: self.xbsDir)
         }
     }
     
