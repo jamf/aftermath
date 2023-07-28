@@ -192,7 +192,7 @@ class DatabaseParser: AftermathModule {
          16|dt|DATETIME|1|datetime('now')|0
          */
         
-        self.addTextToFile(atUrl: xpdbWriteFile, text: "violated_rule, exec_path, exec_signing_id, exec_team_id, exec_sha256, is_notarized, reported, timestamp")
+        self.addTextToFile(atUrl: xpdbWriteFile, text: "datetime, violated_rule, exec_path, exec_signing_id, exec_team_id, exec_sha256, is_notarized, reported")
         let xpdbPath = "\(self.collectionDir)/Artifacts/raw/xbs/XPdb"
         let fileURL = URL(fileURLWithPath: xpdbPath)
         
@@ -249,7 +249,7 @@ class DatabaseParser: AftermathModule {
                         dt = Aftermath.standardizeMetadataTimestamp(timeStamp: String(cString: col8))
                     }
                     
-                    self.addTextToFile(atUrl: self.xpdbWriteFile, text: "\(violated_rule), \(exec_path), \(exec_signing_id), \(exec_team_id), \(exec_sha256), \(exec_is_notarized),  \(reported), \(dt)")
+                    self.addTextToFile(atUrl: self.xpdbWriteFile, text: "\(dt), \(violated_rule), \(exec_path), \(exec_signing_id), \(exec_team_id), \(exec_sha256), \(exec_is_notarized), \(reported)")
                     
                     self.addTextToFile(atUrl: storylineFile, text: "\(dt), xpdb_\(violated_rule), \(exec_path), \(exec_signing_id)")
                 }
