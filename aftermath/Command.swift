@@ -30,7 +30,7 @@ class Command {
     static var collectDirs: [String] = []
     static var unifiedLogsFile: String? = nil
     static var esLogs: [String] = ["create", "exec", "mmap"]
-    static let version: String = "1.6.0"
+    static let version: String = "2.0.0"
     
     static func main() {
         setup(with: CommandLine.arguments)
