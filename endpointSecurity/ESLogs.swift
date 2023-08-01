@@ -17,6 +17,7 @@ class ESLogs: ESModule {
         self.outputFile = outputFile
     }
     
+    // Note: Because eslogger runs on a separate thread, it will exit when aftermath exits, which may cause the last line of the json file to be truncated/incomplete.
     func logESEvents(events: String) {
         var output = ""
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in

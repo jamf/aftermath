@@ -25,6 +25,7 @@ class NetworkConnections: NetworkModule {
         self.addTextToFile(atUrl: writeFile, text: output)
     }
     
+    // Note: Because tcpdump runs on a separate thread, it will exit when aftermath exits, which may cause the last line of the pcap file to be truncated/incomplete.
     func pcapCapture(writeFile: URL) {
         var output = ""
         DispatchQueue.global(qos: .userInitiated).async {

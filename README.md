@@ -63,6 +63,9 @@ login_events: processImagePath contains "loginwindow" and eventMessage contains 
 tcc: process == "tccd"
 ```
 
+### Note
+Because `eslogger` and `tcpdump` run on additional threads and the goal is to collect as much data from them as possible, they exit when aftermath exits. Because of this, the last line of the eslogger json file or the pcap file generated from tcpdump may be truncated.
+
 ## Releases
 There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
 ```bash
