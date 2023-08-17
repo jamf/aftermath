@@ -159,10 +159,13 @@ class Command {
              mainModule.log("Starting ES logging...")
              let esModule = ESModule()
              esModule.run()
+
              
+             // tcpdump
              mainModule.log("Running pcap...")
              let pcapModule = NetworkModule()
              pcapModule.pcapRun()
+
              
              // System Recon
              mainModule.log("Started system recon")
@@ -205,6 +208,7 @@ class Command {
              artifactModule.run()
              mainModule.log("Finished gathering artifacts")
 
+             
              // Logs
              mainModule.log("Started logging unified logs")
              let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
@@ -221,7 +225,7 @@ class Command {
              mainModule.log("Finished running Aftermath collection")
              
              // Copy from cache to output
-             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: false)
+             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
 
              // End Aftermath
              mainModule.log("Aftermath Finished")
