@@ -15,4 +15,8 @@ public extension String {
         }
         return ""
     }
+    
+    func expandingTildeInPath() -> String {
+        return self.replacingOccurrences(of: "~", with: FileManager.default.homeDirectoryForCurrentUser.path)
+    }
 }
