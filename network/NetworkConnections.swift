@@ -19,7 +19,7 @@ class NetworkConnections: NetworkModule {
     }
     
     func captureNetworkConnections(writeFile: URL) {
-        let command = "lsof -i"
+        let command = "lsof -i -n"
         let output = Aftermath.shell("\(command)")
         
         self.addTextToFile(atUrl: writeFile, text: output)
