@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E29FD732A2FB098008D528F /* ESModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E29FD722A2FB098008D528F /* ESModule.swift */; };
+		5E29FD752A2FB0EF008D528F /* ESLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E29FD742A2FB0EF008D528F /* ESLogs.swift */; };
 		5E494473293AC914007FFBDD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E494472293AC914007FFBDD /* URL.swift */; };
 		5E494475293D50FE007FFBDD /* ConfigurationProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */; };
+		5E4BC90029D75A8E0004DAA6 /* Arc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */; };
 		5E6780F22922E7E800BAF04B /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6780F12922E7E800BAF04B /* Edge.swift */; };
 		5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AD2941608D009D2AB5 /* Data.swift */; };
 		5E93B0B0294160B6009D2AB5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AF294160B6009D2AB5 /* String.swift */; };
+		5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
 		70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */; };
@@ -77,11 +81,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E29FD722A2FB098008D528F /* ESModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESModule.swift; sourceTree = "<group>"; };
+		5E29FD742A2FB0EF008D528F /* ESLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESLogs.swift; sourceTree = "<group>"; };
 		5E494472293AC914007FFBDD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationProfiles.swift; sourceTree = "<group>"; };
+		5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arc.swift; sourceTree = "<group>"; };
 		5E6780F12922E7E800BAF04B /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		5E93B0AD2941608D009D2AB5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		5E93B0AF294160B6009D2AB5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtectBehavioralService.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
@@ -158,6 +166,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E29FD712A2FB07E008D528F /* endpointSecurity */ = {
+			isa = PBXGroup;
+			children = (
+				5E29FD722A2FB098008D528F /* ESModule.swift */,
+				5E29FD742A2FB0EF008D528F /* ESLogs.swift */,
+			);
+			path = endpointSecurity;
+			sourceTree = "<group>";
+		};
 		70A44401275707800035F40E /* systemRecon */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +247,7 @@
 				70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */,
 				A08342D7284E48FC005E437A /* LogFiles.swift */,
 				5E494474293D50FE007FFBDD /* ConfigurationProfiles.swift */,
+				5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */,
 			);
 			path = artifacts;
 			sourceTree = "<group>";
@@ -271,6 +289,7 @@
 				A0E1E3EC275EC809008D0DC6 /* Chrome.swift */,
 				A0E1E3EE275EC810008D0DC6 /* Safari.swift */,
 				5E6780F12922E7E800BAF04B /* Edge.swift */,
+				5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */,
 			);
 			path = browsers;
 			sourceTree = "<group>";
@@ -357,6 +376,7 @@
 				A3CD4E54274434EE00869ECB /* aftermath */,
 				A08342D4284A8211005E437A /* analysis */,
 				A076742D2755797800ED7066 /* artifacts */,
+				5E29FD712A2FB07E008D528F /* endpointSecurity */,
 				A374535B2757C1110074B65C /* extensions */,
 				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
 				A02509F228ADB1930030D6A7 /* helpers */,
@@ -441,7 +461,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					A190FFDA28B8151300B9EF9A = {
 						CreatedOnToolsVersion = 13.4;
@@ -502,6 +522,7 @@
 			files = (
 				A3CD4E56274434EE00869ECB /* Command.swift in Sources */,
 				5E494475293D50FE007FFBDD /* ConfigurationProfiles.swift in Sources */,
+				5E4BC90029D75A8E0004DAA6 /* Arc.swift in Sources */,
 				A0C2E89728AAAE33008FA597 /* ProcLib.h in Sources */,
 				A3745358275730870074B65C /* LaunchItems.swift in Sources */,
 				A0FAEEFE28B94B2C00AC655F /* LogParser.swift in Sources */,
@@ -533,11 +554,14 @@
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
 				5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */,
+				5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */,
 				A0879957275AD2DC00E885BC /* SystemConfig.swift in Sources */,
 				A0FD80F628C7F82400E91584 /* ProcessParser.swift in Sources */,
 				A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */,
+				5E29FD732A2FB098008D528F /* ESModule.swift in Sources */,
 				5E494473293AC914007FFBDD /* URL.swift in Sources */,
 				A007834E28947D71008489EA /* Emond.swift in Sources */,
+				5E29FD752A2FB0EF008D528F /* ESLogs.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A0759135275985170006766F /* TCC.swift in Sources */,
 				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
@@ -561,6 +585,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
@@ -578,6 +603,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
@@ -624,6 +650,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -688,6 +715,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -719,6 +747,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -730,7 +759,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
@@ -744,10 +773,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6PV5YF2UES;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 6PV5YF2UES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -759,7 +789,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
