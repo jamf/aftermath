@@ -29,7 +29,7 @@ class NetworkConnections: NetworkModule {
     func pcapCapture(writeFile: URL) {
         var output = ""
         DispatchQueue.global(qos: .userInitiated).async {
-            let command = "sudo tcpdump -i en0 -w \(writeFile.relativePath)"
+            let command = "tcpdump -i en0 -w \(writeFile.relativePath)"
             output = Aftermath.shell("\(command)")
             
             return
