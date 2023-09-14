@@ -15,7 +15,7 @@ class ConfigurationProfiles: ArtifactsModule {
         
         let outputFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "config_profiles.txt")
             
-        let command = "sudo profiles -C -o stdout-xml"
+        let command = "profiles -C -o stdout-xml"
         let output = Aftermath.shell("\(command)")
         
         self.addTextToFile(atUrl: outputFile, text: output)
