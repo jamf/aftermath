@@ -155,10 +155,14 @@ class Command {
              mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
              
 
-             // Start logging Endpoint Security data
-             mainModule.log("Starting ES logging...")
-             let esModule = ESModule()
-             esModule.run()
+             if #available(macOS 13, *) {
+                  // Start logging Endpoint Security data
+                  mainModule.log("Starting ES logging...")
+                  let esModule = ESModule()
+                  esModule.run()
+             } else {
+                 print("Unable to run eslogger due to unavailability on this OS")
+             }
 
              
              // tcpdump
