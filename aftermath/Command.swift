@@ -156,9 +156,14 @@ class Command {
              
 
              // Start logging Endpoint Security data
-             mainModule.log("Starting ES logging...")
-             let esModule = ESModule()
-             esModule.run()
+             if #available(macOS 13, *) {
+                  // Start logging Endpoint Security data
+                  mainModule.log("Starting ES logging...")
+                  let esModule = ESModule()
+                  esModule.run()
+             } else {
+                 print("Unable to run eslogger due to unavailability on this OS")
+             }
 
              
              // tcpdump
