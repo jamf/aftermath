@@ -20,11 +20,7 @@ public extension FileManager {
    }
 
     func deletingPathExtension(path: String) -> String {
-        if #available(macOS 13.0, *) {
-            return URL(filePath: path).deletingPathExtension().absoluteString
-        } else {
-            return URL(fileURLWithPath: path).deletingPathExtension().absoluteString
-        }
+        return URL(fileURLWithPath: path).deletingPathExtension().relativePath
     }
 
     @discardableResult

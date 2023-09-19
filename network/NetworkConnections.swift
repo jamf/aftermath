@@ -10,23 +10,30 @@ import Foundation
 
 class NetworkConnections: NetworkModule {
     
-    let rawDir: URL
-   
-    init(rawDir: URL) {
-        self.rawDir = rawDir
-    }
-    
     func captureAirportPrefs(writeFile: URL) {
         let url = URL(fileURLWithPath: "/Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist")
         let plistDict = Aftermath.getPlistAsDict(atUrl: url)
         
-        self.copyFileToCase(fileToCopy: url, toLocation: rawDir)
+        self.copyFileToCase(fileToCopy: url, toLocation: self.moduleDirRoot)
         self.addTextToFile(atUrl: writeFile, text: "\(url.path)\n\(plistDict)\n")
     }
     
     func captureNetworkConnections(writeFile: URL) {
-        let command = "lsof -i"
+        let command = "lsof -i -n"
         let output = Aftermath.shell("\(command)")
+        
+        self.addTextToFile(atUrl: writeFile, text: output)
+    }
+    
+    // Note: Because tcpdump runs on a separate thread, it will exit when aftermath exits, which may cause the last line of the pcap file to be truncated/incomplete.
+    func pcapCapture(writeFile: URL) {
+        var output = ""
+        DispatchQueue.global(qos: .userInitiated).async {
+            let command = "tcpdump -i en0 -w \(writeFile.relativePath)"
+            output = Aftermath.shell("\(command)")
+            
+            return
+        }
         
         self.addTextToFile(atUrl: writeFile, text: output)
     }

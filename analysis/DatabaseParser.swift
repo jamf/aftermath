@@ -13,6 +13,7 @@ class DatabaseParser: AftermathModule {
     
     lazy var tccWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "tcc.csv")
     lazy var quarantineWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "lsquarantine.csv")
+    lazy var xpdbWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "xpdb.csv")
     let collectionDir: String
     let storylineFile: URL
  
@@ -170,6 +171,94 @@ class DatabaseParser: AftermathModule {
         }
     }
     
+    func parseXPdb() {
+        /*
+         0|id|INTEGER|0||1
+         1|violated_rule|TEXT|0||0
+         2|exec_path|TEXT|0||0
+         3|exec_cdhash|TEXT|0||0
+         4|exec_signing_id|TEXT|0||0
+         5|exec_team_id|TEXT|0||0
+         6|exec_sha256|TEXT|0||0
+         7|exec_is_notarized|BOOLEAN|0||0
+         8|responsible_path|TEXT|0||0
+         9|responsible_cdhash|TEXT|0||0
+         10|responsible_signing_id|TEXT|0||0
+         11|responsible_team_id|TEXT|0||0
+         12|responsible_sha256|TEXT|0||0
+         13|responsible_is_notarized|BOOLEAN|0||0
+         14|reported|BOOLEAN|0||0
+         15|profile_hash|INTEGER|0||0
+         16|dt|DATETIME|1|datetime('now')|0
+         */
+        
+        self.addTextToFile(atUrl: xpdbWriteFile, text: "datetime, violated_rule, exec_path, exec_signing_id, exec_team_id, exec_sha256, is_notarized, reported")
+        let xpdbPath = "\(self.collectionDir)/Artifacts/raw/xbs/XPdb"
+        let fileURL = URL(fileURLWithPath: xpdbPath)
+        
+        if !filemanager.fileExists(atPath: xpdbPath) { self.log("No XPdb exists. Skipping...") }
+        
+        var db : OpaquePointer?
+        
+        if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
+            var queryStatement: OpaquePointer? = nil
+            let queryString = "SELECT violated_rule, exec_path, exec_signing_id, exec_team_id, exec_sha256, exec_is_notarized, reported, dt FROM events ORDER BY dt DESC;"
+            
+            if sqlite3_prepare(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                var violated_rule: String = ""
+                var exec_path: String = ""
+                var exec_signing_id: String = ""
+                var exec_team_id: String = ""
+                var exec_sha256: String = ""
+                var exec_is_notarized: String = ""
+                var reported: String = ""
+                var dt: String = ""
+                
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    
+                    if let col1 = sqlite3_column_text(queryStatement, 0) {
+                        violated_rule = String(cString: col1)
+                    }
+                    
+                    if let col2 = sqlite3_column_text(queryStatement, 1) {
+                        exec_path = String(cString: col2)
+                    }
+                    
+                    if let col3 = sqlite3_column_text(queryStatement, 2) {
+                        exec_signing_id = String(cString: col3)
+                    }
+                    
+                    if let col4 = sqlite3_column_text(queryStatement, 3) {
+                        exec_team_id = String(cString: col4)
+                    }
+                    
+                    if let col5 = sqlite3_column_text(queryStatement, 4) {
+                        exec_sha256 = String(cString: col5)
+                    }
+                    
+                    if let col6 = sqlite3_column_text(queryStatement, 5) {
+                        exec_is_notarized = String(cString: col6)
+                    }
+                    
+                    if let col7 = sqlite3_column_text(queryStatement, 6) {
+                        reported = String(cString: col7)
+                    }
+                    
+                    // standarize from yyy-MM-dd HH:mm:ss
+                    if let col8 = sqlite3_column_text(queryStatement, 7) {
+                        dt = Aftermath.standardizeMetadataTimestamp(timeStamp: String(cString: col8))
+                    }
+                    
+                    self.addTextToFile(atUrl: self.xpdbWriteFile, text: "\(dt), \(violated_rule), \(exec_path), \(exec_signing_id), \(exec_team_id), \(exec_sha256), \(exec_is_notarized), \(reported)")
+                    
+                    self.addTextToFile(atUrl: storylineFile, text: "\(dt), xpdb_\(violated_rule), \(exec_path), \(exec_signing_id)")
+                }
+            }
+        } else {
+            self.log("An error occurred when attempting to query the XPdb.")
+        }
+    }
+    
     func run() {
         self.log("Parsing collected database files")
         self.log("Parsing LSQuarantine database...")
@@ -177,6 +266,9 @@ class DatabaseParser: AftermathModule {
         
         self.log("Parsing TCC database...")
         parseTCC()
+        
+        self.log("Parsing XPdb...")
+        parseXPdb()
     }
     
     enum TCCAuthValue: String, CaseIterable {

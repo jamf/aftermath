@@ -59,9 +59,11 @@ struct CaseFiles {
         
         let fm = FileManager.default
         let isDir = fm.isDirectoryThatExists(path: outputLocation)
-        guard isDir || fm.fileExists(atPath: outputLocation) else {
-            print("Output path is not a valid file or directory that exists")
-            return
+        
+        var isFullPath: Bool = false
+        
+        if URL(fileURLWithPath: outputLocation).pathExtension == "zip" {
+            isFullPath = true
         }
         
         print("Moving the aftermath directory from its temporary location. This may take some time. Please wait...")
@@ -70,9 +72,15 @@ struct CaseFiles {
         let localCaseDir = isAnalysis ? analysisCaseDir : caseDir
         
         let endPath: String
+        
         if isDir {
             endPath = "\(outputLocation)/\(localCaseDir.lastPathComponent)"
         } else {
+            // Determine if the directory didn't exist and we weren't passed a full path. Checks for misspellings in the path. (ie: -o /Users/user/Desktopp)
+            guard isFullPath else {
+                print("Output location is invalid.")
+                return
+            }
             // Ensure that we end up with the correct (.zip) path extension
             endPath = fm.deletingPathExtension(path: outputLocation)
         }
