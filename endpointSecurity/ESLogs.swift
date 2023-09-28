@@ -21,7 +21,7 @@ class ESLogs: ESModule {
     func logESEvents(events: String) {
         var output = ""
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let command = "sudo eslogger \(events) > \(self!.outputFile.relativePath)"
+            let command = "eslogger \(events) > \(self!.outputFile.relativePath)"
             output = Aftermath.shell("\(command)")
             
             return
@@ -31,11 +31,7 @@ class ESLogs: ESModule {
     }
     
     override func run() {
-        if !Command.options.contains(.disableESLogs) {          
-            self.log("Collecting ES logs...")
-            logESEvents(events: Command.esLogs.joined(separator: " "))
-        } else {
-            self.log("Skipping ES logging")
-        }
+        self.log("Collecting ES logs...")
+        logESEvents(events: Command.esLogs.joined(separator: " "))
     }
 }

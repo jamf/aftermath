@@ -67,6 +67,7 @@ class UnifiedLogModule: AftermathModule, AMProto {
     }
     
     func run() {
+        self.log("Starting logging unified logs")
         self.log("Filtering Unified Log. Hang Tight!")
         
         // run the external input file of predicates
@@ -83,5 +84,8 @@ class UnifiedLogModule: AftermathModule, AMProto {
         // run default predicates
         filterPredicates(predicates: self.defaultPredicates)
         self.log("Unified Log filtering complete.")
+        
+        self.log("Finished logging unified logs")
+
     }
 }
