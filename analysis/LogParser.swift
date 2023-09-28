@@ -56,15 +56,10 @@ class LogParser: AftermathModule {
                 self.addTextToFile(atUrl: self.storylineFile, text: text)
             }
         } catch {
-            print("Unable to parse contents")
+            self.log("Unable to parse install log contents")
         }
     }
-    
-    fileprivate func sanatizeInfo(_ info: inout String) {
-        info = info.replacingOccurrences(of: ",", with: "")
-        info = info.replacingOccurrences(of: "\"", with: "")
-    }
-    
+
     func parseSysLog() {
         // system.log
         
@@ -114,7 +109,7 @@ class LogParser: AftermathModule {
                 self.addTextToFile(atUrl: storylineFile, text: text)
             }
         } catch {
-            print("Unable to parse contents")
+            self.log("Unable to parse syslog contents")
         }
     }
     
@@ -154,8 +149,13 @@ class LogParser: AftermathModule {
                 self.addTextToFile(atUrl: self.storylineFile, text: text)
             }
         } catch {
-            print("Unable to parse contents")
+            self.log("Unable to parse XPR contents")
         }
+    }
+    
+    fileprivate func sanatizeInfo(_ info: inout String) {
+        info = info.replacingOccurrences(of: ",", with: "")
+        info = info.replacingOccurrences(of: "\"", with: "")
     }
     
     func run() {

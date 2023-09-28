@@ -15,6 +15,9 @@ class PersistenceModule: AftermathModule, AMProto {
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
     func run() {
+        
+        self.log("Starting Persistence Module")
+
         let persistenceRawDir = self.createNewDirInRoot(dirName: "\(dirName)/raw")
         
         // capture the launch items
@@ -42,5 +45,8 @@ class PersistenceModule: AftermathModule, AMProto {
         
         let loginItems = LoginItems(saveToRawDir: persistenceRawDir)
         loginItems.run()
+        
+        self.log("Finished gathering persistence mechanisms")
+
     }
 }

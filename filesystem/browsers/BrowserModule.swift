@@ -26,9 +26,11 @@ class BrowserModule: AftermathModule, AMProto {
         
         self.log("Collecting browser information. Checking for open browsers. Closing any open browsers...")
         
-        // if the --force-browser-killswitch option is not added, force close the browsers
-        if !Command.options.contains(.disableBrowserKillswitch) {
+        // force close the browsers if it's not specified
+        if Command.disableFeatures["browser-killswitch"] == false {
             closeBrowsers()
+        } else {
+            self.log("Not force closing browsers")
         }
         
         // Check if Edge is installed
