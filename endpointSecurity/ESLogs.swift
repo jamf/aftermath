@@ -31,11 +31,7 @@ class ESLogs: ESModule {
     }
     
     override func run() {
-        if !Command.options.contains(.disableESLogs) {          
-            self.log("Collecting ES logs...")
-            logESEvents(events: Command.esLogs.joined(separator: " "))
-        } else {
-            self.log("Skipping ES logging")
-        }
+        self.log("Collecting ES logs...")
+        logESEvents(events: Command.esLogs.joined(separator: " "))
     }
 }
