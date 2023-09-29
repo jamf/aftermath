@@ -156,8 +156,7 @@ class Command {
                  mainModule.log("Aftermath requires macOS 12 or later in order to analyze collection data.")
                  print("Aftermath requires macOS 12 or later in order to analyze collection data.")
              }
-            
-             mainModule.log("Finished analysis module")
+
 
              // Move analysis directory to output direcotry
              CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: true)

@@ -22,6 +22,7 @@ class BrowserModule: AftermathModule, AMProto {
         let chromeDir = self.createNewDir(dir: moduleDirRoot, dirname: "Chrome")
         let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "Safari")
         let arcDir = self.createNewDir(dir: moduleDirRoot, dirname: "Arc")
+        let braveDir = self.createNewDir(dir: moduleDirRoot, dirname: "Brave")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
         self.log("Collecting browser information. Checking for open browsers. Closing any open browsers...")
@@ -52,6 +53,10 @@ class BrowserModule: AftermathModule, AMProto {
         // Check if Arc is installed
         let arc = Arc(arcDir: arcDir, writeFile: writeFile)
         arc.run()
+        
+        // Check if Brave is installed
+        let brave = Brave(braveDir: braveDir, writeFile: writeFile)
+        brave.run()
     }
     
     func closeBrowsers() {

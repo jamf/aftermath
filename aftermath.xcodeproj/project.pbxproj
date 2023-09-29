@@ -16,6 +16,7 @@
 		5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AD2941608D009D2AB5 /* Data.swift */; };
 		5E93B0B0294160B6009D2AB5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AF294160B6009D2AB5 /* String.swift */; };
 		5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */; };
+		5EFDDCD72AC6661A00EEF193 /* Brave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDDCD62AC6661A00EEF193 /* Brave.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
 		70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */; };
@@ -90,6 +91,7 @@
 		5E93B0AD2941608D009D2AB5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		5E93B0AF294160B6009D2AB5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtectBehavioralService.swift; sourceTree = "<group>"; };
+		5EFDDCD62AC6661A00EEF193 /* Brave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brave.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
 		70CF9E3927611C6100FD884B /* ShellHistoryAndProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellHistoryAndProfiles.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				A0E1E3EE275EC810008D0DC6 /* Safari.swift */,
 				5E6780F12922E7E800BAF04B /* Edge.swift */,
 				5E4BC8FF29D75A8E0004DAA6 /* Arc.swift */,
+				5EFDDCD62AC6661A00EEF193 /* Brave.swift */,
 			);
 			path = browsers;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EFDDCD72AC6661A00EEF193 /* Brave.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* Command.swift in Sources */,
 				5E494475293D50FE007FFBDD /* ConfigurationProfiles.swift in Sources */,
 				5E4BC90029D75A8E0004DAA6 /* Arc.swift in Sources */,
