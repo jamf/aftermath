@@ -86,7 +86,7 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
     WARNING: This will be a time-intensive, memory-consuming scan.
 --disable -> disable a set of aftermath features that may collect personal user data
     Available features to disable: browsers -> collecting browser information | browser-killswitch -> force-closes browers | -> databases -> tcc & lsquarantine databases | filesystem -> walking the filesystem for timestamps | proc-info -> collecting process information via TrueTree and eslogger | all -> all aforementioned options 
-    usage: --disable browsers browser-killswitch databases filesystem proc-info
+    usage: --disable browsers browser-killswitch databases filesystem proc-info slack
            --disable all
 --es-logs -> specify which Endpoint Security events (space-separated) to collect (defaults are: create exec mmap). To disable, see --disable es-logs
     usage: --es-logs setuid unmount write

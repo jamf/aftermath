@@ -35,7 +35,12 @@ class Slack: FileSystemModule {
     }
     
     override func run() {
-        self.log("Collecting Slack information")
-        extractSlackPrefs()
+        if Command.disableFeatures["slack"] == false {
+            self.log("Collecting Slack information")
+            extractSlackPrefs()
+        } else {
+            self.log("Skipping capturing Slack preferences")
+        }
+        
     }
 }
