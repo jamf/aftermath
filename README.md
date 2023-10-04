@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-2.1.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-2.1.1-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
