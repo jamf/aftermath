@@ -16,6 +16,7 @@
 		5E93B0AE2941608D009D2AB5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AD2941608D009D2AB5 /* Data.swift */; };
 		5E93B0B0294160B6009D2AB5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AF294160B6009D2AB5 /* String.swift */; };
 		5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */; };
+		5ECE5DC12ADF2B4A00939BB0 /* BTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE5DC02ADF2B4A00939BB0 /* BTM.swift */; };
 		5EFDDCD72AC6661A00EEF193 /* Brave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDDCD62AC6661A00EEF193 /* Brave.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
@@ -91,6 +92,7 @@
 		5E93B0AD2941608D009D2AB5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		5E93B0AF294160B6009D2AB5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtectBehavioralService.swift; sourceTree = "<group>"; };
+		5ECE5DC02ADF2B4A00939BB0 /* BTM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTM.swift; sourceTree = "<group>"; };
 		5EFDDCD62AC6661A00EEF193 /* Brave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brave.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				A09B239B2848F6050062D592 /* Periodic.swift */,
 				A007834D28947D71008489EA /* Emond.swift */,
 				A007834F28947E80008489EA /* LoginItems.swift */,
+				5ECE5DC02ADF2B4A00939BB0 /* BTM.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				A029AB1C28774CA400649701 /* Tree.swift in Sources */,
 				A007835028947E80008489EA /* LoginItems.swift in Sources */,
 				A0C930D428A4318F0011FB87 /* Timeline.swift in Sources */,
+				5ECE5DC12ADF2B4A00939BB0 /* BTM.swift in Sources */,
 				A374535A275735B40074B65C /* LoginHooks.swift in Sources */,
 				70CF9E3A27611C6100FD884B /* ShellHistoryAndProfiles.swift in Sources */,
 				A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */,
