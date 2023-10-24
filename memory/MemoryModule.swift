@@ -19,5 +19,4 @@ class MemoryModule: AftermathModule {
         let stat = Stat()
         stat.run()
     }
-    
 }
