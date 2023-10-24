@@ -29,7 +29,7 @@ class Command {
     static var unifiedLogsFile: String? = nil
     static var esLogs: [String] = ["create", "exec", "mmap"]
     static let version: String = "2.2.0"
-    static var disableFeatures: [String:Bool] = ["all": false, "browsers": false, "browser-killswitch": false, "databases": false, "filesystem": false, "proc-info": false, "slack": false]
+    static var disableFeatures: [String:Bool] = ["all": false, "browsers": false, "browser-killswitch": false, "databases": false, "filesystem": false, "proc-info": false, "slack": false, "ul": false]
     
     static func main() {
         setup(with: CommandLine.arguments)
@@ -269,7 +269,7 @@ class Command {
          print("    usage: --collect-dirs /Users/<USER>/Downloads /tmp")
          print("--deep -> performs deep scan and captures metadata from Users entire directory (WARNING: this may be time-consuming)")
          print("--disable -> disable a set of aftermath features that may collect personal user data")
-         print("    usage: --disable browsers browser-killswitch databases filesystem proc-info slack")
+         print("    usage: --disable browsers browser-killswitch databases filesystem proc-info slack ul")
          print("           --disable all")
          print("--es-logs -> specify which Endpoint Security events (space-separated) to collect (defaults are: create exec mmap)")
          print("    usage: --es-logs exec open rename")
