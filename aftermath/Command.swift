@@ -209,6 +209,11 @@ class Command {
              // FileSystem
              let fileSysModule = FileSystemModule()
              fileSysModule.run()
+             
+             
+             // Memory
+             let memoryModule = MemoryModule()
+             memoryModule.run()
 
 
              // Artifacts
