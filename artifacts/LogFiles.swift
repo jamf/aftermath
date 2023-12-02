@@ -77,7 +77,7 @@ class LogFiles: ArtifactsModule {
             for file in files {
                 let filePath = URL(fileURLWithPath: file.relativePath)
                 if (filemanager.fileExists(atPath: filePath.path)) {
-                    self.copyFileToCase(fileToCopy: filePath, toLocation: diagReportsDir, newFileName: "\(user)_\(filePath.lastPathComponent)")
+                    self.copyFileToCase(fileToCopy: filePath, toLocation: diagReportsDir, newFileName: "\(user.username)_\(filePath.lastPathComponent)")
                 }
             }
         }
