@@ -116,8 +116,8 @@ class Safari: BrowserModule {
         self.addTextToFile(atUrl: safariDownloads, text: "timestamp,url")
         
         for user in getBasicUsersOnSystem() {
-        let downloadsPlist = URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Downloads.plist")
-            
+            let downloadsPlist = URL(fileURLWithPath: "\(user.homedir)/Library/Safari/Downloads.plist")
+                
             if filemanager.fileExists(atPath: downloadsPlist.path) {
                 let plistDict = Aftermath.getPlistAsDict(atUrl: downloadsPlist)
                 
@@ -144,7 +144,6 @@ class Safari: BrowserModule {
                             }
                         }
                         self.addTextToFile(atUrl: safariDownloads, text: "\(timestamp),\(url)")
-
                     }
                 }
             }

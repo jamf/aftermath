@@ -21,7 +21,7 @@ class BashProfiles: ArtifactsModule {
         
         let userFiles = [ ".bash_history", ".bash_profile", ".bashrc", ".bash_logout",
                           ".zsh_history", ".zshenv", ".zprofile", ".zshrc", ".zlogin", ".zlogout",
-                          ".sh_history"
+                          ".sh_history", ".config/fish/config.fish"
         ]
         
         let globalFiles = ["/etc/profile", "/etc/zshenv", "/etc/zprofile", "/etc/zshrc", "/etc/zlogin", "/etc/zlogout"]
@@ -31,7 +31,7 @@ class BashProfiles: ArtifactsModule {
             for filename in userFiles {
                 let path = URL(fileURLWithPath: "\(user.homedir)/\(filename)")
                 if (filemanager.fileExists(atPath: path.path)) {
-                    let newFileName = "\(user.username)_\(filename)"
+                    let newFileName = "\(user.username)_\(filename.replacingOccurrences(of: "/", with: ""))"
                     self.copyFileToCase(fileToCopy: path, toLocation: self.profilesDir, newFileName: newFileName)
                 }
                
