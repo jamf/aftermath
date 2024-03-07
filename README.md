@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-2.2.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-2.2.1-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
@@ -65,6 +65,61 @@ tcc: process == "tccd"
 
 ### Note
 Because `eslogger` and `tcpdump` run on additional threads and the goal is to collect as much data from them as possible, they exit when aftermath exits. Because of this, the last line of the eslogger json file or the pcap file generated from tcpdump may be truncated.
+
+### File Collection List
+- Artifacts
+    - Configuration Profiles
+    - Log Files
+    - LSQuarantine Database
+    - Shell History and Profiles (bash, csh, fish, ksh, zsh)
+    - TCC Database
+    - XBS Database (XProtect Behabioral Service)
+- Filesystem
+    - Browser Data (Cookies, Downloads, Extensions, History)
+        - Arc
+        - Brave
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+    - File Data
+        - Walk common directories to get accessed, birth, modified timestamps
+    - Slack
+- Memory
+    - Calculate data based on current memory usage, swap, etc.
+- Network
+    - Active network connections
+    - Airport Preferences
+- Persistence
+    - BTM Database
+    - Cron
+    - Emond
+    - Launch Items
+        - Launch Agents
+        - Launch Daemons
+    - Login Hooks
+    - Login Items
+    - Overrides
+        - launchd Overrides
+        - MDM Overrides
+    - Periodic Scripts
+    - System Extensions
+- Processes
+    - Leverage [TrueTree](https://github.com/themittenmac/TrueTree) to create process tree 
+- System Recon
+    - Environment Variables
+    - Install History
+    - Installed Applications
+    - Installed Users
+    - Interfaces
+    - MRT Version
+    - Running Applications
+    - Security Assessment (SIP status, Gatekeeper status, Firewall status, Filevault status, Remote Login, Airdrop status, I/O statistics, Screensharing status, Login History, Network Interface Parameters)
+    - XProtect Version
+    - XProtect Remediator (XPR) Version
+- Unified Logs
+    - Default Unified Logs (failed_sudo, login, manual_configuration_profile_install, screensharing, ssh, tcc, xprotect_remediator)
+    - Additional can be passed in at runtime
 
 ## Releases
 There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like

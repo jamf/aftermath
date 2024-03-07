@@ -28,7 +28,7 @@ class Command {
     static var collectDirs: [String] = []
     static var unifiedLogsFile: String? = nil
     static var esLogs: [String] = ["create", "exec", "mmap"]
-    static let version: String = "2.2.0"
+    static let version: String = "2.2.1"
     static var disableFeatures: [String:Bool] = ["all": false, "browsers": false, "browser-killswitch": false, "databases": false, "filesystem": false, "proc-info": false, "slack": false, "ul": false]
     
     static func main() {

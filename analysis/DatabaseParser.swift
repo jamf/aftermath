@@ -328,6 +328,7 @@ class DatabaseParser: AftermathModule {
         case contacts_full = "kTCCServiceContactsFull"
         case contacts_limited = "kTCCServiceContactsLimited"
         case currentLocation = "kTCCServiceLocation"
+        case endpointSecurity = "kTCCServiceEndpointSecurityClient"
         case fileAccess = "kTCCServiceFileProviderDomain"
         case fileAccess_request = "kTCCServiceFileProviderPresence"
         case fitness = "kTCCServiceMotion"
