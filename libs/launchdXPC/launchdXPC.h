@@ -4,7 +4,6 @@
 //  Created by Patrick Wardle
 //  Ported from code by Jonathan Levin
 //
-// TrueTree License: https://github.com/themittenmac/TrueTree/blob/master/license.md
 
 #ifndef launchdXPC_h
 #define launchdXPC_h
@@ -19,8 +18,6 @@ int getSubmittedPid(int pid);
 
 //hit up launchd (via XPC) to get process info
 NSString* getSubmittedByPlist(unsigned long pid);
-
-NSDictionary* getProcessArgs(unsigned long pid);
 
 //launchd structs/functions
 // inspired by: http://newosxbook.com/articles/jlaunchctl.html
