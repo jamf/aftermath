@@ -1,5 +1,5 @@
 //
-//  launchdXPC.c
+//  launchdXPC.m
 //  Created by Patrick Wardle
 //  Ported from code by Jonathan Levin
 //
@@ -367,7 +367,7 @@ NSMutableDictionary* parse(NSString* data)
         
         //end key line? (line: "}")
         // remove dictionary, as it's no longer needed
-        if(YES == [obj hasSuffix:@"}"])
+        if(YES == [obj isEqualToString:@"}"])
         {
             //remove
             [dictionaries removeLastObject];

@@ -18,7 +18,12 @@ class ESModule: AftermathModule {
     lazy var esFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "es_logs.json")
     
     func run() {
-        let esLogs = ESLogs(outputDir: moduleDirRoot, outputFile: esFile)
-        esLogs.run()
+        if Command.disableFeatures["proc-info"] == false {
+            self.log("Starting ES logging...")
+            let esLogs = ESLogs(outputDir: moduleDirRoot, outputFile: esFile)
+            esLogs.run()
+        } else {
+            self.log("Skipping ES logging")
+        }
     }
 }

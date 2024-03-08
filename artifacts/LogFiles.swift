@@ -61,8 +61,44 @@ class LogFiles: ArtifactsModule {
         }
     }
     
+    func collectDiagnosticsReports() {
+        let diagReportsDir = self.createNewDir(dir: self.logFilesDir, dirname: "diagnostics_reports")
+
+        let files = filemanager.filesInDirRecursive(path: "/Library/Logs/DiagnosticReports")
+        for file in files {
+            let filePath = URL(fileURLWithPath: file.relativePath)
+            if (filemanager.fileExists(atPath: filePath.path)) {
+                self.copyFileToCase(fileToCopy: filePath, toLocation: diagReportsDir)
+            }
+        }
+        
+        for user in getBasicUsersOnSystem() {
+            let files = filemanager.filesInDirRecursive(path: "\(user.homedir)/Library/Logs/DiagnosticReports")
+            for file in files {
+                let filePath = URL(fileURLWithPath: file.relativePath)
+                if (filemanager.fileExists(atPath: filePath.path)) {
+                    self.copyFileToCase(fileToCopy: filePath, toLocation: diagReportsDir, newFileName: "\(user.username)_\(filePath.lastPathComponent)")
+                }
+            }
+        }
+    }
+    
+    func collectCrashReports() {
+        let crashReportsDir = self.createNewDir(dir: self.logFilesDir, dirname: "crash_reporter")
+        
+        let files = filemanager.filesInDirRecursive(path: "/Library/Logs/CrashReporter")
+        for file in files {
+            let filePath = URL(fileURLWithPath: file.relativePath)
+            if (filemanager.fileExists(atPath: filePath.path)) {
+                self.copyFileToCase(fileToCopy: filePath, toLocation: crashReportsDir)
+            }
+        }
+    }
+    
     override func run() {
         captureLogFiles()
         captureUserLogs()
+        collectDiagnosticsReports()
+        collectCrashReports()
     }
 }

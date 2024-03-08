@@ -2,7 +2,7 @@
 ![](https://github.com/jamf/aftermath/blob/main/AftermathLogo.png)
 
 
-![](https://img.shields.io/badge/release-2.0.0-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
+![](https://img.shields.io/badge/release-2.2.1-bright%20green)&nbsp;![](https://img.shields.io/badge/macOS-12.0%2B-blue)&nbsp;![](https://img.shields.io/badge/license-MIT-orange)
 
 
 ## About
@@ -66,6 +66,59 @@ tcc: process == "tccd"
 ### Note
 Because `eslogger` and `tcpdump` run on additional threads and the goal is to collect as much data from them as possible, they exit when aftermath exits. Because of this, the last line of the eslogger json file or the pcap file generated from tcpdump may be truncated.
 
+### File Collection List
+- Artifacts
+    - Configuration Profiles
+    - Log Files
+    - LSQuarantine Database
+    - Shell History and Profiles (bash, csh, fish, ksh, zsh)
+    - TCC Database
+    - XBS Database (XProtect Behabioral Service)
+- Filesystem
+    - Browser Data (Cookies, Downloads, Extensions, History)
+        - Arc
+        - Brave
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+    - File Data
+        - Walk common directories to get accessed, birth, modified timestamps
+    - Slack
+- Network
+    - Active network connections
+    - Airport Preferences
+- Persistence
+    - BTM Database
+    - Cron
+    - Emond
+    - Launch Items
+        - Launch Agents
+        - Launch Daemons
+    - Login Hooks
+    - Login Items
+    - Overrides
+        - launchd Overrides
+        - MDM Overrides
+    - Periodic Scripts
+    - System Extensions
+- Processes
+    - Leverage [TrueTree](https://github.com/themittenmac/TrueTree) to create process tree 
+- System Recon
+    - Environment Variables
+    - Install History
+    - Installed Applications
+    - Installed Users
+    - Interfaces
+    - MRT Version
+    - Running Applications
+    - Security Assessment (SIP status, Gatekeeper status, Firewall status, Filevault status, Remote Login, Airdrop status, I/O statistics, Screensharing status, Login History, Network Interface Parameters)
+    - XProtect Version
+    - XProtect Remediator (XPR) Version
+- Unified Logs
+    - Default Unified Logs (failed_sudo, login, manual_configuration_profile_install, screensharing, ssh, tcc, xprotect_remediator)
+    - Additional can be passed in at runtime
+
 ## Releases
 There is an Aftermath.pkg available under [Releases](https://github.com/jamf/aftermath/releases). This pkg is signed and notarized. It will install the aftermath binary at `/usr/local/bin/`. This would be the ideal way to deploy via MDM. Since this is installed in `bin`, you can then run aftermath like
 ```bash
@@ -84,14 +137,16 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
     usage: --collect-dirs <path_to_dir> <path_to_another_dir>
 --deep or -d -> perform a deep scan of the file system for modified and accessed timestamped metadata
     WARNING: This will be a time-intensive, memory-consuming scan.
- --es-logs -> specify which Endpoint Security events (space-separated) to collect (defaults are: create exec mmap). To disable, see --disable-es-logs
+--disable -> disable a set of aftermath features that may collect personal user data
+    Available features to disable: browsers -> collecting browser information | browser-killswitch -> force-closes browers | -> databases -> tcc & lsquarantine databases | filesystem -> walking the filesystem for timestamps | proc-info -> collecting process information via TrueTree and eslogger | slack -> slack data | ul -> unified logging modules | all -> all aforementioned options 
+    usage: --disable browsers browser-killswitch databases filesystem proc-info slack
+           --disable all
+--es-logs -> specify which Endpoint Security events (space-separated) to collect (defaults are: create exec mmap). To disable, see --disable es-logs
     usage: --es-logs setuid unmount write
 --logs -> specify an external text file with unified log predicates (as dictionary objects) to parse
     usage: --logs /Users/<USER>/Desktop/myPredicates.txt
 -o or --output -> specify an output location for Aftermath collection results (defaults to /tmp)
      usage: -o Users/user/Desktop
---disable-browser-killswitch -> by default, browsers are force-closed during collection. This will disable the force-closing of browsers.
---disable-es-logs -> by default, es logs of create, exec, and mmap are collected. This will disable this default behavior
 --pretty -> colorize Terminal output
 --cleanup -> remove Aftermath folders from default locations ("/tmp", "/var/folders/zz/) 
 ```
