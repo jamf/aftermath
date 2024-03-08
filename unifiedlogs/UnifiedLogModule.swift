@@ -67,21 +67,29 @@ class UnifiedLogModule: AftermathModule, AMProto {
     }
     
     func run() {
-        self.log("Filtering Unified Log. Hang Tight!")
-        
-        // run the external input file of predicates
-        if let externalLogFile = self.logFile {
-            if !filemanager.fileExists(atPath: externalLogFile) {
-                self.log("No external predicate file found at \(externalLogFile)")
-            } else {
-                let externalParsedPredicates = parsePredicateFile(path: externalLogFile)
-                print(externalParsedPredicates)
-                filterPredicates(predicates: externalParsedPredicates)
+        if Command.disableFeatures["ul"] == false {
+            self.log("Starting logging unified logs")
+            self.log("Filtering Unified Log. Hang Tight!")
+            
+            // run the external input file of predicates
+            if let externalLogFile = self.logFile {
+                if !filemanager.fileExists(atPath: externalLogFile) {
+                    self.log("No external predicate file found at \(externalLogFile)")
+                } else {
+                    let externalParsedPredicates = parsePredicateFile(path: externalLogFile)
+                    print(externalParsedPredicates)
+                    filterPredicates(predicates: externalParsedPredicates)
+                }
             }
+            
+            // run default predicates
+            filterPredicates(predicates: self.defaultPredicates)
+            self.log("Unified Log filtering complete.")
+            
+            self.log("Finished logging unified logs")
+        } else {
+            self.log("Skipping unified logging")
         }
-        
-        // run default predicates
-        filterPredicates(predicates: self.defaultPredicates)
-        self.log("Unified Log filtering complete.")
+
     }
 }

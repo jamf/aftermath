@@ -1,5 +1,5 @@
 //
-//  Chrome.swift
+//  Brave.swift
 //  aftermath
 //
 //  Copyright  2022 JAMF Software, LLC
@@ -8,29 +8,29 @@
 import Foundation
 import SQLite3
 
-class Chrome: BrowserModule {
+class Brave: BrowserModule {
         
-    let chromeDir: URL
+    let braveDir: URL
     let writeFile: URL
     
-    init(chromeDir: URL, writeFile: URL) {
-        self.chromeDir = chromeDir
+    init(braveDir: URL, writeFile: URL) {
+        self.braveDir = braveDir
         self.writeFile = writeFile
     }
     
     func gatherHistory() {
 
-        let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
+        let historyOutput = self.createNewCaseFile(dirUrl: self.braveDir, filename: "history_output.csv")
         self.addTextToFile(atUrl: historyOutput, text: "datetime,user,profile,url")
         
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getBraveProfilesForUser(user: user) {
 
                 // Get the history file for the profile
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/History") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/History")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.braveDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
                 } else { continue }
 
                 // Open the history file
@@ -59,23 +59,23 @@ class Chrome: BrowserModule {
                             
                             self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(user.username),\(profile),\(url)")
                         }
-                    } else { self.log("Unable to query the database. Please ensure that Chrome is not running.") }
+                    } else { self.log("Unable to query the database. Please ensure that Brave is not running.") }
                 } else { self.log("Unable to open the database") }
             }
         }
     }
     
     func dumpDownloads() {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Downloads: -----\n")
         
-        let downlaodsRaw = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "downloads_output.csv")
+        let downlaodsRaw = self.createNewCaseFile(dirUrl: self.braveDir, filename: "downloads_output.csv")
         self.addTextToFile(atUrl: downlaodsRaw, text: "datetime,user,profile,url,target_path,danger_type,opened")
         
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getBraveProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/History") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/History")
                 } else { continue }
 
                 var db: OpaquePointer?
@@ -108,45 +108,45 @@ class Chrome: BrowserModule {
                             let col5 = sqlite3_column_text(queryStatement, 4)
                             if let col5 = col5 { opened = String(cString: col5) }
                             
-                            self.addTextToFile(atUrl: downlaodsRaw, text: " \(dateTime),\(user.username),\(profile),\(url),\(targetPath),\(dangerType),\(opened)")
+                            self.addTextToFile(atUrl: downlaodsRaw, text: "\(dateTime),\(user.username),\(profile),\(url),\(targetPath),\(dangerType),\(opened)")
                         }
                     }
                 }
             }
         }
         
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downloads -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Downloads -----\n")
     }
     
     func dumpPreferences() {
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getBraveProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferences_\(user.username)_\(profile)")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/Preferences") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/Preferences")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.braveDir, newFileName: "preferences_\(user.username)_\(profile)")
                 } else { continue }
                         
                 do {
                     let data = try Data(contentsOf: file, options: .mappedIfSafe)
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                        self.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
+                        self.addTextToFile(atUrl: writeFile, text: "\nBrave Preferences -----\n\(String(describing: json))\n ----- End of Brave Preferences -----\n")
                     }
                     
-                } catch { self.log("Unable to capture Chrome Preferenes") }
+                } catch { self.log("Unable to capture Brave Preferenes") }
             }
         }
     }
     
     func dumpCookies() {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Brave Cookies: -----\n")
 
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getBraveProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "cookies_\(user.username)_\(profile).db")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/Cookies") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/Cookies")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.braveDir, newFileName: "cookies_\(user.username)_\(profile).db")
                 } else { continue }
                         
                 var db: OpaquePointer?
@@ -188,27 +188,27 @@ class Chrome: BrowserModule {
                 }
             }
         }
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Brave Cookies -----\n")
     }
     
-    func captureExtensions() {        
+    func captureExtensions() {
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
-                let chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions_\(user.username)_\(profile)")
-                let path = "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Extensions"
+            for profile in getBraveProfilesForUser(user: user) {
+                let braveExtensionDir = self.createNewDir(dir: self.braveDir, dirname: "extensions_\(user.username)_\(profile)")
+                let path = "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser/\(profile)/Extensions"
             
                 for file in filemanager.filesInDirRecursive(path: path) {
-                    self.copyFileToCase(fileToCopy: file, toLocation: chromeExtensionDir)
+                    self.copyFileToCase(fileToCopy: file, toLocation: braveExtensionDir)
                 }
             }
         }
     }
 
-    func getChromeProfilesForUser(user: User) -> [String] {
+    func getBraveProfilesForUser(user: User) -> [String] {
         var profiles: [String] = []
         // Get the directory name if it contains the string "Profile"
-        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome") {
-            for file in filemanager.filesInDir(path: "\(user.homedir)/Library/Application Support/Google/Chrome") {
+        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser") {
+            for file in filemanager.filesInDir(path: "\(user.homedir)/Library/Application Support/BraveSoftware/Brave-Browser") {
                 if file.lastPathComponent.starts(with: "Profile") || file.lastPathComponent == "Default" {
                     profiles.append(file.lastPathComponent)
                 }
@@ -219,7 +219,7 @@ class Chrome: BrowserModule {
     }
     
     override func run() {
-        self.log("Collecting Chrome browser information...")
+        self.log("Collecting Brave browser information...")
         gatherHistory()
         dumpDownloads()
         dumpPreferences()

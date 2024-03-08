@@ -276,9 +276,12 @@ class DatabaseParser: AftermathModule {
         case unknown = "1"
         case allowed = "2"
         case limited = "3"
+        case addOnly = "4"
+        case singleBootAllowed = "5" // allowed for a unique boot_uuid
     }
     
     enum TCCAuthReason: String, CaseIterable {
+        case inherited = "0"
         case error = "1"
         case userConsent = "2"
         case userSet = "3"
@@ -292,9 +295,9 @@ class DatabaseParser: AftermathModule {
         case entitled = "11"
         case appTypePolicy = "12"
     }
-    
+
     /*
-     Compiled from /System/Library/PrivateFrameworks/TCC.framework/Resources/en.lproj/Localizable.strings and https://rainforest.engineering/2021-02-09-macos-tcc/
+    Originally compiled from /System/Library/PrivateFrameworks/TCC.framework/Resources/en.lproj/Localizable.strings and https://rainforest.engineering/2021-02-09-macos-tcc/
      */
     enum TCCService: String, CaseIterable {
         // critical
@@ -312,6 +315,8 @@ class DatabaseParser: AftermathModule {
         
         // file access
         case adminFiles = "kTCCServiceSystemPolicySysAdminFiles"
+        case appData = "kTCCServiceSystemPolicyAppData"
+        case appManagement = "kTCCServiceSystemPolicyAppBundles"
         case desktopFolder = "kTCCServiceSystemPolicyDesktopFolder"
         case developerFiles = "kTCCServiceSystemPolicyDeveloperFiles"
         case documentsFolder = "kTCCServiceSystemPolicyDocumentsFolder"
@@ -321,23 +326,25 @@ class DatabaseParser: AftermathModule {
         // service access
         case addressBook = "kTCCServiceAddressBook"
         case appleEvents = "kTCCServiceAppleEvents"
+        case audioCapture = "kTCCServiceAudioCapture"
         case availability = "kTCCServiceUserAvailability"
-        case bluetooth_always = "kTCCServiceBluetoothAlways"
+        case bluetoothAlways = "kTCCServiceBluetoothAlways"
         case calendar = "kTCCServiceCalendar"
         case camera = "kTCCServiceCamera"
         case contacts_full = "kTCCServiceContactsFull"
         case contacts_limited = "kTCCServiceContactsLimited"
         case currentLocation = "kTCCServiceLocation"
-        case fileAccess = "kTCCServiceFileProviderDomain"
-        case fileAccess_request = "kTCCServiceFileProviderPresence"
+        case endpointSecurity = "kTCCServiceEndpointSecurityClient"
+        case icloudDriveAccess = "kTCCServiceFileProviderDomain"
+        case fileAccessPresence = "kTCCServiceFileProviderPresence"
         case fitness = "kTCCServiceMotion"
-        case focus_notifications = "kTCCServiceFocusStatus"
+        case focusStatus = "kTCCServiceFocusStatus"
         case gamecenter = "kTCCServiceGameCenterFriends"
         case homeData = "kTCCServiceWillow"
         case mediaLibrary = "kTCCServiceMediaLibrary"
         case microphone = "kTCCServiceMicrophone"
         case photos = "kTCCServicePhotos"
-        case photos_add = "kTCCServicePhotosAdd"
+        case photosAdd = "kTCCServicePhotosAdd"
         case proto3Right = "kTCCServicePrototype3Rights"
         case reminders = "kTCCServiceReminders"
         case removableVolumes = "kTCCServiceSystemPolicyRemovableVolumes"
