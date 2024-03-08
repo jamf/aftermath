@@ -277,7 +277,7 @@ class DatabaseParser: AftermathModule {
         case allowed = "2"
         case limited = "3"
         case addOnly = "4"
-        case appDataAllowed = "5"
+        case singleBootAllowed = "5" // allowed for a unique boot_uuid
     }
     
     enum TCCAuthReason: String, CaseIterable {
