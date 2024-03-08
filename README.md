@@ -85,8 +85,6 @@ Because `eslogger` and `tcpdump` run on additional threads and the goal is to co
     - File Data
         - Walk common directories to get accessed, birth, modified timestamps
     - Slack
-- Memory
-    - Calculate data based on current memory usage, swap, etc.
 - Network
     - Active network connections
     - Airport Preferences

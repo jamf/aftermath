@@ -17,8 +17,6 @@
 		5E93B0B0294160B6009D2AB5 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93B0AF294160B6009D2AB5 /* String.swift */; };
 		5EA438FF2A7010FF00F3E2B9 /* XProtectBehavioralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */; };
 		5ECE5DC12ADF2B4A00939BB0 /* BTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE5DC02ADF2B4A00939BB0 /* BTM.swift */; };
-		5ECE5DC42AE0406700939BB0 /* MemoryModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE5DC32AE0406700939BB0 /* MemoryModule.swift */; };
-		5ECE5DC62AE040B700939BB0 /* Stat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE5DC52AE040B700939BB0 /* Stat.swift */; };
 		5EFDDCD72AC6661A00EEF193 /* Brave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDDCD62AC6661A00EEF193 /* Brave.swift */; };
 		70A44403275707A90035F40E /* SystemReconModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44402275707A90035F40E /* SystemReconModule.swift */; };
 		70A44405275A76990035F40E /* LSQuarantine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A44404275A76990035F40E /* LSQuarantine.swift */; };
@@ -32,7 +30,6 @@
 		A02509F428ADB1A80030D6A7 /* CHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02509F328ADB1A80030D6A7 /* CHelpers.swift */; };
 		A029AB152876A02800649701 /* ProcessModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB142876A02800649701 /* ProcessModule.swift */; };
 		A029AB192876A29600649701 /* Pids.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB182876A29600649701 /* Pids.swift */; };
-		A029AB1C28774CA400649701 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = A029AB1B28774CA400649701 /* Tree.swift */; };
 		A029AB2B2877F52D00649701 /* launchdXPC.m in Sources */ = {isa = PBXBuildFile; fileRef = A029AB2A2877F52D00649701 /* launchdXPC.m */; };
 		A05BF3BD284FF8C0009E197B /* FileSystemModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BC284FF8C0009E197B /* FileSystemModule.swift */; };
 		A05BF3BF284FF8CF009E197B /* Slack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05BF3BE284FF8CF009E197B /* Slack.swift */; };
@@ -66,6 +63,9 @@
 		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
+		A31009A42B9B838100068593 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31009A32B9B838100068593 /* Network.swift */; };
+		A31009A62B9B83E300068593 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31009A52B9B83E300068593 /* Node.swift */; };
+		A31009A82B9B845E00068593 /* Processes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31009A72B9B845E00068593 /* Processes.swift */; };
 		A3745358275730870074B65C /* LaunchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745357275730870074B65C /* LaunchItems.swift */; };
 		A374535A275735B40074B65C /* LoginHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745359275735B40074B65C /* LoginHooks.swift */; };
 		A374535D2757C1300074B65C /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374535C2757C1300074B65C /* FileManager.swift */; };
@@ -95,8 +95,6 @@
 		5E93B0AF294160B6009D2AB5 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		5EA438FE2A7010FF00F3E2B9 /* XProtectBehavioralService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XProtectBehavioralService.swift; sourceTree = "<group>"; };
 		5ECE5DC02ADF2B4A00939BB0 /* BTM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTM.swift; sourceTree = "<group>"; };
-		5ECE5DC32AE0406700939BB0 /* MemoryModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryModule.swift; sourceTree = "<group>"; };
-		5ECE5DC52AE040B700939BB0 /* Stat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stat.swift; sourceTree = "<group>"; };
 		5EFDDCD62AC6661A00EEF193 /* Brave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brave.swift; sourceTree = "<group>"; };
 		70A44402275707A90035F40E /* SystemReconModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemReconModule.swift; sourceTree = "<group>"; };
 		70A44404275A76990035F40E /* LSQuarantine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSQuarantine.swift; sourceTree = "<group>"; };
@@ -110,7 +108,6 @@
 		A02509F328ADB1A80030D6A7 /* CHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHelpers.swift; sourceTree = "<group>"; };
 		A029AB142876A02800649701 /* ProcessModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessModule.swift; sourceTree = "<group>"; };
 		A029AB182876A29600649701 /* Pids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pids.swift; sourceTree = "<group>"; };
-		A029AB1B28774CA400649701 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		A029AB282877F4F400649701 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		A029AB292877F50900649701 /* launchdXPC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = launchdXPC.h; sourceTree = "<group>"; };
 		A029AB2A2877F52D00649701 /* launchdXPC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = launchdXPC.m; sourceTree = "<group>"; };
@@ -146,6 +143,9 @@
 		A1E433E428B9270800E2B510 /* dummyPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dummyPlist.plist; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
+		A31009A32B9B838100068593 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		A31009A52B9B83E300068593 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		A31009A72B9B845E00068593 /* Processes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Processes.swift; sourceTree = "<group>"; };
 		A3745357275730870074B65C /* LaunchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchItems.swift; sourceTree = "<group>"; };
 		A3745359275735B40074B65C /* LoginHooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHooks.swift; sourceTree = "<group>"; };
 		A374535C2757C1300074B65C /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -181,15 +181,6 @@
 				5E29FD742A2FB0EF008D528F /* ESLogs.swift */,
 			);
 			path = endpointSecurity;
-			sourceTree = "<group>";
-		};
-		5ECE5DC22AE0405500939BB0 /* memory */ = {
-			isa = PBXGroup;
-			children = (
-				5ECE5DC32AE0406700939BB0 /* MemoryModule.swift */,
-				5ECE5DC52AE040B700939BB0 /* Stat.swift */,
-			);
-			path = memory;
 			sourceTree = "<group>";
 		};
 		70A44401275707800035F40E /* systemRecon */ = {
@@ -230,7 +221,9 @@
 			children = (
 				A029AB142876A02800649701 /* ProcessModule.swift */,
 				A029AB182876A29600649701 /* Pids.swift */,
-				A029AB1B28774CA400649701 /* Tree.swift */,
+				A31009A32B9B838100068593 /* Network.swift */,
+				A31009A52B9B83E300068593 /* Node.swift */,
+				A31009A72B9B845E00068593 /* Processes.swift */,
 			);
 			path = processes;
 			sourceTree = "<group>";
@@ -399,7 +392,6 @@
 				A374535B2757C1110074B65C /* extensions */,
 				A0E1E3F9275ED4B7008D0DC6 /* filesystem */,
 				A02509F228ADB1930030D6A7 /* helpers */,
-				5ECE5DC22AE0405500939BB0 /* memory */,
 				A0E1E3F4275ED2D6008D0DC6 /* network */,
 				A0776CAC27482FF2007D18D8 /* persistence */,
 				A029AB132876A01300649701 /* processes */,
@@ -552,7 +544,6 @@
 				A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */,
 				A029AB152876A02800649701 /* ProcessModule.swift in Sources */,
 				5E6780F22922E7E800BAF04B /* Edge.swift in Sources */,
-				A029AB1C28774CA400649701 /* Tree.swift in Sources */,
 				A007835028947E80008489EA /* LoginItems.swift in Sources */,
 				A0C930D428A4318F0011FB87 /* Timeline.swift in Sources */,
 				5ECE5DC12ADF2B4A00939BB0 /* BTM.swift in Sources */,
@@ -564,9 +555,10 @@
 				5E93B0B0294160B6009D2AB5 /* String.swift in Sources */,
 				A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */,
 				A02509F428ADB1A80030D6A7 /* CHelpers.swift in Sources */,
-				5ECE5DC62AE040B700939BB0 /* Stat.swift in Sources */,
 				70A44403275707A90035F40E /* SystemReconModule.swift in Sources */,
 				A029AB2B2877F52D00649701 /* launchdXPC.m in Sources */,
+				A31009A42B9B838100068593 /* Network.swift in Sources */,
+				A31009A82B9B845E00068593 /* Processes.swift in Sources */,
 				A0E1E3EF275EC810008D0DC6 /* Safari.swift in Sources */,
 				A006B5A12882FBA70091FAA1 /* DatabaseParser.swift in Sources */,
 				70A44405275A76990035F40E /* LSQuarantine.swift in Sources */,
@@ -585,6 +577,7 @@
 				5E494473293AC914007FFBDD /* URL.swift in Sources */,
 				A007834E28947D71008489EA /* Emond.swift in Sources */,
 				5E29FD752A2FB0EF008D528F /* ESLogs.swift in Sources */,
+				A31009A62B9B83E300068593 /* Node.swift in Sources */,
 				A076742F2755798F00ED7066 /* ArtifactsModule.swift in Sources */,
 				A0759135275985170006766F /* TCC.swift in Sources */,
 				A0E1E3F6275ED2E4008D0DC6 /* NetworkModule.swift in Sources */,
@@ -593,7 +586,6 @@
 				A0D6D54927FE52C1002BB3C8 /* SystemExtensions.swift in Sources */,
 				A08342D6284A8247005E437A /* AnalysisModule.swift in Sources */,
 				A029AB192876A29600649701 /* Pids.swift in Sources */,
-				5ECE5DC42AE0406700939BB0 /* MemoryModule.swift in Sources */,
 				A08342D8284E48FC005E437A /* LogFiles.swift in Sources */,
 				A0D6D54327F76C58002BB3C8 /* Cron.swift in Sources */,
 				A02509F128AD93DA0030D6A7 /* Storyline.swift in Sources */,
@@ -773,7 +765,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 6PV5YF2UES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = C793NB2B2B;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -783,7 +775,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
@@ -802,8 +794,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 6PV5YF2UES;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 6PV5YF2UES;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = C793NB2B2B;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -813,7 +805,7 @@
 				MACH_O_TYPE = mh_execute;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.crashsecurity.aftermath;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamf.aftermath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT) $(SRCROOT)/libs/ProcLib $(SRCROOT)/libs/launchdXPC";
