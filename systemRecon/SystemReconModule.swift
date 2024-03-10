@@ -228,6 +228,8 @@ class SystemReconModule: AftermathModule, AMProto {
     }
 
     func run() {
+        self.log("Started system recon")
+
         let systemInformationFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "system_information.txt")
         let installedAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "installed_apps.txt")
         let runningAppsFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "running_apps.txt")
@@ -244,5 +246,8 @@ class SystemReconModule: AftermathModule, AMProto {
         environmentVariables(saveFile: environmentVariablesFile)
         securityAssessment(saveFile: systemInformationFile)
         installedUsers(saveFile: installedUsersFile)
+        
+        self.log("Finished system recon")
+
     }
 }

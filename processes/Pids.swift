@@ -1,4 +1,4 @@
-//
+/*
 //  Process.swift
 //  aftermath
 //
@@ -61,8 +61,8 @@ class Pids {
         
         var responsiblePid: CInt
         if (pidCheck == -1) {
-            print("Error getting responsible pid for process " + String(pidOfInterest))
-            print("Defaulting to self")
+            //print("Error getting responsible pid for process " + String(pidOfInterest))
+            //print("Defaulting to self")
             responsiblePid = CInt(pidOfInterest)
         } else {
             responsiblePid = pidCheck
@@ -100,3 +100,4 @@ class Pids {
         return pids
     }
 }
+*/
