@@ -49,7 +49,7 @@ class LaunchItems: PersistenceModule {
             self.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url.path) -----\n")
             self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary Name: \(binaryName)\n")
             self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary SHA256: \(binarySHA256)\n")
-            self.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.description)
+            self.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.json)
         }
     }
     
