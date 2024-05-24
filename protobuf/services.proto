@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "reports.proto"
+
+service AftermathService {
+    rpc Exchange(Request) returns (Response) {}
+    rpc ExchangeCS(stream Request) returns (Response) {}
+    rpc ExchangeSS(Request) returns (stream Response) {}
+    rpc ExchangeBS(stream Request) returns (stream Response) {}
+}

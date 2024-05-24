@@ -1,0 +1,11 @@
+{
+    "protocPath": "/Users/geoffrey.atkinson/apps/protobuf/bin/protoc",
+    "invocations": [
+        {
+            "protoFiles":[
+                "services.proto"
+            ],
+            "visibility": "internal"
+        }
+    ]
+}

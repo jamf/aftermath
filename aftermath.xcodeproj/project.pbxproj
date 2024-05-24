@@ -70,6 +70,11 @@
 		A374535A275735B40074B65C /* LoginHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3745359275735B40074B65C /* LoginHooks.swift */; };
 		A374535D2757C1300074B65C /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374535C2757C1300074B65C /* FileManager.swift */; };
 		A3CD4E56274434EE00869ECB /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD4E55274434EE00869ECB /* Command.swift */; };
+		BA04E6432BF4D816004C35C2 /* reports.proto in Sources */ = {isa = PBXBuildFile; fileRef = BA04E6412BF4D816004C35C2 /* reports.proto */; };
+		BA17B8A32BF4D93C00ACD45B /* swift-protobuf-config.json in Sources */ = {isa = PBXBuildFile; fileRef = BA04E6422BF4D816004C35C2 /* swift-protobuf-config.json */; };
+		BA6E853E2BF66DA70014CEE7 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = BA6E853D2BF66DA70014CEE7 /* SwiftProtobuf */; };
+		BA6E85402BF66DA70014CEE7 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = BA6E853F2BF66DA70014CEE7 /* SwiftProtobufPluginLibrary */; };
+		BA6E85422BF66DA70014CEE7 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = BA6E85412BF66DA70014CEE7 /* protoc-gen-swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +157,9 @@
 		A3A3A3CD274754B400F8F557 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3CD4E52274434EE00869ECB /* aftermath */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = aftermath; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3CD4E55274434EE00869ECB /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		BA04E6412BF4D816004C35C2 /* reports.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; path = reports.proto; sourceTree = "<group>"; };
+		BA04E6422BF4D816004C35C2 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
+		BA6E85442BF66E8F0014CEE7 /* aftermath.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = aftermath.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +174,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6E85422BF66DA70014CEE7 /* protoc-gen-swift in Frameworks */,
+				BA6E85402BF66DA70014CEE7 /* SwiftProtobufPluginLibrary in Frameworks */,
 				A190FFD328B8094600B9EF9A /* XCTest.framework in Frameworks */,
 				A0C930CF289852E80011FB87 /* ZIPFoundation in Frameworks */,
+				BA6E853E2BF66DA70014CEE7 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +394,7 @@
 		A3CD4E49274434EE00869ECB = {
 			isa = PBXGroup;
 			children = (
+				BA04E6372BF4D7AE004C35C2 /* protobuf */,
 				A190FFCD28B8080100B9EF9A /* tests */,
 				A029AB1128769F6C00649701 /* libs */,
 				A3CD4E54274434EE00869ECB /* aftermath */,
@@ -415,12 +427,22 @@
 		A3CD4E54274434EE00869ECB /* aftermath */ = {
 			isa = PBXGroup;
 			children = (
+				BA6E85442BF66E8F0014CEE7 /* aftermath.entitlements */,
 				A3CD4E55274434EE00869ECB /* Command.swift */,
 				8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */,
 				A3046F8D27627DAC0069AA21 /* Module.swift */,
 				A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */,
 			);
 			path = aftermath;
+			sourceTree = "<group>";
+		};
+		BA04E6372BF4D7AE004C35C2 /* protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				BA04E6422BF4D816004C35C2 /* swift-protobuf-config.json */,
+				BA04E6412BF4D816004C35C2 /* reports.proto */,
+			);
+			path = protobuf;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,10 +478,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA04E6402BF4D7ED004C35C2 /* PBXTargetDependency */,
 			);
 			name = aftermath;
 			packageProductDependencies = (
 				A0C930CE289852E80011FB87 /* ZIPFoundation */,
+				BA6E853D2BF66DA70014CEE7 /* SwiftProtobuf */,
+				BA6E853F2BF66DA70014CEE7 /* SwiftProtobufPluginLibrary */,
+				BA6E85412BF66DA70014CEE7 /* protoc-gen-swift */,
 			);
 			productName = aftermath;
 			productReference = A3CD4E52274434EE00869ECB /* aftermath */;
@@ -495,6 +521,7 @@
 			mainGroup = A3CD4E49274434EE00869ECB;
 			packageReferences = (
 				A0C930CD289852E80011FB87 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				BA6E853C2BF66DA70014CEE7 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = A3CD4E53274434EE00869ECB /* Products */;
 			projectDirPath = "";
@@ -532,6 +559,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA17B8A32BF4D93C00ACD45B /* swift-protobuf-config.json in Sources */,
 				5EFDDCD72AC6661A00EEF193 /* Brave.swift in Sources */,
 				A3CD4E56274434EE00869ECB /* Command.swift in Sources */,
 				5E494475293D50FE007FFBDD /* ConfigurationProfiles.swift in Sources */,
@@ -552,6 +580,7 @@
 				A0E1E3EB275EC800008D0DC6 /* Firefox.swift in Sources */,
 				8ABB9E312756D2B500C0ADD7 /* Aftermath.swift in Sources */,
 				A0E1E3F8275ED35D008D0DC6 /* NetworkConnections.swift in Sources */,
+				BA04E6432BF4D816004C35C2 /* reports.proto in Sources */,
 				5E93B0B0294160B6009D2AB5 /* String.swift in Sources */,
 				A0E1E3E9275EC736008D0DC6 /* BrowserModule.swift in Sources */,
 				A02509F428ADB1A80030D6A7 /* CHelpers.swift in Sources */,
@@ -593,6 +622,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BA04E6402BF4D7ED004C35C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = BA04E63F2BF4D7ED004C35C2 /* SwiftProtobufPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A190FFE028B8151300B9EF9A /* Debug */ = {
@@ -759,13 +795,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = aftermath/aftermath.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = C793NB2B2B;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 2R99W5KP86;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -789,13 +826,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = aftermath/aftermath.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = C793NB2B2B;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 2R99W5KP86;
 				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -854,6 +892,22 @@
 				version = 0.9.18;
 			};
 		};
+		BA04E6382BF4D7E0004C35C2 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.26.0;
+			};
+		};
+		BA6E853C2BF66DA70014CEE7 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.26.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -861,6 +915,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A0C930CD289852E80011FB87 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		BA04E63F2BF4D7ED004C35C2 /* SwiftProtobufPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA04E6382BF4D7E0004C35C2 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "plugin:SwiftProtobufPlugin";
+		};
+		BA6E853D2BF66DA70014CEE7 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA6E853C2BF66DA70014CEE7 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		BA6E853F2BF66DA70014CEE7 /* SwiftProtobufPluginLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA6E853C2BF66DA70014CEE7 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobufPluginLibrary;
+		};
+		BA6E85412BF66DA70014CEE7 /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA6E853C2BF66DA70014CEE7 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

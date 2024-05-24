@@ -5,7 +5,9 @@
 //  Copyright 2022 JAMF Software, LLC
 //
 
- import Foundation
+import Foundation
+import SwiftProtobuf
+
 
  struct Options: OptionSet {
      let rawValue: Int
@@ -18,6 +20,7 @@
      static let unifiedLogs = Options(rawValue: 1 << 5)
      static let esLogs = Options(rawValue: 1 << 6)
      static let disable = Options(rawValue: 1 << 7)
+     static let proto = Options(rawValue: 1 << 8)
  }
 
 @main
@@ -107,6 +110,9 @@ class Command {
                      Self.options.insert(.output)
                      Self.outputLocation = args[index + 1]
                  }
+             case "-p", "--proto":
+                 Self.options.insert(.proto)
+
              case "-v", "--version":
                  print(version)
                  exit(1)
@@ -124,11 +130,40 @@ class Command {
         
         printBanner()
         cleanup(defaultRun: true)
+        /*
+        if Self.options.contains(.proto) {
+            var request = Request()
+            request.report.id = 11
+            request.report.net.id = 22
+            do {
+                let reqstr = try request.jsonString()
+                print (reqstr)
+                
+                var response = Response()
+                response.data =  try Google_Protobuf_Any(message: request)
+                let resstr = try response.jsonString()
+                print (resstr)
+                
+                let anyObject = response.data
+                if anyObject.isA(Request.self) {
+                    let req2 = try Request(unpackingAny: anyObject)
+                    let reqstr2 = try req2.jsonString()
+                    print (reqstr2)
+                }
+
+            } catch {
+                print("Exception printing jsonstring")
+            }
+            
+            return
+        }
+*/
+        var request = Request()
+        
         if Self.options.contains(.analyze) {
              if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
                  CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
-         }
-
+             }
 
              let mainModule = AftermathModule()
              mainModule.log("Running Aftermath Version \(version)")
@@ -179,54 +214,60 @@ class Command {
              } else {
                  print("Unable to run eslogger due to unavailability on this OS. Requires macOS 13 or higher.")
              }
-
              
-             // tcpdump
-             let pcapModule = NetworkModule()
-             pcapModule.pcapRun()
-
-             
-             // System Recon
-             let systemReconModule = SystemReconModule()
-             systemReconModule.run()
-
-
+//             // tcpdump
+//             let pcapModule = NetworkModule()
+//             pcapModule.pcapRun()
+//
+//             
+//             // System Recon
+//             let systemReconModule = SystemReconModule()
+//             systemReconModule.run()
+//
+//
              // Network
-             let networkModule = NetworkModule()
+             var networkModule = NetworkModule()
              networkModule.run()
+//
+//
+//             // Processes
+//             let procModule = ProcessModule()
+//             procModule.run()
+//
+//
+//             // Persistence
+//             let persistenceModule = PersistenceModule()
+//             persistenceModule.run()
+//
+//             
+//             // FileSystem
+//             let fileSysModule = FileSystemModule()
+//             fileSysModule.run()
+//             
+//             
+//
+//             // Artifacts
+//             let artifactModule = ArtifactsModule()
+//             artifactModule.run()
+//
+//             
+//             // Logs
+//             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
+//             unifiedLogModule.run()
+//             
+//                          
+//             mainModule.log("Finished running Aftermath collection")
+//             
+//             // Copy from cache to output
+//             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
 
-
-             // Processes
-             let procModule = ProcessModule()
-             procModule.run()
-
-
-             // Persistence
-             let persistenceModule = PersistenceModule()
-             persistenceModule.run()
-
+             do {
+                 let reqstr = try request.jsonString()
+                 print (reqstr)
+             } catch {
+                 print("Exception printing jsonstring")
+             }
              
-             // FileSystem
-             let fileSysModule = FileSystemModule()
-             fileSysModule.run()
-             
-             
-
-             // Artifacts
-             let artifactModule = ArtifactsModule()
-             artifactModule.run()
-
-             
-             // Logs
-             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
-             unifiedLogModule.run()
-             
-                          
-             mainModule.log("Finished running Aftermath collection")
-             
-             // Copy from cache to output
-             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
-
              // End Aftermath
              mainModule.log("Aftermath Finished")
          }

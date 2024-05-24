@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+message CaseFile {
+    bytes data = 200;
+    string text = 300;
+}
+
+message AftermathR {
+    uint32 id = 1;
+}
+
+message Network {
+    uint32 id = 1;
+    map<string, CaseFile> casefiles = 100;
+}
+
+message System {
+    uint32 id = 1;
+}
+
+message ProcessR {
+    uint32 id = 1;
+}
+
+message Persistence {
+    uint32 id = 1;
+}
+
+message Filesystem {
+    uint32 id = 1;
+}
+
+message Artifact {
+    uint32 id = 1;
+}
+
+message Log {
+    uint32 id = 1;
+}
+
+message Report {
+    uint32 id = 1;
+
+    optional AftermathR am = 50;
+
+    optional Network net = 100;
+    optional System sys = 200;
+    optional ProcessR proc = 300;
+    optional Persistence pers = 400;
+    optional Filesystem file = 500;
+    optional Artifact art = 600;
+    optional Log log = 700;
+}
+
+message Request {
+    uint32 id = 1;
+    
+    Report report = 100;
+    optional google.protobuf.Any data = 1000;
+}
+
+message Response {
+    uint32 id = 1;
+    optional google.protobuf.Any data = 1000;
+}

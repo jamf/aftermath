@@ -41,7 +41,7 @@ class AftermathModule {
             
         users = getUsersOnSystem()
     }
-    
+
     func getUsersOnSystem() -> [User] {
         var users = [User]()
         

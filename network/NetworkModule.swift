@@ -19,6 +19,8 @@ class NetworkModule: AftermathModule, AMProto {
         let network = NetworkConnections()
         network.run()
         
+        //self.report.net.casefiles.merge(<#T##other: Sequence##Sequence#>, uniquingKeysWith: <#T##(CaseFile, CaseFile) throws -> CaseFile#>) = network.report.net
+        
         self.log("Finished gathering network information...")
     }
     
