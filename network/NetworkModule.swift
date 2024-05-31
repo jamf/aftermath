@@ -21,8 +21,6 @@ class NetworkModule: AftermathModule, AMProto {
         
         self.report = networkCnx.getReport()
         
-
-        
         self.log("Finished gathering network information...")
     }
     
