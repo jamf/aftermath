@@ -130,34 +130,7 @@ class Command {
         
         printBanner()
         cleanup(defaultRun: true)
-        /*
-        if Self.options.contains(.proto) {
-            var request = Request()
-            request.report.id = 11
-            request.report.net.id = 22
-            do {
-                let reqstr = try request.jsonString()
-                print (reqstr)
-                
-                var response = Response()
-                response.data =  try Google_Protobuf_Any(message: request)
-                let resstr = try response.jsonString()
-                print (resstr)
-                
-                let anyObject = response.data
-                if anyObject.isA(Request.self) {
-                    let req2 = try Request(unpackingAny: anyObject)
-                    let reqstr2 = try req2.jsonString()
-                    print (reqstr2)
-                }
 
-            } catch {
-                print("Exception printing jsonstring")
-            }
-            
-            return
-        }
-*/
         var request = Request()
         
         if Self.options.contains(.analyze) {
