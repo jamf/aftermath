@@ -38,6 +38,18 @@ class NetworkConnections: NetworkModule {
         self.addTextToFile(atUrl: writeFile, text: output)
     }
     
+    func populatePB(_ url: URL) {
+        do {
+            var cf = CaseFile()
+            cf.pathname = url.absoluteString
+            cf.filetype = .text
+            cf.text = try String(contentsOf: url)
+            self.report.net.casefiles.updateValue(cf, forKey: url.absoluteString)
+        } catch {
+            print("Error setting case file: \(url.absoluteString)")
+        }
+    }
+    
     
     override func run() {
         let airportWriteFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "network.txt")
@@ -45,9 +57,11 @@ class NetworkConnections: NetworkModule {
         
         self.log("Collecting airport information...")
         captureAirportPrefs(writeFile: airportWriteFile)
+        populatePB(airportWriteFile)
         
         self.log("Gathering results of lsof...")
         captureNetworkConnections(writeFile: networkConnectionsWriteFile)
+        populatePB(networkConnectionsWriteFile)
     }
 }
 

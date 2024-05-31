@@ -16,10 +16,12 @@ class NetworkModule: AftermathModule, AMProto {
     func run() {
         self.log("Started gathering network information...")
 
-        let network = NetworkConnections()
-        network.run()
+        let networkCnx = NetworkConnections()
+        networkCnx.run()
         
-        //self.report.net.casefiles.merge(<#T##other: Sequence##Sequence#>, uniquingKeysWith: <#T##(CaseFile, CaseFile) throws -> CaseFile#>) = network.report.net
+        self.report = networkCnx.getReport()
+        
+
         
         self.log("Finished gathering network information...")
     }

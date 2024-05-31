@@ -215,51 +215,53 @@ class Command {
                  print("Unable to run eslogger due to unavailability on this OS. Requires macOS 13 or higher.")
              }
              
-//             // tcpdump
-//             let pcapModule = NetworkModule()
-//             pcapModule.pcapRun()
-//
-//             
-//             // System Recon
-//             let systemReconModule = SystemReconModule()
-//             systemReconModule.run()
-//
-//
+            // tcpdump
+            let pcapModule = NetworkModule()
+            pcapModule.pcapRun()
+
+            
+            // System Recon
+            let systemReconModule = SystemReconModule()
+            systemReconModule.run()
+
+
              // Network
              var networkModule = NetworkModule()
              networkModule.run()
-//
-//
-//             // Processes
-//             let procModule = ProcessModule()
-//             procModule.run()
-//
-//
-//             // Persistence
-//             let persistenceModule = PersistenceModule()
-//             persistenceModule.run()
-//
-//             
-//             // FileSystem
-//             let fileSysModule = FileSystemModule()
-//             fileSysModule.run()
-//             
-//             
-//
-//             // Artifacts
-//             let artifactModule = ArtifactsModule()
-//             artifactModule.run()
-//
-//             
-//             // Logs
-//             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
-//             unifiedLogModule.run()
-//             
-//                          
-//             mainModule.log("Finished running Aftermath collection")
-//             
-//             // Copy from cache to output
-//             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
+
+
+            // Processes
+            let procModule = ProcessModule()
+            procModule.run()
+
+
+            // Persistence
+            let persistenceModule = PersistenceModule()
+            persistenceModule.run()
+
+            
+            // FileSystem
+            let fileSysModule = FileSystemModule()
+            fileSysModule.run()
+            
+            
+
+            // Artifacts
+            let artifactModule = ArtifactsModule()
+            artifactModule.run()
+
+            
+            // Logs
+            let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
+            unifiedLogModule.run()
+            
+                         
+            mainModule.log("Finished running Aftermath collection")
+            
+            // Copy from cache to output
+            CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
+
+             request.report.net = networkModule.getReport().net
 
              do {
                  let reqstr = try request.jsonString()

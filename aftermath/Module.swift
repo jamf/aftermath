@@ -27,6 +27,12 @@ class AftermathModule {
     var caseDirSelector: URL
     var isPretty: Bool = false
     
+    var report = Report()
+    
+    func getReport() -> Report {
+        return report
+    }
+    
     init() {
         if Command.options.contains(.analyze) {
             caseLogSelector = CaseFiles.analysisLogFile

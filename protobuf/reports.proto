@@ -2,9 +2,17 @@ syntax = "proto3";
 
 import "google/protobuf/any.proto";
 
+enum FileType {
+    BINARY = 0;
+    TEXT = 1;
+}
+
 message CaseFile {
+    string pathname = 100;
+    FileType filetype = 101;
+
     bytes data = 200;
-    string text = 300;
+    string text = 201;
 }
 
 message AftermathR {
@@ -45,7 +53,7 @@ message Report {
 
     optional AftermathR am = 50;
 
-    optional Network net = 100;
+    Network net = 100;
     optional System sys = 200;
     optional ProcessR proc = 300;
     optional Persistence pers = 400;
