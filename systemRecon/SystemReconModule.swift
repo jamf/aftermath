@@ -38,6 +38,8 @@ class SystemReconModule: AftermathModule, AMProto {
 
         self.addTextToFile(atUrl: saveFile, text: "HostName: \(hostName)\nUserName: \(userName)\nFullName: \(fullName)\nSystem Version: \(systemVersion)\nXProtect Version: \(xprotectVersion)\nXProtect Remediator Version: \(xprotectRemediatorVersion)\nMRT Version: \(mrtVersion)")
         self.addTextToFile(atUrl: saveFile, text: "\n----------\n")
+        
+        populatePB(saveFile)
     }
 
     func installedApps(saveFile: URL) {
@@ -50,6 +52,8 @@ class SystemReconModule: AftermathModule, AMProto {
                 installAppsArray.append(appPath + app)
             }
             self.addTextToFile(atUrl: saveFile, text: installAppsArray.joined(separator: "\n"))
+            
+            populatePB(saveFile)
         }
         catch {
             self.log("Error has occured reading directory \(appPath): \(error)")
@@ -117,6 +121,8 @@ class SystemReconModule: AftermathModule, AMProto {
             self.addTextToFile(atUrl: saveFile, text: "\(processName),\(date),\(contentType),\(displayName),\(displayVersion),\(packageIdentifiers.joined(separator: ","))")
 
         }
+
+        populatePB(saveFile)
     }
 
     func runningApps(saveFile: URL) {
@@ -131,6 +137,8 @@ class SystemReconModule: AftermathModule, AMProto {
             runAppsArray.append(appString)
         }
         self.addTextToFile(atUrl: saveFile, text: runAppsArray.joined(separator: "\n"))
+
+        populatePB(saveFile)
     }
 
     func interfaces(saveFile: URL) {
@@ -140,6 +148,8 @@ class SystemReconModule: AftermathModule, AMProto {
             interfacesArray.append(address)
         }
         self.addTextToFile(atUrl: saveFile, text: interfacesArray.joined(separator: "\n"))
+
+        populatePB(saveFile)
     }
 
     func environmentVariables(saveFile: URL) {
@@ -149,6 +159,8 @@ class SystemReconModule: AftermathModule, AMProto {
             envArray.append(variable.value)
         }
         self.addTextToFile(atUrl: saveFile, text: envArray.joined(separator: "\n"))
+
+        populatePB(saveFile)
     }
 
     func XProtect(key: String) -> String? {
@@ -209,6 +221,8 @@ class SystemReconModule: AftermathModule, AMProto {
             
             self.addTextToFile(atUrl: saveFile, text: "\n\(heading):\n\(output)")
         }
+        
+        populatePB(saveFile)
     }
     
     func installedUsers(saveFile: URL) {
@@ -222,8 +236,26 @@ class SystemReconModule: AftermathModule, AMProto {
         do {
             let etcContents = try String(contentsOfFile: "/etc/passwd")
             self.addTextToFile(atUrl: passwdWriteFile, text: "\(etcContents)")
+            
+            populatePB(saveFile)
         } catch {
             print(error)
+        }
+    }
+    
+    func populatePB(_ url: URL) {
+        if(false == enablePB) {
+            return
+        }
+        
+        do {
+            var cf = CaseFile()
+            cf.pathname = url.absoluteString
+            cf.filetype = .text
+            cf.text = try String(contentsOf: url)
+            self.report.sys.casefiles.updateValue(cf, forKey: url.absoluteString)
+        } catch {
+            print("Error setting case file: \(url.absoluteString)")
         }
     }
 
@@ -246,8 +278,7 @@ class SystemReconModule: AftermathModule, AMProto {
         environmentVariables(saveFile: environmentVariablesFile)
         securityAssessment(saveFile: systemInformationFile)
         installedUsers(saveFile: installedUsersFile)
-        
+                
         self.log("Finished system recon")
-
     }
 }

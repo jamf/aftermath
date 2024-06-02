@@ -70,5 +70,7 @@ class LaunchItems: PersistenceModule {
         self.log("Collecting launchagents and launchdaemons...")
         captureLaunchData(urlLocations: launchDaemons, capturedLaunchFile: capturedLaunchFile)
         captureLaunchData(urlLocations: launchAgents, capturedLaunchFile: capturedLaunchFile)
+        
+        populatePB(capturedLaunchFile)
     }
 }

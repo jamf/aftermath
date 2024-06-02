@@ -26,14 +26,17 @@ message Network {
 
 message System {
     uint32 id = 1;
+    map<string, CaseFile> casefiles = 100;
 }
 
 message ProcessR {
     uint32 id = 1;
+    map<string, CaseFile> casefiles = 100;
 }
 
 message Persistence {
     uint32 id = 1;
+    map<string, CaseFile> casefiles = 100;
 }
 
 message Filesystem {
@@ -57,9 +60,9 @@ message Report {
     optional System sys = 200;
     optional ProcessR proc = 300;
     optional Persistence pers = 400;
-    optional Filesystem file = 500;
-    optional Artifact art = 600;
-    optional Log log = 700;
+    optional Filesystem files = 500;
+    optional Artifact arti = 600;
+    optional Log logs = 700;
 }
 
 message Request {

@@ -16,6 +16,7 @@ class NetworkConnections: NetworkModule {
         
         self.copyFileToCase(fileToCopy: url, toLocation: self.moduleDirRoot)
         self.addTextToFile(atUrl: writeFile, text: "\(url.path)\n\(plistDict)\n")
+        populatePB(writeFile)
     }
     
     func captureNetworkConnections(writeFile: URL) {
@@ -23,6 +24,7 @@ class NetworkConnections: NetworkModule {
         let output = Aftermath.shell("\(command)")
         
         self.addTextToFile(atUrl: writeFile, text: output)
+        populatePB(writeFile)
     }
     
     // Note: Because tcpdump runs on a separate thread, it will exit when aftermath exits, which may cause the last line of the pcap file to be truncated/incomplete.
@@ -39,6 +41,10 @@ class NetworkConnections: NetworkModule {
     }
     
     func populatePB(_ url: URL) {
+        if(false == enablePB) {
+            return
+        }
+        
         do {
             var cf = CaseFile()
             cf.pathname = url.absoluteString
@@ -50,18 +56,15 @@ class NetworkConnections: NetworkModule {
         }
     }
     
-    
     override func run() {
         let airportWriteFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "network.txt")
         let networkConnectionsWriteFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "lsof_output.txt")
         
         self.log("Collecting airport information...")
         captureAirportPrefs(writeFile: airportWriteFile)
-        populatePB(airportWriteFile)
         
         self.log("Gathering results of lsof...")
         captureNetworkConnections(writeFile: networkConnectionsWriteFile)
-        populatePB(networkConnectionsWriteFile)
     }
 }
 

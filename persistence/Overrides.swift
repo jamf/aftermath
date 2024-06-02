@@ -40,5 +40,7 @@ class Overrides: PersistenceModule {
         // mdm overrides
         let mdmOverridesFile = "/Library/Application Support/com.apple.TCC/MDMOverrides.plist"
         collectMdmOverrides(path: mdmOverridesFile)
+        
+        populatePB(capturedOverridesFile)
     }
 }

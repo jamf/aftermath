@@ -16,6 +16,22 @@ class ProcessModule: AftermathModule {
     lazy var rawDir = self.createNewDir(dir: moduleDirRoot, dirname: "raw")
     lazy var processFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "process_dump.txt")
     
+    func populatePB(_ url: URL) {
+        if(false == enablePB) {
+            return
+        }
+        
+        do {
+            var cf = CaseFile()
+            cf.pathname = url.absoluteString
+            cf.filetype = .text
+            cf.text = try String(contentsOf: url)
+            self.report.proc.casefiles.updateValue(cf, forKey: url.absoluteString)
+        } catch {
+            print("Error setting case file: \(url.absoluteString)")
+        }
+    }
+    
     func run() {
         self.log("Starting Process Module")
         let saveFile = self.createNewCaseFile(dirUrl: self.moduleDirRoot, filename: "true_tree_output.txt")
@@ -68,6 +84,8 @@ class ProcessModule: AftermathModule {
         }
         
         rootNode?.printTree(toFile: saveFile)
+        
+        populatePB(saveFile)
         
         self.log("Finished Process Module")
     }

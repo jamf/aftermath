@@ -17,5 +17,7 @@ class BTM: PersistenceModule {
         
         let btmDumpFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "btm.txt")
         self.addTextToFile(atUrl: btmDumpFile, text: output)
+        
+        populatePB(btmDumpFile)
     }
 }

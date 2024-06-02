@@ -45,12 +45,8 @@ class Periodic: PersistenceModule {
             let periodicDir = self.createNewDir(dir: self.saveToRawDir, dirname: "periodic/\(loc)")
             let scripts = filemanager.filesInDirRecursive(path: directory)
             capturePeriodicScripts(urlLocations: scripts, capturedScriptsFile: capturedScriptsFile, directory: periodicDir)
-
-            
-            
         }
         
-
-        
+        populatePB(capturedScriptsFile)
     }
 }

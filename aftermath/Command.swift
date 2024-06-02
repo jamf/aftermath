@@ -127,124 +127,119 @@ class Command {
      }
 
     static func start() {
-        
+
         printBanner()
         cleanup(defaultRun: true)
 
         var request = Request()
         
         if Self.options.contains(.analyze) {
-             if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
-                 CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
-             }
+            if let name = self.analysisDir?.split(separator: "_").last?.split(separator: ".").first {
+                CaseFiles.CreateAnalysisCaseDir(filename: String(describing: name))
+            }
 
-             let mainModule = AftermathModule()
-             mainModule.log("Running Aftermath Version \(version)")
-             mainModule.log("Aftermath Analysis Started")
-             mainModule.log("Analysis started at \(mainModule.getCurrentTimeStandardized().replacingOccurrences(of: ":", with: "_"))")
+            let mainModule = AftermathModule()
+            mainModule.log("Running Aftermath Version \(version)")
+            mainModule.log("Aftermath Analysis Started")
+            mainModule.log("Analysis started at \(mainModule.getCurrentTimeStandardized().replacingOccurrences(of: ":", with: "_"))")
 
-             guard let dir = Self.analysisDir else {
-                 mainModule.log("Analysis directory not provided")
-                 return
-             }
-             guard FileManager.default.isFileThatExists(path: dir) else {
-                 mainModule.log("Analysis directory is not a valid directory that exists")
-                 return
-             }
-             
-             let unzippedDir = mainModule.unzipArchive(location: dir)
-             
-             mainModule.log("Started analysis on Aftermath directory: \(unzippedDir)")
-             if #available(macOS 12, *) {
-                 let analysisModule = AnalysisModule(collectionDir: unzippedDir)
-                 analysisModule.run()
-                 
-                 mainModule.log("Finished analysis module")
-             } else {
-                 mainModule.log("Aftermath requires macOS 12 or later in order to analyze collection data.")
-                 print("Aftermath requires macOS 12 or later in order to analyze collection data.")
-             }
+            guard let dir = Self.analysisDir else {
+                mainModule.log("Analysis directory not provided")
+                return
+            }
+            guard FileManager.default.isFileThatExists(path: dir) else {
+                mainModule.log("Analysis directory is not a valid directory that exists")
+                return
+            }
+            
+            let unzippedDir = mainModule.unzipArchive(location: dir)
+            
+            mainModule.log("Started analysis on Aftermath directory: \(unzippedDir)")
+            if #available(macOS 12, *) {
+                let analysisModule = AnalysisModule(collectionDir: unzippedDir)
+                analysisModule.run()
+                
+                mainModule.log("Finished analysis module")
+            } else {
+                mainModule.log("Aftermath requires macOS 12 or later in order to analyze collection data.")
+                print("Aftermath requires macOS 12 or later in order to analyze collection data.")
+            }
 
+            // Move analysis directory to output direcotry
+            CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: true)
 
-             // Move analysis directory to output direcotry
-             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation, isAnalysis: true)
-
-             // End Aftermath
-             mainModule.log("Aftermath Finished")
+            // End Aftermath
+            mainModule.log("Aftermath Finished")
          } else {
-             CaseFiles.CreateCaseDir()
-             let mainModule = AftermathModule()
-             mainModule.log("Running Aftermath Version \(version)")
-             mainModule.log("Aftermath Collection Started")
-             mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
-             
-
-             // eslogger
-             if #available(macOS 13, *) {
-                  let esModule = ESModule()
-                  esModule.run()
-             } else {
-                 print("Unable to run eslogger due to unavailability on this OS. Requires macOS 13 or higher.")
-             }
-             
+            CaseFiles.CreateCaseDir()
+            let mainModule = AftermathModule()
+            mainModule.log("Running Aftermath Version \(version)")
+            mainModule.log("Aftermath Collection Started")
+            mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
+            mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
+            
+            // eslogger
+            if #available(macOS 13, *) {
+                let esModule = ESModule()
+                esModule.run()
+            } else {
+                print("Unable to run eslogger due to unavailability on this OS. Requires macOS 13 or higher.")
+            }
+            
             // tcpdump
             let pcapModule = NetworkModule()
             pcapModule.pcapRun()
 
-            
             // System Recon
             let systemReconModule = SystemReconModule()
             systemReconModule.run()
 
-
-             // Network
-             var networkModule = NetworkModule()
-             networkModule.run()
-
+            // Network
+            let networkModule = NetworkModule()
+            networkModule.run()
 
             // Processes
             let procModule = ProcessModule()
             procModule.run()
 
-
             // Persistence
             let persistenceModule = PersistenceModule()
             persistenceModule.run()
 
-            
             // FileSystem
             let fileSysModule = FileSystemModule()
             fileSysModule.run()
-            
-            
 
             // Artifacts
             let artifactModule = ArtifactsModule()
             artifactModule.run()
 
-            
             // Logs
             let unifiedLogModule = UnifiedLogModule(logFile: unifiedLogsFile)
             unifiedLogModule.run()
-            
-                         
+             
             mainModule.log("Finished running Aftermath collection")
             
             // Copy from cache to output
             CaseFiles.MoveTemporaryCaseDir(outputLocation: self.outputLocation.expandingTildeInPath(), isAnalysis: false)
 
-             request.report.net = networkModule.getReport().net
+            request.report.sys = systemReconModule.getReport().sys
+            request.report.net = networkModule.getReport().net
+            request.report.proc = procModule.getReport().proc
+            request.report.pers = persistenceModule.getReport().pers
+            request.report.files = fileSysModule.getReport().files
+            request.report.arti = artifactModule.getReport().arti
+            request.report.logs = unifiedLogModule.getReport().logs
 
-             do {
-                 let reqstr = try request.jsonString()
-                 print (reqstr)
-             } catch {
-                 print("Exception printing jsonstring")
-             }
-             
-             // End Aftermath
-             mainModule.log("Aftermath Finished")
+            do {
+                let reqstr = try request.jsonString()
+                print (reqstr)
+            } catch {
+                print("Exception printing jsonstring")
+            }
+            
+            // End Aftermath
+            mainModule.log("Aftermath Finished")
          }
      }
 

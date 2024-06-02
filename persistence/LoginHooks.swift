@@ -46,8 +46,6 @@ class LoginHooks: PersistenceModule {
             self.addTextToFile(atUrl: hooksSaveFile, text: hooksParsed)
         }
         
-        
-        
         self.copyFileToCase(fileToCopy: url, toLocation: self.saveToRawDir)
     }
 }

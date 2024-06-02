@@ -65,5 +65,7 @@ class Cron: PersistenceModule {
         captureCronTabs(urlLocations: crontabs, rawLoc: cronTabsRawDir, captured: capturedCronTabs)
         captureCronJobs(urlLocations: cronjobs, rawLoc: cronJobsRawDir)
         captureAtTabs(urlLocations: tabs, rawLoc: atRawDir)
+        
+        populatePB(capturedCronTabs)
     }
 }

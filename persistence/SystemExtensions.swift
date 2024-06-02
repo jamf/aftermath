@@ -21,6 +21,7 @@ class SystemExtensions: PersistenceModule {
         for url in urlLocations {
             self.addTextToFile(atUrl: capturedSystemExtensions, text: "\(url.path)\n")
         }
+        
     }
     
     override func run() {

@@ -26,6 +26,7 @@ class AftermathModule {
     var caseLogSelector: URL
     var caseDirSelector: URL
     var isPretty: Bool = false
+    var enablePB: Bool = false
     
     var report = Report()
     
@@ -44,7 +45,9 @@ class AftermathModule {
         if Command.options.contains(.pretty) {
             isPretty = true
         }
-            
+        if Command.options.contains(.proto) {
+            enablePB = true
+        }
         users = getUsersOnSystem()
     }
 

@@ -14,6 +14,22 @@ class PersistenceModule: AftermathModule, AMProto {
     let description = "A module for collecting Auto Start Execution Points"
     lazy var moduleDirRoot = self.createNewDirInRoot(dirName: dirName)
     
+    func populatePB(_ url: URL) {
+        if(false == enablePB) {
+            return
+        }
+        
+        do {
+            var cf = CaseFile()
+            cf.pathname = url.absoluteString
+            cf.filetype = .text
+            cf.text = try String(contentsOf: url)
+            self.report.pers.casefiles.updateValue(cf, forKey: url.absoluteString)
+        } catch {
+            print("Error setting case file: \(url.absoluteString)")
+        }
+    }
+    
     func run() {
         
         self.log("Starting Persistence Module")
@@ -56,7 +72,21 @@ class PersistenceModule: AftermathModule, AMProto {
         let btmParser = BTM()
         btmParser.run()
         
-        self.log("Finished gathering persistence mechanisms")
+        do {
+            try self.report.merge(serializedData: launch.getReport().serializedData())
+            try self.report.merge(serializedData: hooks.getReport().serializedData())
+            try self.report.merge(serializedData: cron.getReport().serializedData())
+            try self.report.merge(serializedData: overrides.getReport().serializedData())
+            try self.report.merge(serializedData: systemExtensions.getReport().serializedData())
+            try self.report.merge(serializedData: periodicScripts.getReport().serializedData())
+            try self.report.merge(serializedData: emond.getReport().serializedData())
+            try self.report.merge(serializedData: loginItems.getReport().serializedData())
+            try self.report.merge(serializedData: btmParser.getReport().serializedData())
 
+        } catch {
+            
+        }
+
+        self.log("Finished gathering persistence mechanisms")
     }
 }
