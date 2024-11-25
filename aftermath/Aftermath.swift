@@ -85,6 +85,8 @@ class Aftermath {
     @available(macOS 12.0, *)
     static func sortCSV(unsortedArr: [[String]]) throws -> [[String]] {
         var arr = unsortedArr
+        // These strings may appear in the input array but they don't play nicely with the date 
+        // formatting so they will be ignored
         let rejectedStrings = ["birth", "accessed"]
         try arr.sort { lhs, rhs in
             guard let lhsStr = lhs.first, let rhsStr = rhs.first,
