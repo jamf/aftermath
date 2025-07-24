@@ -85,8 +85,14 @@ class Aftermath {
     @available(macOS 12.0, *)
     static func sortCSV(unsortedArr: [[String]]) throws -> [[String]] {
         var arr = unsortedArr
+        // These strings may appear in the input array but they don't play nicely with the date 
+        // formatting so they will be ignored
+        let rejectedStrings = ["birth", "accessed"]
         try arr.sort { lhs, rhs in
-            guard let lhsStr = lhs.first, let rhsStr = rhs.first else { return false }
+            guard let lhsStr = lhs.first, let rhsStr = rhs.first,
+                  rejectedStrings.contains(lhsStr), rejectedStrings.contains(rhsStr) else {
+                return false
+            }
             let lhsDate = try Date("\(lhsStr)Z", strategy: .iso8601)
             let rhsDate = try Date("\(rhsStr)Z", strategy: .iso8601)
             return lhsDate > rhsDate
