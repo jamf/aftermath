@@ -18,18 +18,26 @@ class LaunchItems: PersistenceModule {
     func captureLaunchData(urlLocations: [URL], capturedLaunchFile: URL) {
         for url in urlLocations {
             let plistDict = Aftermath.getPlistAsDict(atUrl: url)
-            var binaryName: String? = nil
-            var binarySHA256: String? = nil
+            var binaryName: String = ""
+            var binarySHA256: String = ""
             
             // get the progarm key and pass value to parser
-            if let binaryLocation = plistDict["Program"] {
-                binaryName = binaryLocation as? String
-                binarySHA256 = collectBinaryHashInformation(binaryLocation: binaryLocation as! String)
-            } else if let binaryLocation = plistDict["ProgramArguments"] {
+            if let binaryLocation = plistDict["Program"] as? String {
+                binaryName = binaryLocation
+                if let SHA256 = collectBinaryHashInformation(binaryLocation: binaryLocation) {
+                    binarySHA256 = SHA256
+                } else {
+                    self.log("Could not get binarySHA256 for \(binaryLocation)")
+                }
+                
+            } else if let binaryLocation = plistDict["ProgramArguments"] as? [String] {
                 // grab first element of ProgramArguments
-                binaryName = binaryLocation as? String
-                let arr = binaryLocation as! [String]
-                binarySHA256 = collectBinaryHashInformation(binaryLocation: arr[0])
+                binaryName = binaryLocation[0]
+                if let SHA256 = collectBinaryHashInformation(binaryLocation: binaryLocation[0]) {
+                    binarySHA256 = SHA256
+                } else {
+                    self.log("Could not get binarySHA256 for \(binaryLocation[0])")
+                }
             } else {
                 self.log("Could not get plist information for \(url.relativePath)")
             }
@@ -39,9 +47,9 @@ class LaunchItems: PersistenceModule {
             
             // write the plists to one file
             self.addTextToFile(atUrl: capturedLaunchFile, text: "\n----- \(url.path) -----\n")
-            self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary Name: \(binaryName ?? "unknown")\n")
-            self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary SHA256: \(binarySHA256 ?? "unknown")\n")
-            self.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.description)
+            self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary Name: \(binaryName)\n")
+            self.addTextToFile(atUrl: capturedLaunchFile, text: "Binary SHA256: \(binarySHA256)\n")
+            self.addTextToFile(atUrl: capturedLaunchFile, text: plistDict.json)
         }
     }
     
