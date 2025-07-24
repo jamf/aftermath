@@ -14,7 +14,7 @@ struct CaseFiles {
     static var analysisCaseDir = FileManager.default.temporaryDirectory
     static let analysisLogFile = analysisCaseDir.appendingPathComponent("aftermath_analysis.log")
     static let metadataFile = caseDir.appendingPathComponent("metadata.csv")
-    static let fm = FileManager.default
+    static let fm = Aftermath.fm
     static var serialNumber: String? {
         var platformExpert: io_service_t = 0
         if #available(macOS 12.0, *) {
@@ -57,7 +57,7 @@ struct CaseFiles {
     static func MoveTemporaryCaseDir(outputLocation: String, isAnalysis: Bool) {
         print("Checking for existence of output location")
         
-        let fm = FileManager.default
+        let fm = CaseFiles.fm
         let isDir = fm.isDirectoryThatExists(path: outputLocation)
         
         var isFullPath: Bool = false
@@ -70,13 +70,13 @@ struct CaseFiles {
         
         // Determine if we should look in /tmp or in the Aftermath case directory within /tmp
         let localCaseDir = isAnalysis ? analysisCaseDir : caseDir
-        
+
         let endPath: String
         
         if isDir {
             endPath = "\(outputLocation)/\(localCaseDir.lastPathComponent)"
         } else {
-            // Determine if the directory didn't exist and we weren't passed a full path. Checks for misspellings in the path. (ie: -o /Users/user/Desktopp)
+            // Determine if the directory didn't exist and we weren't passed a full path. Checks for misspellings in the path. (ie: -o /Users/user/Desktop)
             guard isFullPath else {
                 print("Output location is invalid.")
                 return
@@ -99,8 +99,9 @@ struct CaseFiles {
             }
             
             do {
-                try fm.zipItem(at: localCaseDir, to: endURL, shouldKeepParent: true, compressionMethod: .deflate)
-                try fm.moveItem(at: endURL, to: zippedURL)
+                let tmpZipURL = URL(fileURLWithPath: "/tmp/Aftermath_tmp_zip")
+                try fm.zipItem(at: localCaseDir, to: tmpZipURL, shouldKeepParent: true, compressionMethod: .deflate)
+                try fm.moveItem(at: tmpZipURL, to: zippedURL)
                 print("Aftermath archive moved to \(zippedURL.path)")
                 
             } catch {
