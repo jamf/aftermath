@@ -72,7 +72,7 @@ extension Node {
 
     func printTree(toFile: URL) {
         let tree = treeLines().joined(separator:"\n")
-        print(toFile)
+//        print(toFile)
         
         do {
             try tree.write(to: toFile, atomically: true, encoding: String.Encoding.utf8)
