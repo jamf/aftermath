@@ -8,7 +8,22 @@
 import Foundation
 
 extension URL {
-
+    
+    func getExtendedAttribute(name: String) throws -> Data {
+        let data = try self.withUnsafeFileSystemRepresentation { fileSystemPath -> Data in
+            let length = getxattr(fileSystemPath, name, nil, 0, 0, 0)
+            guard length >= 0 else { throw URL.posixError(errno) }
+            
+            var data = Data(count: length)
+            let result =  data.withUnsafeMutableBytes { [count = data.count] in
+                getxattr(fileSystemPath, name, $0.baseAddress, count, 0, 0)
+            }
+            guard result >= 0 else { throw URL.posixError(errno) }
+            return data
+        }
+        return data
+    }
+    
     // Get list of all extended attributes.
     func listExtendedAttributes() throws -> [String] {
 

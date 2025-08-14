@@ -14,6 +14,7 @@ class DatabaseParser: AftermathModule {
     lazy var tccWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "tcc.csv")
     lazy var quarantineWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "lsquarantine.csv")
     lazy var xpdbWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "xpdb.csv")
+    lazy var provenanceWriteFile = self.createNewCaseFile(dirUrl: CaseFiles.analysisCaseDir, filename: "provenance.csv")
     let collectionDir: String
     let storylineFile: URL
  
@@ -258,6 +259,70 @@ class DatabaseParser: AftermathModule {
             self.log("An error occurred when attempting to query the XPdb.")
         }
     }
+
+    /*
+     CREATE TABLE provenance_tracking (  pk INTEGER PRIMARY KEY,  url TEXT NOT NULL,  bundle_id TEXT,  cdhash TEXT,  team_identifier TEXT,  signing_identifier TEXT,  flags INTEGER,  timestamp INTEGER NOT NULL,  link_pk INTEGER);
+     */
+    struct ProvenanceEntry: CustomStringConvertible {
+        var description: String {
+            "\(self.pk), \(self.url), \(self.bundleId ?? "unknown"), \(self.cdhash ?? "unknown"), \(self.teamIdentifier ?? "unknown"), \(self.signingIdentifier ?? "unknown"), \(self.flags.flatMap {value in String(value)} ?? "unknown"), \(self.timestamp), \(self.linkPk.flatMap {value in String(value)} ?? "unknown")"
+        }
+
+        var pk: Int64 = 0
+        var url: String = ""
+        var bundleId: String? = nil
+        var cdhash: String? = nil
+        var teamIdentifier: String? = nil
+        var signingIdentifier: String? = nil
+        var flags: Int64? = nil
+        var timestamp: Int64 = 0
+        var linkPk: Int64? = nil
+    }
+
+    func parseProvenanceTracking() {
+        self.addTextToFile(atUrl: provenanceWriteFile, text: "pk, url, bundle_id, cdhash, team_identifier, signing_identifier, flags, timestamp, link_pk")
+        let provenancePath = "\(self.collectionDir)/Artifacts/raw/provenance/ExecPolicy"
+        let fileURL = URL(fileURLWithPath: provenancePath)
+        
+        // parse provenance tracking
+        var db : OpaquePointer?
+        if sqlite3_open(fileURL.path, &db) == SQLITE_OK {
+            var queryStatement: OpaquePointer? = nil
+            let queryString = "SELECT pk, url, bundle_id, cdhash, team_identifier, signing_identifier, flags, timestamp, link_pk FROM provenance_tracking;"
+            if sqlite3_prepare(db, queryString, -1, &queryStatement, nil) == SQLITE_OK {
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    var provenanceEntry = ProvenanceEntry()
+                    provenanceEntry.pk = Int64(sqlite3_column_int64(queryStatement, 0))
+                    
+                    if let col2 = sqlite3_column_text(queryStatement, 1) {
+                        provenanceEntry.url = String(cString: col2)
+                    }
+                    
+                    if let col3 = sqlite3_column_text(queryStatement, 2) {
+                        provenanceEntry.bundleId = String(cString: col3)
+                    }
+                    
+                    if let col4 = sqlite3_column_text(queryStatement, 3) {
+                        provenanceEntry.cdhash = String(cString: col4)
+                    }
+                    
+                    if let col5 = sqlite3_column_text(queryStatement, 4) {
+                        provenanceEntry.teamIdentifier = String(cString: col5)
+                    }
+                    
+                    if let col6 = sqlite3_column_text(queryStatement, 5) {
+                        provenanceEntry.signingIdentifier = String(cString: col6)
+                    }
+                    
+                    provenanceEntry.flags = Int64(sqlite3_column_int64(queryStatement, 6))
+                    provenanceEntry.timestamp = Int64(sqlite3_column_int64(queryStatement, 7))
+                    provenanceEntry.linkPk = Int64(sqlite3_column_int64(queryStatement, 8))
+
+                    self.addTextToFile(atUrl: self.provenanceWriteFile, text: "\(provenanceEntry)")
+                }
+            }
+        }
+    }
     
     func run() {
         self.log("Parsing collected database files")
@@ -269,6 +334,9 @@ class DatabaseParser: AftermathModule {
         
         self.log("Parsing XPdb...")
         parseXPdb()
+        
+        self.log("Parsing Provenance Tracking...")
+        parseProvenanceTracking()
     }
     
     enum TCCAuthValue: String, CaseIterable {
