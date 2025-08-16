@@ -258,7 +258,7 @@ class AftermathModule {
                     for downloaded in downloadedArr {
                         metadata.append("\(downloaded) ")
                     }
-                    metadata.append("none,")
+                    metadata.append(",")
                 } else {
                     metadata.append("none,")
                 }
