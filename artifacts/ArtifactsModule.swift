@@ -23,6 +23,7 @@ class ArtifactsModule: AftermathModule, AMProto {
         let profilesDir = self.createNewDir(dir: rawDir, dirname: "profiles")
         let logFilesDir = self.createNewDir(dir: rawDir, dirname: "logs")
         let xbsDir = self.createNewDir(dir: rawDir, dirname: "xbs")
+        let provenanceDir = self.createNewDir(dir: rawDir, dirname: "provenance")
         
         if Command.disableFeatures["databases"] == false {
             let tcc = TCC(tccDir: rawDir)
@@ -50,6 +51,10 @@ class ArtifactsModule: AftermathModule, AMProto {
             self.log("Collecting the XPdb")
             let xbs = XProtectBehavioralService(xbsDir: xbsDir)
             xbs.run()
+
+            self.log("Collecting the provenance database")
+            let prov = ProvenanceTracking(provenanceDir: provenanceDir)
+            prov.run()
         } else {
             self.log("Unable to capture XPdb due to unavailability on this OS")
         }

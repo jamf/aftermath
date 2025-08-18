@@ -239,7 +239,7 @@ class AftermathModule {
         do {
             let xattrs = try fromFile.listExtendedAttributes()
             if xattrs.isEmpty {
-                xattr.append("none,")
+                xattr.append("none")
             } else { xattrs.forEach { xattr.append("\($0) ") } }
             
             metadata.append("\(xattr),")
@@ -258,11 +258,24 @@ class AftermathModule {
                     for downloaded in downloadedArr {
                         metadata.append("\(downloaded) ")
                     }
+                    metadata.append(",")
+                } else {
+                    metadata.append("none,")
                 }
+            } else {
+                metadata.append("none,")
             }
                 
         } else {
             metadata.append("unknown,")
+        }
+
+        do {
+            let provenanceData = try fromFile.getExtendedAttribute(name: "com.apple.provenance")
+            let pkData = Data(provenanceData[3..<11])
+            metadata.append("\(pkData.withUnsafeBytes{$0.load(as: Int64.self)})")
+        } catch {
+            metadata.append("none")
         }
             
         self.addTextToFile(atUrl: CaseFiles.metadataFile, text: metadata)

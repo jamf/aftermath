@@ -169,7 +169,7 @@ class Command {
              mainModule.log("Running Aftermath Version \(version)")
              mainModule.log("Aftermath Collection Started")
              mainModule.log("Collection started at \(mainModule.getCurrentTimeStandardized())")
-             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom")
+             mainModule.addTextToFile(atUrl: CaseFiles.metadataFile, text: "file,birth,modified,accessed,permissions,uid,gid,xattr,downloadedFrom,provenance")
              
 
              // eslogger
