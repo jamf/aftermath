@@ -21,12 +21,13 @@ class ESLogs: ESModule {
     func logESEvents(events: String) {
         var output = ""
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let command = "eslogger \(events) > \(self!.outputFile.relativePath)"
+
+            let command = "eslogger \(events) > \(self?.outputFile.relativePath)"
             output = Aftermath.shell("\(command)")
             
             return
         }
-        
+
         self.addTextToFile(atUrl: self.outputFile, text: output)
     }
     
