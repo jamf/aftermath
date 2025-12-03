@@ -23,6 +23,7 @@ class BrowserModule: AftermathModule, AMProto {
         let safariDir = self.createNewDir(dir: moduleDirRoot, dirname: "Safari")
         let arcDir = self.createNewDir(dir: moduleDirRoot, dirname: "Arc")
         let braveDir = self.createNewDir(dir: moduleDirRoot, dirname: "Brave")
+        let cometDir = self.createNewDir(dir: moduleDirRoot, dirname: "Comet")
         let writeFile = self.createNewCaseFile(dirUrl: moduleDirRoot, filename: "browsers.txt")
         
         self.log("Collecting browser information. Checking for open browsers. Closing any open browsers...")
@@ -57,10 +58,14 @@ class BrowserModule: AftermathModule, AMProto {
         // Check if Brave is installed
         let brave = Brave(braveDir: braveDir, writeFile: writeFile)
         brave.run()
+        
+        // Check if Comet is installed
+        let comet = Comet(cometDir: cometDir, writeFile: writeFile)
+        comet.run()
     }
     
     func closeBrowsers() {
-        let browserData = ["/Applications/Microsoft Edge.app": "com.microsoft.edgemac", "/Applications/Firefox.app": "org.mozilla.firefox", "/Applications/Google Chrome.app": "com.google.Chrome", "/Applications/Safari.app": "com.apple.Safari", "/Applications/Arc.app": "company.thebrowser.Browser"]
+        let browserData = ["/Applications/Microsoft Edge.app": "com.microsoft.edgemac", "/Applications/Firefox.app": "org.mozilla.firefox", "/Applications/Google Chrome.app": "com.google.Chrome", "/Applications/Safari.app": "com.apple.Safari", "/Applications/Arc.app": "company.thebrowser.Browser", "/Applications/Comet.app": "ai.perplexity.comet"]
         
         for (key, value) in browserData {
             if filemanager.fileExists(atPath: key) {
