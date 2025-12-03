@@ -79,6 +79,7 @@ Because `eslogger` and `tcpdump` run on additional threads and the goal is to co
         - Arc
         - Brave
         - Chrome
+        - Comet
         - Edge
         - Firefox
         - Safari
@@ -157,6 +158,7 @@ To uninstall the aftermath binary, run the `AftermathUninstaller.pkg` from the [
 - Maggie Zirnhelt
 - Matt Benyo
 - Ferdous Saljooki
+- Lilly Ryan
 
 ## Thank You
 This project leverages the open source [TrueTree](https://github.com/themittenmac/TrueTree) project, written and [licensed](https://github.com/themittenmac/TrueTree/blob/master/license.md) by Jaron Bradley. 
