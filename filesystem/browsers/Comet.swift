@@ -1,5 +1,5 @@
 //
-//  Chrome.swift
+//  Comet.swift
 //  aftermath
 //
 //  Copyright  2022 JAMF Software, LLC
@@ -8,29 +8,29 @@
 import Foundation
 import SQLite3
 
-class Chrome: BrowserModule {
+class Comet: BrowserModule {
         
-    let chromeDir: URL
+    let cometDir: URL
     let writeFile: URL
     
-    init(chromeDir: URL, writeFile: URL) {
-        self.chromeDir = chromeDir
+    init(cometDir: URL, writeFile: URL) {
+        self.cometDir = cometDir
         self.writeFile = writeFile
     }
     
     func gatherHistory() {
 
-        let historyOutput = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "history_output.csv")
+        let historyOutput = self.createNewCaseFile(dirUrl: self.cometDir, filename: "history_output.csv")
         self.addTextToFile(atUrl: historyOutput, text: "datetime,user,profile,url")
         
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getCometProfilesForUser(user: user) {
 
                 // Get the history file for the profile
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/History") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/History")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.cometDir, newFileName: "history_and_downloads_\(user.username)_\(profile).db")
                 } else { continue }
 
                 // Open the history file
@@ -59,23 +59,23 @@ class Chrome: BrowserModule {
                             
                             self.addTextToFile(atUrl: historyOutput, text: "\(dateTime),\(user.username),\(profile),\(url)")
                         }
-                    } else { self.log("Unable to query the database. Please ensure that Chrome is not running.") }
+                    } else { self.log("Unable to query the database. Please ensure that Comet is not running.") }
                 } else { self.log("Unable to open the database") }
             }
         }
     }
     
     func dumpDownloads() {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Downloads: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Comet Downloads: -----\n")
         
-        let downlaodsRaw = self.createNewCaseFile(dirUrl: self.chromeDir, filename: "downloads_output.csv")
+        let downlaodsRaw = self.createNewCaseFile(dirUrl: self.cometDir, filename: "downloads_output.csv")
         self.addTextToFile(atUrl: downlaodsRaw, text: "datetime,user,profile,url,target_path,danger_type,opened")
         
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getCometProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/History")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/History") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/History")
                 } else { continue }
 
                 var db: OpaquePointer?
@@ -115,38 +115,38 @@ class Chrome: BrowserModule {
             }
         }
         
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Downloads -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Comet Downloads -----\n")
     }
     
     func dumpPreferences() {
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getCometProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Preferences")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "preferences_\(user.username)_\(profile)")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/Preferences") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/Preferences")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.cometDir, newFileName: "preferences_\(user.username)_\(profile)")
                 } else { continue }
                         
                 do {
                     let data = try Data(contentsOf: file, options: .mappedIfSafe)
                     if let json = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as? [String: Any] {
-                        self.addTextToFile(atUrl: writeFile, text: "\nChrome Preferences -----\n\(String(describing: json))\n ----- End of Chrome Preferences -----\n")
+                        self.addTextToFile(atUrl: writeFile, text: "\nComet Preferences -----\n\(String(describing: json))\n ----- End of Comet Preferences -----\n")
                     }
                     
-                } catch { self.log("Unable to capture Chrome Preferenes") }
+                } catch { self.log("Unable to capture Comet Preferenes") }
             }
         }
     }
     
     func dumpCookies() {
-        self.addTextToFile(atUrl: self.writeFile, text: "----- Chrome Cookies: -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "----- Comet Cookies: -----\n")
 
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
+            for profile in getCometProfilesForUser(user: user) {
                 var file: URL
-                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies") {
-                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Cookies")
-                    self.copyFileToCase(fileToCopy: file, toLocation: self.chromeDir, newFileName: "cookies_\(user.username)_\(profile).db")
+                if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/Cookies") {
+                    file = URL(fileURLWithPath: "\(user.homedir)/Library/Application Support/Comet/\(profile)/Cookies")
+                    self.copyFileToCase(fileToCopy: file, toLocation: self.cometDir, newFileName: "cookies_\(user.username)_\(profile).db")
                 } else { continue }
                         
                 var db: OpaquePointer?
@@ -188,27 +188,27 @@ class Chrome: BrowserModule {
                 }
             }
         }
-        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Chrome Cookies -----\n")
+        self.addTextToFile(atUrl: self.writeFile, text: "\n----- End of Comet Cookies -----\n")
     }
     
-    func captureExtensions() {        
+    func captureExtensions() {
         for user in getBasicUsersOnSystem() {
-            for profile in getChromeProfilesForUser(user: user) {
-                let chromeExtensionDir = self.createNewDir(dir: self.chromeDir, dirname: "extensions_\(user.username)_\(profile)")
-                let path = "\(user.homedir)/Library/Application Support/Google/Chrome/\(profile)/Extensions"
+            for profile in getCometProfilesForUser(user: user) {
+                let cometExtensionDir = self.createNewDir(dir: self.cometDir, dirname: "extensions_\(user.username)_\(profile)")
+                let path = "\(user.homedir)/Library/Application Support/Comet/\(profile)/Extensions"
             
                 for file in filemanager.filesInDirRecursive(path: path) {
-                    self.copyFileToCase(fileToCopy: file, toLocation: chromeExtensionDir)
+                    self.copyFileToCase(fileToCopy: file, toLocation: cometExtensionDir)
                 }
             }
         }
     }
 
-    func getChromeProfilesForUser(user: User) -> [String] {
+    func getCometProfilesForUser(user: User) -> [String] {
         var profiles: [String] = []
         // Get the directory name if it contains the string "Profile"
-        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Google/Chrome") {
-            for file in filemanager.filesInDir(path: "\(user.homedir)/Library/Application Support/Google/Chrome") {
+        if filemanager.fileExists(atPath: "\(user.homedir)/Library/Application Support/Comet") {
+            for file in filemanager.filesInDir(path: "\(user.homedir)/Library/Application Support/Comet") {
                 if file.lastPathComponent.starts(with: "Profile") || file.lastPathComponent == "Default" {
                     profiles.append(file.lastPathComponent)
                 }
@@ -219,7 +219,7 @@ class Chrome: BrowserModule {
     }
     
     override func run() {
-        self.log("Collecting Chrome browser information...")
+        self.log("Collecting Comet browser information...")
         gatherHistory()
         dumpDownloads()
         dumpPreferences()
