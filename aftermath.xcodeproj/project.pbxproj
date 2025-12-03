@@ -62,6 +62,7 @@
 		A190FFE328B8168400B9EF9A /* AftermathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A190FFCF28B8084F00B9EF9A /* AftermathTests.swift */; };
 		A1E433D928B918FF00E2B510 /* Aftermath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB9E302756D2B500C0ADD7 /* Aftermath.swift */; };
 		A1E433E528B9270800E2B510 /* dummyPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E433E428B9270800E2B510 /* dummyPlist.plist */; };
+		A202BE352EE03E6B006277CA /* Comet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202BE342EE03E6B006277CA /* Comet.swift */; };
 		A3046F8E27627DAC0069AA21 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8D27627DAC0069AA21 /* Module.swift */; };
 		A3046F902763AE5E0069AA21 /* CaseFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */; };
 		A31009A42B9B838100068593 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31009A32B9B838100068593 /* Network.swift */; };
@@ -144,6 +145,7 @@
 		A190FFD528B80C3900B9EF9A /* MockFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFileManager.swift; sourceTree = "<group>"; };
 		A190FFDB28B8151300B9EF9A /* tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E433E428B9270800E2B510 /* dummyPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = dummyPlist.plist; sourceTree = "<group>"; };
+		A202BE342EE03E6B006277CA /* Comet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comet.swift; sourceTree = "<group>"; };
 		A3046F8D27627DAC0069AA21 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		A3046F8F2763AE5E0069AA21 /* CaseFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseFiles.swift; sourceTree = "<group>"; };
 		A31009A32B9B838100068593 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 		A0E1E3E7275EC720008D0DC6 /* browsers */ = {
 			isa = PBXGroup;
 			children = (
+				A202BE342EE03E6B006277CA /* Comet.swift */,
 				A0E1E3E8275EC736008D0DC6 /* BrowserModule.swift */,
 				A0E1E3EA275EC800008D0DC6 /* Firefox.swift */,
 				A0E1E3EC275EC809008D0DC6 /* Chrome.swift */,
@@ -572,6 +575,7 @@
 				A374535D2757C1300074B65C /* FileManager.swift in Sources */,
 				A09B239C2848F6050062D592 /* Periodic.swift in Sources */,
 				A0DA61B028625E1D00224810 /* FileWalker.swift in Sources */,
+				A202BE352EE03E6B006277CA /* Comet.swift in Sources */,
 				A0E1E3ED275EC809008D0DC6 /* Chrome.swift in Sources */,
 				A3046F8E27627DAC0069AA21 /* Module.swift in Sources */,
 				8ABB9E2B27568EB700C0ADD7 /* UnifiedLogModule.swift in Sources */,
