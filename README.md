@@ -73,7 +73,7 @@ Because `eslogger` and `tcpdump` run on additional threads and the goal is to co
     - LSQuarantine Database
     - Shell History and Profiles (bash, csh, fish, ksh, zsh)
     - TCC Database
-    - XBS Database (XProtect Behabioral Service)
+    - XBS Database (XProtect Behavioral Service)
 - Filesystem
     - Browser Data (Cookies, Downloads, Extensions, History)
         - Arc
