@@ -304,7 +304,8 @@ class AftermathModule {
         testFormatter.dateStyle = .full
         testFormatter.timeStyle = .full
         testFormatter.locale = Locale(identifier: "en_US_POSIX")
-        testFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss'Z'"
+        testFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        testFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         
         let currentDateTime = Date()
         
