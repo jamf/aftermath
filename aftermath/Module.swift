@@ -272,8 +272,13 @@ class AftermathModule {
 
         do {
             let provenanceData = try fromFile.getExtendedAttribute(name: "com.apple.provenance")
-            let pkData = Data(provenanceData[3..<11])
-            metadata.append("\(pkData.withUnsafeBytes{$0.load(as: Int64.self)})")
+            if provenanceData.count >= 11 {
+                let pkData = Data(provenanceData[3..<11])
+                metadata.append("\(pkData.withUnsafeBytes{$0.loadUnaligned(as: Int64.self)})")
+            } else {
+                metadata.append("unknown")
+                self.log("Unexpected com.apple.provenance length \(provenanceData.count) for \(fromFile.path)")
+            }
         } catch {
             metadata.append("none")
         }
